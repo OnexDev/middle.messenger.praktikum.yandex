@@ -1,0 +1,19 @@
+<div class="{{styles.auth}}">
+    <div class="{{styles.container}}">
+        <h1 class="{{styles.title}}">Вход</h1>
+        <div class="{{styles.form}}">
+            <div class="{{styles.field}}">
+                <input class="{{styles.input}}" required/>
+                <label>Логин</label>
+            </div>
+            <div class="{{styles.field}}">
+                <input type="password" class="{{styles.input}}" required/>
+                <label>Пароль</label>
+            </div>
+        </div>
+        <div class="{{styles.buttons}}">
+            {{> button isPrimary=true classes=styles.main label='Авторизоваться'}}
+            {{> button classes=styles.subbutton label='Нет аккаунта?'}}
+        </div>
+    </div>
+</div>

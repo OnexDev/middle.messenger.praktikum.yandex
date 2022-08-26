@@ -1,0 +1,26 @@
+@import 'src/utils/variables';
+
+.button {
+  display: block;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1;
+
+  background: transparent;
+  border:none;
+  color: $blue;
+
+  cursor: pointer;
+  transition: all 0.05s ease-in;
+  &:hover{
+    opacity: 0.8;
+  }
+
+  &.primary{
+    background: $blue;
+    color:$white;
+    padding: 12px 0;
+    border-radius: 8px;
+    width: 280px;
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "practicum-messenger",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html",
+    "postbuild": "cp -r public/* dist/"
+  },
+  "keywords": [],
+  "author": "Pritornyi",
+  "license": "ISC",
+  "devDependencies": {
+    "@anikin/parcel-transformer-handlebars-precompile": "^1.0.1",
+    "@parcel/transformer-sass": "^2.7.0",
+    "parcel": "^2.7.0",
+    "parcel-reporter-static-files-copy": "^1.4.0"
+  },
+  "@parcel/transformer-css": {
+    "cssModules": true
+  },
+  "dependencies": {
+    "@parcel/transformer-css": "^2.7.0",
+    "handlebars": "^4.7.7"
+  }
+}
