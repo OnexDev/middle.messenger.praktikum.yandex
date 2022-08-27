@@ -4,8 +4,7 @@
   "description": "",
   "scripts": {
     "dev": "parcel src/index.html",
-    "build": "parcel build src/index.html",
-    "postbuild": "cp -r public/* dist/"
+    "build": "parcel build src/index.html"
   },
   "keywords": [],
   "author": "Pritornyi",
