@@ -7,4 +7,4 @@
 
 [build]
   publish = "dist"
-  command = "npm run dev --no-cache"
+  command = "npm run build --no-cache"
