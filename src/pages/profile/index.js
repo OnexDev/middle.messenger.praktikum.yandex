@@ -1,5 +1,6 @@
 import profile from './profile.hbs'
-import styles from './profile.scss'
+import * as styles from './profile.scss'
+
 export default (props) => {
     const credentials = [
         {
