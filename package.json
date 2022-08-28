@@ -14,6 +14,7 @@
     "@anikin/parcel-transformer-handlebars-precompile": "1.0.1",
     "@parcel/transformer-sass": "2.7.0",
     "chalk": "5.0.1",
+    "express-history-api-fallback": "^2.2.1",
     "parcel": "2.7.0",
     "parcel-reporter-static-files-copy": "1.4.0",
     "prettier": "2.7.1"
