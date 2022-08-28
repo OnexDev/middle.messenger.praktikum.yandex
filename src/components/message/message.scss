@@ -2,13 +2,13 @@
 
 .message {
   display: flex;
-  background: #F8F8F8;
+  background: #f8f8f8;
   max-width: 402px;
   width: fit-content;
   padding: 11px;
   border-radius: 0 12px 12px 12px;
 
-  margin-top:10px;
+  margin-top: 10px;
 
   .content {
     padding: 0;
@@ -21,11 +21,11 @@
     line-height: 15px;
   }
 
-  .text{
+  .text {
     white-space: pre-wrap;
   }
 
-  .meta{
+  .meta {
     float: right;
     margin-left: 10px;
 
@@ -34,11 +34,11 @@
     font-size: 9px;
     height: 15px;
     line-height: 15px;
-    color:$gray;
+    color: $gray;
     display: flex;
     flex-direction: row;
 
-    .status{
+    .status {
       display: inline-flex;
       width: 10px;
       height: 4px;
@@ -52,16 +52,15 @@
     }
   }
 
-  &.isOwner{
+  &.isOwner {
     border-radius: 12px 12px 0 12px;
     margin-left: auto;
-    background: #E4EDFD;
-    .meta{
-     color:$blue;
-      .status{
+    background: #e4edfd;
+    .meta {
+      color: $blue;
+      .status {
         background: $blue;
       }
     }
-
   }
 }

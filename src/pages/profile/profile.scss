@@ -1,7 +1,7 @@
 @import './src/utils/variables';
 
-.profile{
-  .sidebar{
+.profile {
+  .sidebar {
     position: fixed;
     height: 100%;
     width: 64px;
@@ -14,7 +14,7 @@
     align-items: center;
     background: $container;
   }
-  .exit{
+  .exit {
     cursor: pointer;
     border: none;
     background: $blue;
@@ -22,47 +22,46 @@
     height: 28px;
     border-radius: 100%;
   }
-  .main{
+  .main {
     width: 510px;
-    margin:auto;
+    margin: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    &>*{
+    & > * {
       width: 100%;
     }
   }
-  .user{
+  .user {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin:60px auto;
+    margin: 60px auto;
 
-    h3{
+    h3 {
       font-style: normal;
       font-weight: 600;
       font-size: 16px;
       line-height: 16px;
     }
   }
-  .avatar{
+  .avatar {
     width: 130px;
     height: 130px;
     border-radius: 100%;
     margin-bottom: 21px;
     overflow: hidden;
-    position:  relative;
+    position: relative;
     cursor: pointer;
 
-
-    &::after{
+    &::after {
       content: 'Поменять \0a аватар';
       position: absolute;
       background: rgba($black, 0.7);
 
-      top:0;
+      top: 0;
       left: 0;
       bottom: 0;
       right: 0;
@@ -71,37 +70,36 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      color:$white;
-      transition: opacity .3s ease-out;
+      color: $white;
+      transition: opacity 0.3s ease-out;
       opacity: 0;
 
       font-size: 13px;
       line-height: 14px;
       white-space: pre;
-
     }
-    &:hover{
-      &::after{
+    &:hover {
+      &::after {
         opacity: 1;
       }
     }
   }
 
-  .credentials{
+  .credentials {
     display: flex;
     flex-direction: column;
     list-style: none;
     padding: 0 0 50px 0;
     margin: 0;
 
-    .input{
+    .input {
       border: none;
       text-align: right;
     }
 
     // Не придумал как правильно передавать css modules в partials.
-    .logout{
-      &>*{
+    .logout {
+      & > * {
         color: $red;
       }
     }
@@ -112,20 +110,20 @@
       justify-content: space-between;
       border-bottom: 1px solid $gray-border;
       padding: 10px 0;
-      span:last-child{
-        color:gray;
+      span:last-child {
+        color: gray;
       }
     }
 
-    :last-child{
+    :last-child {
       border-bottom: none;
     }
   }
 
-  .saveButton{
+  .saveButton {
     // Не придумал как правильно передавать css modules в partials.
 
-    button{
+    button {
       font-size: 13px;
       margin: 160px auto 0;
     }
