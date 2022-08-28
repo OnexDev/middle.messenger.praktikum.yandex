@@ -26,7 +26,13 @@ const router = (app, pathname) => {
         app.innerHTML = registration();
     } else if (pathname === '/profile.html') {
         app.innerHTML = profile();
-    } else {
+    }
+    else if (pathname === '/profile2.html') {
+        app.innerHTML = profile({isEditMode: true});
+    }
+    else if (pathname === '/profile3.html') {
+        app.innerHTML = profile({isPasswordEditMode: true});
+    }else {
         app.innerHTML = htmlPage404();
     }
 }

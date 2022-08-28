@@ -32,5 +32,9 @@ Sprint 1
 [![Netlify Status](https://api.netlify.com/api/v1/badges/840fe653-3cee-4c38-99e6-56f885282e0f/deploy-status)](https://app.netlify.com/sites/pritornyi-msg/deploys)
 ![Contributors](https://img.shields.io/website?label=netlify&url=https%3A%2F%2Fpritornyi-msg.netlify.app%2F)
 
+## FAQ
+Роутинг, так как не является частью задания этого спринта ограниченно работает в условиях `npm run dev` на localhost:1234, при использовании express его работа нарушается.
 
+Figma: https://www.figma.com/file/tJesHhPmqV1zzyNbDJL85m/Y.Messanger?node-id=12%3A35
 
+Netlify: https://pritornyi-msg.netlify.app/

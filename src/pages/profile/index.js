@@ -5,27 +5,33 @@ export default (props) => {
     const credentials = [
         {
             title: 'Почта',
-            value: 'pochta@yandex.ru'
+            value: 'pochta@yandex.ru',
+            name:'email',
         },
         {
             title: 'Логин',
-            value: 'ivanivanov'
+            value: 'ivanivanov',
+            name:'login'
         },
         {
             title: 'Имя',
-            value: 'Иван'
+            value: 'Иван',
+            name: 'first_name'
         },
         {
             title: 'Фамилия',
-            value: 'Иванов'
+            value: 'Иванов',
+            name: 'second_name'
         },
         {
             title: 'Имя в чате',
-            value: 'Иван'
+            value: 'Иван',
+            name: 'chat_name'
         },
         {
             title: 'Телефон',
-            value: '+7 (909) 967 30 30'
+            value: '+7 (909) 967 30 30',
+            name: 'phone'
         },
     ]
     return profile({styles, ...props, credentials})

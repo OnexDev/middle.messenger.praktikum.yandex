@@ -25,6 +25,13 @@
   .main{
     width: 510px;
     margin:auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    &>*{
+      width: 100%;
+    }
   }
   .user{
     display: flex;
@@ -48,6 +55,7 @@
     overflow: hidden;
     position:  relative;
     cursor: pointer;
+
 
     &::after{
       content: 'Поменять \0a аватар';
@@ -86,6 +94,11 @@
     padding: 0 0 50px 0;
     margin: 0;
 
+    .input{
+      border: none;
+      text-align: right;
+    }
+
     // Не придумал как правильно передавать css modules в partials.
     .logout{
       &>*{
@@ -106,6 +119,15 @@
 
     :last-child{
       border-bottom: none;
+    }
+  }
+
+  .saveButton{
+    // Не придумал как правильно передавать css modules в partials.
+
+    button{
+      font-size: 13px;
+      margin: 160px auto 0;
     }
   }
 }
