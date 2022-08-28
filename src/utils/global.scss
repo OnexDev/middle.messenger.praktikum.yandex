@@ -1,8 +1,12 @@
 @import './normilize.scss';
 @import './variables.scss';
 
-body {
+html, body {
   font-family: 'Inter', sans-serif;
+  height: 100%;
+  &>*{
+    height: 100%;
+  }
 }
 * {
   color: $black;
