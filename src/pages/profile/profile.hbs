@@ -17,10 +17,10 @@
             <ul class="{{styles.credentials}}">
                 {{#each credentials as |credential|}}
                     <li>
-                        <span class="{{styles.title}}">
+                        <span class="{{../styles.title}}">
                             {{credential.title}}
                         </span>
-                        <input value="{{credential.value}}" name="{{credential.name}}" class="{{styles.input}}"/>
+                        <input value="{{credential.value}}" name="{{credential.name}}" class="{{../styles.input}}"/>
                     </li>
                 {{/each}}
             </ul>
@@ -55,10 +55,10 @@
             <ul class="{{styles.credentials}}">
                 {{#each credentials as |credential|}}
                     <li>
-                        <span class="{{styles.title}}">
+                        <span class="{{../styles.title}}">
                             {{credential.title}}
                         </span>
-                        <span class="{{styles.value}}">
+                        <span class="{{../styles.value}}">
                             {{credential.value}}
                         </span>
                     </li>

@@ -8,7 +8,7 @@ import auth from './pages/authentiaction'
 import registration from './pages/registration'
 import profile from "./pages/profile";
 
-import styles from './pages/index.scss'
+import * as styles from './pages/index.scss'
 
 import './components/button';
 import './components/message'
