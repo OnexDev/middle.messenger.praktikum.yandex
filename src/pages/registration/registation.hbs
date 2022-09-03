@@ -1,0 +1,40 @@
+<div class="{{styles.auth}}">
+    <div class="{{styles.container}}">
+        <h1 class="{{styles.title}}">Регистрация</h1>
+        <div class="{{styles.form}}">
+            <div class="{{styles.field}}">
+                <input type="email" class="{{styles.input}}" name="email" required/>
+                <label>Почта</label>
+            </div>
+            <div class="{{styles.field}}">
+                <input class="{{styles.input}}" name="login" required/>
+                <label>Логин</label>
+            </div>
+            <div class="{{styles.field}}">
+                <input class="{{styles.input}}" name="first_name" required/>
+                <label>Имя</label>
+            </div>
+            <div class="{{styles.field}}">
+                <input class="{{styles.input}}" name="second_name" required/>
+                <label>Фамилия</label>
+            </div>
+            <div class="{{styles.field}}">
+                <input type="tel" class="{{styles.input}}" name="phone" required/>
+                <label>Телефон</label>
+            </div>
+            <div class="{{styles.field}}">
+                <input type="password" class="{{styles.input}}" name="password" required/>
+                <label>Пароль</label>
+            </div>
+            <div class="{{styles.field}}">
+                <input class="{{styles.input}}" name="password_repeat" required/>
+                <label>Повтор пароля</label>
+            </div>
+
+        </div>
+        <div class="{{styles.buttons}}">
+            {{> button isPrimary=true classes=styles.main label='Авторизоваться'}}
+            {{> button classes=styles.subbutton label='Нет аккаунта?'}}
+        </div>
+    </div>
+</div>

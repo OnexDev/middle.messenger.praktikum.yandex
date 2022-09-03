@@ -1,0 +1,131 @@
+@import './src/utils/variables';
+
+.profile {
+  .sidebar {
+    position: fixed;
+    height: 100%;
+    width: 64px;
+
+    left: 0;
+    top: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $container;
+  }
+  .exit {
+    cursor: pointer;
+    border: none;
+    background: $blue;
+    width: 28px;
+    height: 28px;
+    border-radius: 100%;
+  }
+  .main {
+    width: 510px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    & > * {
+      width: 100%;
+    }
+  }
+  .user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 60px auto;
+
+    h3 {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 16px;
+    }
+  }
+  .avatar {
+    width: 130px;
+    height: 130px;
+    border-radius: 100%;
+    margin-bottom: 21px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+
+    &::after {
+      content: 'Поменять \0a аватар';
+      position: absolute;
+      background: rgba($black, 0.7);
+
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: $white;
+      transition: opacity 0.3s ease-out;
+      opacity: 0;
+
+      font-size: 13px;
+      line-height: 14px;
+      white-space: pre;
+    }
+    &:hover {
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+
+  .credentials {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0 0 50px 0;
+    margin: 0;
+
+    .input {
+      border: none;
+      text-align: right;
+    }
+
+    // Не придумал как правильно передавать css modules в partials.
+    .logout {
+      & > * {
+        color: $red;
+      }
+    }
+
+    // Не работают css модули внутри handlebars хелперов.
+    li {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid $gray-border;
+      padding: 10px 0;
+      span:last-child {
+        color: gray;
+      }
+    }
+
+    :last-child {
+      border-bottom: none;
+    }
+  }
+
+  .saveButton {
+    // Не придумал как правильно передавать css modules в partials.
+
+    button {
+      font-size: 13px;
+      margin: 160px auto 0;
+    }
+  }
+}
