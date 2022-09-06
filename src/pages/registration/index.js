@@ -1,6 +1,4 @@
-import auth from './registation.hbs'
-import * as styles from '../authentiaction/authentiaction.scss'
+import auth from './registation.hbs';
+import * as styles from '../authentiaction/authentiaction.scss';
 
-export default (props) => {
-  return auth({ styles, ...props })
-}
+export default (props) => auth({ styles, ...props });

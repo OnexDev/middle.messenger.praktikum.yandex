@@ -1,6 +1,4 @@
-import htmlPage404 from './404.hbs'
-import * as styles from '../messages.scss'
+import htmlPage404 from './404.hbs';
+import * as styles from '../messages.scss';
 
-export default () => {
-  return htmlPage404({ styles })
-}
+export default () => htmlPage404({ styles });

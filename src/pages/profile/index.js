@@ -1,5 +1,5 @@
-import profile from './profile.hbs'
-import * as styles from './profile.scss'
+import profile from './profile.hbs';
+import * as styles from './profile.scss';
 
 export default (props) => {
   const credentials = [
@@ -33,6 +33,6 @@ export default (props) => {
       value: '+7 (909) 967 30 30',
       name: 'phone',
     },
-  ]
-  return profile({ styles, ...props, credentials })
-}
+  ];
+  return profile({ styles, ...props, credentials });
+};
