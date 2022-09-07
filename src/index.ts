@@ -1,44 +1,47 @@
-import template from './index.hbs'
+import template from './index.hbs';
 
-import htmlPage404 from './pages/messages/404'
-import htmlPage500 from './pages/messages/500'
+import htmlPage404 from './pages/messages/404/404.hbs';
+import htmlPage500 from './pages/messages/500/500.hbs';
 
-import auth from './pages/authentiaction'
-import registration from './pages/registration'
-import profile from './pages/profile'
+import auth from './pages/authentiaction/authentiaction.hbs';
+import registration from './pages/registration/registation.hbs';
+import profile from './pages/profile/profile.hbs';
 
-import * as styles from './pages/index.scss'
+import * as styles from './pages/index.scss';
 
-import './components/button'
-import './components/message'
+import './components/button/index.ts';
+import './components/message/index.ts';
 
-const router = (app, pathname) => {
+const router = (app: Element, pathname: string) => {
   if (pathname === '/500.html') {
-    app.innerHTML = htmlPage500({ code: 500 })
+    app.innerHTML = htmlPage500({ code: 500 });
   } else if (
-    pathname.startsWith('/5') &&
-    pathname.replace(/[^+\d]/g, '').length === 3 &&
-    pathname.endsWith('.html')
+    pathname.startsWith('/5')
+    && pathname.replace(/[^+\d]/g, '').length === 3
+    && pathname.endsWith('.html')
   ) {
-    app.innerHTML = htmlPage500({ code: pathname.replace(/[^+\d]/g, '') })
+    app.innerHTML = htmlPage500({ code: pathname.replace(/[^+\d]/g, '') });
   } else if (pathname === '/') {
-    app.innerHTML = template({ styles, variable: window.location })
+    app.innerHTML = template({ styles, variable: window.location });
   } else if (pathname === '/auth.html') {
-    app.innerHTML = auth()
+    app.innerHTML = auth();
   } else if (pathname === '/registration.html') {
-    app.innerHTML = registration()
+    app.innerHTML = registration();
   } else if (pathname === '/profile.html') {
-    app.innerHTML = profile()
+    app.innerHTML = profile();
   } else if (pathname === '/profile2.html') {
-    app.innerHTML = profile({ isEditMode: true })
+    app.innerHTML = profile({ isEditMode: true });
   } else if (pathname === '/profile3.html') {
-    app.innerHTML = profile({ isPasswordEditMode: true })
+    app.innerHTML = profile({ isPasswordEditMode: true });
   } else {
-    app.innerHTML = htmlPage404()
+    app.innerHTML = htmlPage404();
   }
-}
+};
 
 window.addEventListener('DOMContentLoaded', () => {
-  const app = document.querySelector('#app')
-  router(app, window.location.pathname)
-})
+  const app = document.querySelector('#app');
+  if (app === null) {
+    throw new Error('#app element does not exist');
+  }
+  router(app, window.location.pathname);
+});
