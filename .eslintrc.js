@@ -11,9 +11,17 @@ module.exports = {
   },
   rules: {
     'max-len': [1, 100],
+
     'no-use-before-define': 0,
+    'no-unused-vars': 0,
+
     '@typescript-eslint/no-unused-vars': 2,
     '@typescript-eslint/no-use-before-define': 2,
+
+    'class-methods-use-this': 0,
+    'import/no-unresolved': 0,
+    'import/extensions': 0,
+
     'no-underscore-dangle': 0,
     'no-param-reassign': [2, { props: false }],
   },

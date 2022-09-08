@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import { EventBus } from './EventBus.ts';
+import { EventBus } from './EventBus';
 
 // Нельзя создавать экземпляр данного класса
 export default class Block {
@@ -44,9 +44,6 @@ export default class Block {
     this.eventBus = () => eventBus;
     this._registerEvents(eventBus);
 
-    this._getChildrenAndProps = this._getChildrenAndProps.bind(this);
-    this._createDocumentElement = this._createDocumentElement.bind(this);
-
     eventBus.emit(Block.EVENTS.INIT);
   }
 
@@ -66,7 +63,7 @@ export default class Block {
   }
 
   _addEvents() {
-    const { events = {} } = this.props as { events: Record<string, () =>void> };
+    const { events = {} } = this.props as { events: Record<string, () => void> };
 
     Object.keys(events).forEach((eventName) => {
       this._element?.addEventListener(eventName, events[eventName]);
@@ -93,7 +90,6 @@ export default class Block {
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   protected init() {}
 
   _componentDidMount() {
@@ -115,7 +111,7 @@ export default class Block {
   }
 
   protected componentDidUpdate(oldProps: any, newProps: any) {
-    return true;
+    return JSON.stringify(oldProps) === JSON.stringify(newProps);
   }
 
   setProps = (nextProps: any) => {
@@ -133,11 +129,11 @@ export default class Block {
   private _render() {
     const fragment = this.render();
 
-        this._element!.innerHTML = '';
+    this._element!.innerHTML = '';
 
-        this._element!.append(fragment);
+    this._element!.append(fragment);
 
-        this._addEvents();
+    this._addEvents();
   }
 
   protected compile(template: (context: any) => string, context: any) {
@@ -153,6 +149,7 @@ export default class Block {
 
     temp.innerHTML = html;
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     Object.entries(this.children).forEach(([_, component]) => {
       const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
 
@@ -207,10 +204,10 @@ export default class Block {
   }
 
   show() {
-        this.getContent()!.style.display = 'block';
+    this.getContent()!.style.display = 'block';
   }
 
   hide() {
-        this.getContent()!.style.display = 'none';
+    this.getContent()!.style.display = 'none';
   }
 }

@@ -3,7 +3,7 @@ type EventHandler<T extends []> = (...args: T) => void;
 export interface Bus {
     on: (event: string, callback: () => void) => void;
     off: (event: string, callback: () => void) => void;
-    emit: <T extends []>(event: string, ...args: T) => void;
+    emit: (event: string, ...args: []) => void;
 }
 
 export class EventBus implements Bus {
@@ -27,7 +27,7 @@ export class EventBus implements Bus {
     );
   }
 
-  emit<T extends []>(event: string, ...args: T) {
+  emit<T extends any[]>(event: string, ...args: T) {
     if (!this.listeners[event]) {
       throw new Event(`Нет события: ${event}`);
     }

@@ -1,5 +1,3 @@
-import template from './index.hbs';
-
 import htmlPage404 from './pages/messages/404/404.hbs';
 import htmlPage500 from './pages/messages/500/500.hbs';
 
@@ -7,7 +5,7 @@ import auth from './pages/authentiaction/authentiaction.hbs';
 import registration from './pages/registration/registation.hbs';
 import profile from './pages/profile/profile.hbs';
 
-import * as styles from './pages/index.scss';
+import LobbyPage from './pages/lobby/index';
 
 import './components/button/index.ts';
 import './components/message/index.ts';
@@ -22,7 +20,9 @@ const router = (app: Element, pathname: string) => {
   ) {
     app.innerHTML = htmlPage500({ code: pathname.replace(/[^+\d]/g, '') });
   } else if (pathname === '/') {
-    app.innerHTML = template({ styles, variable: window.location });
+    const lobbyPage = new LobbyPage({ title: 'Home page' });
+    app.append(lobbyPage.getContent()!);
+    lobbyPage.dispatchComponentDidMount();
   } else if (pathname === '/auth.html') {
     app.innerHTML = auth();
   } else if (pathname === '/registration.html') {
@@ -43,5 +43,6 @@ window.addEventListener('DOMContentLoaded', () => {
   if (app === null) {
     throw new Error('#app element does not exist');
   }
+
   router(app, window.location.pathname);
 });
