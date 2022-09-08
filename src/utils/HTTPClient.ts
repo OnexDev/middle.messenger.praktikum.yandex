@@ -10,17 +10,15 @@ enum METHODS {
  * На входе: объект. Пример: {a: 1, b: 2, c: {d: 123}, k: [1, 2, 3]}
  * На выходе: строка. Пример: ?a=1&b=2&c=[object Object]&k=1,2,3
  */
-function queryStringify(data: Record<string, any>) {
-  return Object.entries(data).reduce((accumulator, next) => {
-    if (typeof accumulator !== 'string') {
-      // eslint-disable-next-line no-param-reassign
-      accumulator = `?${accumulator[0]}=${accumulator[1]}`;
-    }
-    const [key, value] = next;
+export function queryStringify(data: Record<string, any>) {
+  let accumulator: string = '';
+  Object.entries(data).forEach(([key, value]) => {
     const partial = `${key}=${Array.isArray(value) ? value.join(',') : value}`;
-    return `${accumulator}&${partial}`;
+    accumulator = [accumulator, partial].join('&');
   });
+  return `?${accumulator}`;
 }
+
 type Options = {
     method: METHODS,
     headers?: Record<string, string>,
