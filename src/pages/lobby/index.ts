@@ -16,6 +16,9 @@ export default class HomePage extends Block {
     this.children.button = new Button({
       label: 'Click me',
       isPrimary: true,
+      attrs: {
+        class: 'fff',
+      },
       events: {
         click: () => console.log('clicked'),
       },

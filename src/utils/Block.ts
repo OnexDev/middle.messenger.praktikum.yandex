@@ -30,7 +30,6 @@ export default class Block {
    */
   constructor(tagName = 'div', propsWithChildren: any = {}) {
     const eventBus = new EventBus();
-
     const { props, children } = this._getChildrenAndProps(propsWithChildren);
 
     this._meta = {
@@ -60,6 +59,13 @@ export default class Block {
     });
 
     return { props, children };
+  }
+
+  _addAttrs() {
+    const { attrs = {} } = this.props as { attrs?: Record<string, string>};
+    Object.entries(attrs).forEach(([name, value]) => {
+      this._element?.setAttribute(name, value);
+    });
   }
 
   _addEvents() {
@@ -133,6 +139,7 @@ export default class Block {
 
     this._element!.append(fragment);
 
+    this._addAttrs();
     this._addEvents();
   }
 
@@ -144,7 +151,6 @@ export default class Block {
     });
 
     const html = template(contextAndStubs);
-
     const temp = document.createElement('template');
 
     temp.innerHTML = html;
