@@ -19,7 +19,7 @@ export function queryStringify(data: Record<string, any>) {
   return `?${accumulator}`;
 }
 
-type Options = {
+export type Options = {
     method: METHODS,
     headers?: Record<string, string>,
     data?: any,
@@ -28,25 +28,31 @@ type Options = {
 }
 
 export default class HTTPClient {
-  get = (url:string, options?: Options) => this.request(
+  get = (url:string, options?: Options) => this._request(
     `${url}${queryStringify(options?.data)}`,
     { ...options, method: METHODS.GET },
     options?.timeout,
   );
 
-  put = (url:string, options?: Options) => this.request(
+  put = (url:string, options?: Options) => this._request(
     url,
     { ...options, method: METHODS.PUT },
     options?.timeout,
   );
 
-  post = (url:string, options?: Options) => this.request(
+  post = (url:string, options?: Options) => this._request(
     url,
     { ...options, method: METHODS.POST },
     options?.timeout,
   );
 
-  request = (url:string, options: Options = {
+  delete = (url:string, options?: Options) => this._request(
+    url,
+    { ...options, method: METHODS.DELETE },
+    options?.timeout,
+  );
+
+  private _request = (url:string, options: Options = {
     method: METHODS.GET,
     headers: { 'Content-Type': 'text/plain' },
   }, timeout = 5000) => {

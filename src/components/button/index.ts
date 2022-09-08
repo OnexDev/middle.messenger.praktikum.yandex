@@ -1,37 +1,22 @@
 import template from './button.hbs';
 import * as styles from './button.scss';
 import Block from '../../utils/Block';
+import { BlockProps } from '../../utils/models/BlockProps';
+import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 
-interface ButtonProps {
+interface ButtonProps extends BlockProps{
     label: string,
     isPrimary?: boolean,
-    styles?: [],
-    attrs?:{
-        class: string;
-    },
-    events: {
+    events?: {
         click: () => void;
     }
 }
-const computedClass = (props: ButtonProps) => {
-  const baseInstance = props.attrs?.class;
-  const defaultInstance = styles.button;
-  const computedInstance = [
-    props.isPrimary ? styles.primary : false,
-  ];
-
-  return [defaultInstance, computedInstance, baseInstance].join(' ');
-};
 
 export default class Button extends Block {
   constructor(props: ButtonProps) {
-    super('button', {
-      ...props,
-      attrs: {
-        ...props.attrs,
-        class: computedClass(props),
-      },
-    });
+    super('button', getPropsWithAugmentedClasses<ButtonProps>(props, [styles.button], [
+      props.isPrimary ? styles.button : false,
+    ]));
   }
 
   init() {
