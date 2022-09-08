@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "parcel src/index.html --no-cache",
+    "pre:clean": "rimraf dist && rimraf .parcel-cache",
+    "dev": "npm run pre:clean && parcel src/index.html --no-cache",
     "build": "parcel build src/index.html",
     "start": "npm run build && node server.js"
   },
@@ -22,6 +23,7 @@
     "parcel": "2.7.0",
     "parcel-reporter-static-files-copy": "1.4.0",
     "prettier": "2.7.1",
+    "rimraf": "^3.0.2",
     "stylelint": "14.11.0"
   },
   "@parcel/transformer-css": {

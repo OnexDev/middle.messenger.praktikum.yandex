@@ -10,10 +10,13 @@ module.exports = {
     browser: true,
   },
   rules: {
-    'max-len': [1, 100],
+    'max-len': [1, 80],
 
     'no-use-before-define': 0,
     'no-unused-vars': 0,
+
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': ['error'],
 
     '@typescript-eslint/no-unused-vars': 2,
     '@typescript-eslint/no-use-before-define': 2,
