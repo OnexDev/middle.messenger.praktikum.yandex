@@ -41,8 +41,7 @@
     .status {
       display: inline-flex;
       width: 10px;
-      height: 4px;
-      background: $gray;
+      height: 6px;
       line-height: 15px;
 
       vertical-align: bottom;
@@ -58,9 +57,7 @@
     background: #e4edfd;
     .meta {
       color: $blue;
-      .status {
-        background: $blue;
-      }
+
     }
   }
 }
