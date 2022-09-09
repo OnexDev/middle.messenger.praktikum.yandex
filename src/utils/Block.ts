@@ -46,7 +46,7 @@ export default class Block {
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  _getChildrenAndProps(childrenAndProps: any) {
+  private _getChildrenAndProps(childrenAndProps: any) {
     const props: Record<string, any> = {};
     const children: Record<string, Block> = {};
 
@@ -61,14 +61,14 @@ export default class Block {
     return { props, children };
   }
 
-  _addAttrs() {
+  private _addAttrs() {
     const { attrs = {} } = this.props as { attrs?: Record<string, string>};
     Object.entries(attrs).forEach(([name, value]) => {
       this._element?.setAttribute(name, value);
     });
   }
 
-  _addEvents() {
+  private _addEvents() {
     const { events = {} } = this.props as { events: Record<string, () => void> };
 
     Object.keys(events).forEach((eventName) => {
@@ -76,14 +76,14 @@ export default class Block {
     });
   }
 
-  _registerEvents(eventBus: EventBus) {
+  private _registerEvents(eventBus: EventBus) {
     eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  _createResources() {
+  private _createResources() {
     const { tagName } = this._meta;
     this._element = this._createDocumentElement(tagName);
   }
@@ -98,7 +98,7 @@ export default class Block {
 
   protected init() {}
 
-  _componentDidMount() {
+  private _componentDidMount() {
     this.componentDidMount();
   }
 
@@ -120,7 +120,7 @@ export default class Block {
     return JSON.stringify(oldProps) === JSON.stringify(newProps);
   }
 
-  setProps = (nextProps: any) => {
+  public setProps = (nextProps: any) => {
     if (!nextProps) {
       return;
     }
@@ -175,11 +175,11 @@ export default class Block {
     return new DocumentFragment();
   }
 
-  getContent() {
+  public getContent() {
     return this.element;
   }
 
-  _makePropsProxy(props: any) {
+  private _makePropsProxy(props: any) {
     // Ещё один способ передачи this, но он больше не применяется с приходом ES6+
     const self = this;
 
@@ -204,16 +204,15 @@ export default class Block {
     });
   }
 
-  _createDocumentElement(tagName: string) {
-    // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
+  private _createDocumentElement(tagName: string) {
     return document.createElement(tagName);
   }
 
-  show() {
+  public show() {
     this.getContent()!.style.display = 'block';
   }
 
-  hide() {
+  public hide() {
     this.getContent()!.style.display = 'none';
   }
 }
