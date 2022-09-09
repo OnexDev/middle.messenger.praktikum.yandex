@@ -19,7 +19,12 @@ export default class HomePage extends Block {
           new Field({
               name: 'login',
               required: false,
-              placeholder: 'blah'
+              label: 'а',
+          }),
+          new Field({
+              name: 'password',
+              required: true,
+              label: 'password',
           })
       ]
     this.children.ownerMessage = new Message({

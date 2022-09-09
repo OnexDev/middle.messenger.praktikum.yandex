@@ -19,11 +19,12 @@
     </div>
 
     {{{ button }}}
-
-    {{#each fields as |field|}}
-        {{{field}}}
+<!--    -->
+    {{#each fields}}
+        {{{this}}}
     {{/each}}
 
+    {{field}}
     {{{message}}}
     {{{ownerMessage}}}
 
