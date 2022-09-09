@@ -15,6 +15,7 @@ export default class Block {
   protected props: any;
 
   public children: Record<string, Block>;
+
   public childrenCollection: Record<string, Block[]>;
 
   private eventBus: () => EventBus;
@@ -54,9 +55,9 @@ export default class Block {
     const childrenCollection: Record<string, Block[]> = {};
 
     Object.entries(childrenAndProps).forEach(([key, value]) => {
-        if(Array.isArray(value) && value.every((element) => element instanceof Block)){
-            childrenCollection[key] = value;
-        }
+      if (Array.isArray(value) && value.every((element) => element instanceof Block)) {
+        childrenCollection[key] = value;
+      }
       if (value instanceof Block) {
         children[key] = value;
       } else {
@@ -154,9 +155,9 @@ export default class Block {
 
     Object.entries(this.childrenCollection).forEach(([collectionName, collection]) => {
       Object.entries(collection).forEach(([name, component]) => {
-        contextAndStubs[collectionName] = {...contextAndStubs[collectionName], [name]:`<div data-id="${component.id}"></div>`};
-      })
-    })
+        contextAndStubs[collectionName] = { ...contextAndStubs[collectionName], [name]: `<div data-id="${component.id}"></div>` };
+      });
+    });
 
     Object.entries(this.children).forEach(([name, component]) => {
       contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
@@ -167,25 +168,28 @@ export default class Block {
 
     temp.innerHTML = html;
 
-    const replacer = (temp: HTMLTemplateElement, component: Block)=>{
-        const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
+    const replacer = (component: Block) => {
+      const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
 
-        if (!stub) {
-            return;
-        }
+      if (!stub) {
+        return;
+      }
 
-        component.getContent()?.append(...Array.from(stub.childNodes));
-        stub.replaceWith(component.getContent()!);
-    }
+      component.getContent()?.append(...Array.from(stub.childNodes));
+      stub.replaceWith(component.getContent()!);
+    };
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     Object.entries(this.childrenCollection).forEach(([_, collection]) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-shadow
       Object.entries(collection).forEach(([_, component]) => {
-          replacer(temp, component)
-      })
-    })
+        replacer(component);
+      });
+    });
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     Object.entries(this.children).forEach(([_, component]) => {
-        replacer(temp, component)
+      replacer(component);
     });
 
     return temp.content;
