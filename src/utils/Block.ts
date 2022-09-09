@@ -14,7 +14,8 @@ export default class Block {
 
   protected props: any;
 
-  public children: Record<string, Block> | Record<string, Block[]>;
+  public children: Record<string, Block>;
+  public childrenCollection: Record<string, Block[]>;
 
   private eventBus: () => EventBus;
 
@@ -30,7 +31,7 @@ export default class Block {
    */
   constructor(tagName = 'div', propsWithChildren: any = {}) {
     const eventBus = new EventBus();
-    const { props, children } = this._getChildrenAndProps(propsWithChildren);
+    const { props, children, childrenCollection } = this._getChildrenAndProps(propsWithChildren);
 
     this._meta = {
       tagName,
@@ -38,6 +39,7 @@ export default class Block {
     };
 
     this.children = children;
+    this.childrenCollection = childrenCollection;
     this.props = this._makePropsProxy(props);
 
     this.eventBus = () => eventBus;
@@ -49,8 +51,12 @@ export default class Block {
   private _getChildrenAndProps(childrenAndProps: any) {
     const props: Record<string, any> = {};
     const children: Record<string, Block> = {};
+    const childrenCollection: Record<string, Block[]> = {};
 
     Object.entries(childrenAndProps).forEach(([key, value]) => {
+        if(Array.isArray(value) && value.every((element) => element instanceof Block)){
+            childrenCollection[key] = value;
+        }
       if (value instanceof Block) {
         children[key] = value;
       } else {
@@ -58,7 +64,7 @@ export default class Block {
       }
     });
 
-    return { props, children };
+    return { props, children, childrenCollection };
   }
 
   private _addAttrs() {
@@ -146,6 +152,12 @@ export default class Block {
   protected compile(template: (context: any) => string, context: any) {
     const contextAndStubs = { ...context };
 
+    Object.entries(this.childrenCollection).forEach(([collectionName, collection]) => {
+      Object.entries(collection).forEach(([name, component]) => {
+        contextAndStubs[collectionName] = {[name]:`<div data-id="${component.id}"></div>`};
+      })
+    })
+
     Object.entries(this.children).forEach(([name, component]) => {
       contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
     });
@@ -155,17 +167,25 @@ export default class Block {
 
     temp.innerHTML = html;
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const replacer = (temp: HTMLTemplateElement, component: Block)=>{
+        const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
+
+        if (!stub) {
+            return;
+        }
+
+        component.getContent()?.append(...Array.from(stub.childNodes));
+        stub.replaceWith(component.getContent()!);
+    }
+
+    Object.entries(this.childrenCollection).forEach(([_, collection]) => {
+      Object.entries(collection).forEach(([_, component]) => {
+          replacer(temp, component)
+      })
+    })
+
     Object.entries(this.children).forEach(([_, component]) => {
-      const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
-
-      if (!stub) {
-        return;
-      }
-
-      component.getContent()?.append(...Array.from(stub.childNodes));
-
-      stub.replaceWith(component.getContent()!);
+        replacer(temp, component)
     });
 
     return temp.content;

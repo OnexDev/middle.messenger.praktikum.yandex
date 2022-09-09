@@ -15,8 +15,10 @@ export default class HomePage extends Block {
   }
 
   init() {
-      this.children.fields = [
+      this.childrenCollection.fields = [
           new Field({
+              name: 'login',
+              required: false,
               placeholder: 'blah'
           })
       ]
