@@ -1,8 +1,9 @@
 import Block from '../../utils/Block';
 import template from './lobby.hbs';
-import Button from '../../components/Button';
+import Button from '../../components/button';
 import * as styles from './lobby.scss';
-import Message from '../../components/Message';
+import Message from '../../components/message';
+import Field from "../../components/field";
 
 interface HomePageProps {
     title: string;
@@ -14,6 +15,11 @@ export default class HomePage extends Block {
   }
 
   init() {
+      this.children.fields = [
+          new Field({
+              placeholder: 'blah'
+          })
+      ]
     this.children.ownerMessage = new Message({
       content: 'Привет! Смотри, тут всплыл интересный кусок лунной космической истории — '
               + 'НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну.\n'

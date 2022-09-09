@@ -14,7 +14,7 @@ export default class Block {
 
   protected props: any;
 
-  public children: Record<string, Block>;
+  public children: Record<string, Block> | Record<string, Block[]>;
 
   private eventBus: () => EventBus;
 
@@ -85,7 +85,7 @@ export default class Block {
 
   private _createResources() {
     const { tagName } = this._meta;
-    this._element = this._createDocumentElement(tagName);
+    this._element = Block._createDocumentElement(tagName);
   }
 
   private _init() {
@@ -204,7 +204,7 @@ export default class Block {
     });
   }
 
-  private _createDocumentElement(tagName: string) {
+  private static _createDocumentElement(tagName: string) {
     return document.createElement(tagName);
   }
 

@@ -1,12 +1,14 @@
 import template from './field.hbs';
-import * as styles from './button.scss';
+import * as styles from './field.scss';
 import Block from '../../utils/Block';
 import { BlockProps } from '../../utils/models/BlockProps';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 
 interface FieldProps extends BlockProps{
-    label: string,
-    isPrimary?: boolean,
+    label?: string,
+    placeholder?: string,
+    name: string,
+    required: boolean
     events?: {
         click: () => void;
     }
@@ -14,9 +16,10 @@ interface FieldProps extends BlockProps{
 
 export default class Field extends Block {
   constructor(props: FieldProps) {
-    super('div', getPropsWithAugmentedClasses<FieldProps>(props, [styles.button], [
-      props.isPrimary ? styles.button : false,
-    ]));
+    super('div', getPropsWithAugmentedClasses<FieldProps>(props,
+        [styles.field],
+        [])
+    );
   }
 
   init() {
