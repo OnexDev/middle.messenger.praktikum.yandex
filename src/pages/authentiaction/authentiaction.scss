@@ -50,38 +50,4 @@
     gap: 32px;
     min-height: 190px;
   }
-
-  .field {
-    display: flex;
-    flex-direction: column;
-    color: $gray;
-
-    label {
-      font-size: 13px;
-      line-height: 13px;
-      position: absolute;
-      transition: 0.3s ease-out all;
-    }
-
-    .input:focus + label,
-    .input:valid + label {
-      font-size: 9px;
-      line-height: 9px;
-      transform: translateY(-10px);
-    }
-
-    .input {
-      font-size: 13px;
-      line-height: 13px;
-      border: none;
-      border-bottom: 1px solid $blue;
-
-      font-weight: 500;
-      padding: 7px 0;
-
-      &:focus {
-        outline: none;
-      }
-    }
-  }
 }

@@ -1,4 +1,4 @@
-import template from './button.hbs';
+import template from './field.hbs';
 import * as styles from './button.scss';
 import Block from '../../utils/Block';
 import { BlockProps } from '../../utils/models/BlockProps';
