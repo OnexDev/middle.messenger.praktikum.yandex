@@ -155,11 +155,9 @@ export default class Block {
     Object.entries(this.childrenCollection).forEach(([collectionName, collection]) => {
       Object.entries(collection).forEach(([name, component]) => {
         contextAndStubs[collectionName] = {...contextAndStubs[collectionName], [name]:`<div data-id="${component.id}"></div>`};
-        console.log(contextAndStubs[collectionName][name]) // 2
       })
     })
 
-      console.log(contextAndStubs.fields) // 1
     Object.entries(this.children).forEach(([name, component]) => {
       contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
     });

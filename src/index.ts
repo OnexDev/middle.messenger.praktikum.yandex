@@ -5,14 +5,18 @@ import auth from './pages/authentiaction/authentiaction.hbs';
 import registration from './pages/registration/registation.hbs';
 import profile from './pages/profile/profile.hbs';
 
-import LobbyPage from './pages/lobby/index';
-
+import LobbyPage from './pages/lobby';
+import ChatsPage from "./pages/chats";
 import './components/button/index.ts';
 import './components/message/index.ts';
 
 const router = (app: Element, pathname: string) => {
   if (pathname === '/500.html') {
     app.innerHTML = htmlPage500({ code: 500 });
+  } else if(pathname === '/chats.html'){
+    const chatsPage = new ChatsPage({ title: 'Home page' });
+    app.append(chatsPage.getContent()!);
+    chatsPage.dispatchComponentDidMount();
   } else if (
     pathname.startsWith('/5')
     && pathname.replace(/[^+\d]/g, '').length === 3

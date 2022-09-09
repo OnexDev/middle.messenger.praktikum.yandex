@@ -1,0 +1,22 @@
+<aside>
+{{#each chats}}
+    {{{this}}}
+{{/each}}
+</aside>
+<main class="{{styles.main}}">
+    <div class="{{styles.userBar}}">
+        <img class="{{styles.avatar}}" src="{{currentChat.avatar}}" width="34px" height="34px"/>
+        {{title}}
+        <div class="{{styles.options}}">
+            <div class="{{styles.optionsIcon}}"></div>
+        </div>
+    </div>
+    <div class="{{styles.chat}}">
+        {{#each messages}}
+            {{{this}}}
+        {{/each}}
+    </div>
+    <div class="{{styles.inputBar}}">
+        <img src="pin.png" width="32px" height="32px">
+    </div>
+</main>

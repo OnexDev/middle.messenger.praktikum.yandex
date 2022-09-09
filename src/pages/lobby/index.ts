@@ -6,7 +6,7 @@ import Message from '../../components/message';
 import Field from "../../components/field";
 
 interface HomePageProps {
-    title: string;
+
 }
 
 export default class HomePage extends Block {

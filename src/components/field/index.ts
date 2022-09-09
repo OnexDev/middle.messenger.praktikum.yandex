@@ -8,7 +8,7 @@ interface FieldProps extends BlockProps{
     label?: string,
     placeholder?: string,
     name: string,
-    required: boolean
+    required: boolean,
     events?: {
         click: () => void;
     }
