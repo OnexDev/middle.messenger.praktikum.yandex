@@ -11,7 +11,7 @@
   },
   "lib": [
     "ESNext",
-    "DOM",
+    "DOM"
   ],
   "include": [
     "src/**/*"
