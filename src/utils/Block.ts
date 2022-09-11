@@ -18,7 +18,7 @@ export default class Block<P extends Record<string, any> = any> {
 
   public childrenCollection: Record<string, Block<P>[]>;
 
-  private eventBus: () => EventBus;
+  public eventBus: () => EventBus;
 
   private _element: HTMLElement | null = null;
 

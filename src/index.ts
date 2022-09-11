@@ -1,14 +1,13 @@
 import htmlPage404 from './pages/messages/404/404.hbs';
 import htmlPage500 from './pages/messages/500/500.hbs';
 
-import auth from './pages/authentiaction/authentiaction.hbs';
-import registration from './pages/registration/registation.hbs';
 import profile from './pages/profile/profile.hbs';
 
 import LobbyPage from './pages/lobby';
 import ChatsPage from './pages/chats';
 import './components/button/index.ts';
 import './components/message/index.ts';
+import AuthPage from './pages/authentiaction';
 
 const router = (app: Element, pathname: string) => {
   if (pathname === '/500.html') {
@@ -107,9 +106,14 @@ const router = (app: Element, pathname: string) => {
     app.append(lobbyPage.getContent()!);
     lobbyPage.dispatchComponentDidMount();
   } else if (pathname === '/auth.html') {
-    app.innerHTML = auth();
+    const authPage = new AuthPage({});
+
+    app.append(authPage.getContent()!);
+    authPage.dispatchComponentDidMount();
   } else if (pathname === '/registration.html') {
-    app.innerHTML = registration();
+    //
+    // app.append(chatsPage.getContent()!);
+    // chatsPage.dispatchComponentDidMount();
   } else if (pathname === '/profile.html') {
     app.innerHTML = profile();
   } else if (pathname === '/profile2.html') {

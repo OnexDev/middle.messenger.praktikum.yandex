@@ -1,7 +1,5 @@
 export type BlockProps = {
-    styles?: [],
-    attrs?:{
-        class: string;
-    },
-    events?: {}
+    styles?: string[],
+    attrs?: Record<string, any>
+    events?: Record<string, (...args: any[]) => void>
 }

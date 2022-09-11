@@ -3,23 +3,25 @@ import * as styles from './field.scss';
 import Block from '../../utils/Block';
 import { BlockProps } from '../../utils/models/BlockProps';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
+import Input from '../input';
+import FieldErrors from '../error';
 
-interface FieldProps extends BlockProps{
+export interface FieldProps extends BlockProps{
     label?: string,
     placeholder?: string,
     name: string,
     required: boolean,
     isFormField?: boolean,
-
+    type?: string,
+    // TODO: make validator return Error Object
+    validator: (value: string) => boolean,
     errors?: string[],
-    events?: {
-        click: () => void;
-    }
+    inputEvents?: Record<string, (e:Event)=> void>
 }
 
-export default class Field extends Block {
+export default class Field extends Block<FieldProps> {
   constructor(props: FieldProps) {
-    super('div', getPropsWithAugmentedClasses<FieldProps>(
+    super('label', getPropsWithAugmentedClasses<FieldProps>(
       {
         ...props,
       },
@@ -31,8 +33,37 @@ export default class Field extends Block {
     ));
   }
 
+  protected componentDidUpdate(oldProps: any, newProps: any) {
+    if (newProps.errors !== oldProps.errors) {
+      this.children.fieldErrors.setProps({ errors: this.props.errors }); // ререндерим ошибку
+      return false; // сам компонент не ререндерим
+    }
+    return JSON.stringify(oldProps) === JSON.stringify(newProps);
+  }
+
+  public getFieldValue() {
+    return this.children?.input;
+  }
+
+  public getValidator(): (value: string) => boolean {
+    return this.props.validator;
+  }
+
   init() {
-    this.props.id = this.id;
+    this.children.fieldErrors = new FieldErrors({
+      errors: this.props.errors,
+    });
+    this.children.input = new Input({
+      attrs: {
+        class: styles.input,
+        placeholder: this.props.placeholder ?? '',
+        name: this.props.name,
+        required: this.props.required,
+        value: this.props.value ?? '',
+        type: this.props.type ?? 'text',
+      },
+      events: this.props.inputEvents,
+    });
   }
 
   render() {

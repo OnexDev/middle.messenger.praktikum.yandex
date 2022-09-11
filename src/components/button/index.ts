@@ -4,7 +4,7 @@ import Block from '../../utils/Block';
 import { BlockProps } from '../../utils/models/BlockProps';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 
-interface ButtonProps extends BlockProps{
+export interface ButtonProps extends BlockProps{
     label: string,
     isPrimary?: boolean,
     events?: {

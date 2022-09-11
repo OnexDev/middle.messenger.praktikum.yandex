@@ -1,9 +1,8 @@
 import Block from '../../utils/Block';
 import template from './lobby.hbs';
-import Button from '../../components/button';
 import * as styles from './lobby.scss';
-import Message from '../../components/message';
-import Field from '../../components/field';
+
+import Form from '../../components/form';
 
 interface HomePageProps {
 
@@ -15,60 +14,27 @@ export default class HomePage extends Block {
   }
 
   init() {
-    this.childrenCollection.fields = [
-      new Field({
-        name: 'login',
-        required: false,
-        label: 'а',
-        isFormField: true,
-        errors: ['Логин должен быть больше 6 символов', 'Логин должен содержать только латинские символы'],
-      }),
-      new Field({
-        name: 'password',
-        required: true,
-        label: 'password',
-        isFormField: true,
-      }),
-      new Field({
-        name: 'password',
-        required: true,
-        label: 'password',
-        isFormField: true,
-      }),
-    ];
-    this.children.ownerMessage = new Message({
-      content: 'Привет! Смотри, тут всплыл интересный кусок лунной космической истории — '
-              + 'НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну.\n'
-              + 'Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все т'
-              + 'ушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали '
-              + 'только кассеты с пленкой.\n'
-              + '\n'
-              + 'Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ра'
-              + 'кету они так никогда и не попали. Всего их было произведено 25'
-              + ' штук, одну из них недавно продали на аукционе за 45000 евро.',
-      isOwner: true,
-    });
-    this.children.message = new Message({
-      content: 'Привет! Смотри, тут всплыл интересный кусок лунной космической истории — '
-          + 'НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну.\n'
-          + 'Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все т'
-          + 'ушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали '
-          + 'только кассеты с пленкой.\n'
-          + '\n'
-          + 'Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ра'
-          + 'кету они так никогда и не попали. Всего их было произведено 25'
-          + 'штук, одну из них недавно продали на аукционе за 45000 евро.',
-    });
-    this.children.button = new Button({
-      label: 'Click me',
-      isPrimary: true,
-      attrs: {
-        class: 'fff',
+    this.children.form = new Form(
+      {
+        fields: [
+          {
+            name: 'login',
+            required: false,
+            label: 'а',
+            isFormField: true,
+            validator: () => false,
+          },
+        ],
+        submitButton: {
+          label: 'Click here',
+          isPrimary: true,
+        },
+        onSubmit: (form) => {
+          console.log(form);
+        },
       },
-      events: {
-        click: () => console.log('clicked'),
-      },
-    });
+
+    );
   }
 
   render() {

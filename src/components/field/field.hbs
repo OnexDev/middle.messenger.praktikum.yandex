@@ -1,11 +1,5 @@
-<input class="{{styles.input}}" id="{{id}}_{{name}}" name="{{name}}" placeholder="{{placeholder}}" required="{{required}}"/>
+{{{input}}}
 {{#if label}}
-<label for="{{id}}_{{name}}">{{label}}</label>
+<span class="{{styles.label}}">{{label}}</span>
 {{/if}}
-{{#if errors}}
-    {{#each errors}}
-        <span class="{{../styles.error}}">
-            {{{this}}}
-        </span>
-    {{/each}}
-{{/if}}
+{{{fieldErrors}}}
