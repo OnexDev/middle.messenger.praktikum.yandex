@@ -12,6 +12,8 @@ import useUsernameValidator from './utils/validators/useUsernameValidator';
 import usePasswordValidator from './utils/validators/usePasswordValidator';
 import useMailValidator from './utils/validators/useMailValidator';
 import useNameValidator from './utils/validators/useNameValidator';
+import usePhoneValidator from './utils/validators/usePhoneValidator';
+import * as styles from './pages/formPage/formPage.scss';
 
 const router = (app: Element, pathname: string) => {
   if (pathname === '/500.html') {
@@ -133,6 +135,12 @@ const router = (app: Element, pathname: string) => {
         label: 'Авторизоваться',
         isPrimary: true,
       },
+      subbutton: {
+        label: 'Нет аккаунта?',
+        attrs: {
+          class: styles.subbutton,
+        },
+      },
     });
 
     app.append(authPage.getContent()!);
@@ -168,24 +176,30 @@ const router = (app: Element, pathname: string) => {
           isFormField: true,
           validator: useUsernameValidator,
         }, {
-          name: 'name',
+          name: 'phone',
           required: true,
-          label: 'Имя',
+          label: 'Телефон',
           isFormField: true,
-          validator: useNameValidator,
+          validator: usePhoneValidator,
         },
         {
-          name: 'login',
+          name: 'password',
           required: true,
-          label: 'Логин',
+          label: 'Пароль',
           isFormField: true,
           type: 'password',
-          validator: useUsernameValidator,
+          validator: usePasswordValidator,
         },
       ],
       submitButton: {
-        label: 'Авторизоваться',
+        label: 'Зарегистрироваться',
         isPrimary: true,
+      },
+      subbutton: {
+        label: 'Войти',
+        attrs: {
+          class: styles.subbutton,
+        },
       },
     });
 

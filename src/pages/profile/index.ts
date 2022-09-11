@@ -1,7 +1,8 @@
 import profile from './profile.hbs';
 import * as styles from './profile.scss';
+import { BlockProps } from '../../utils/models/BlockProps';
 
-export default (props) => {
+export default (props: BlockProps) => {
   const credentials = [
     {
       title: 'Почта',

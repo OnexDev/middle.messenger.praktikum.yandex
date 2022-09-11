@@ -10,6 +10,7 @@ import { FieldProps } from '../../components/field';
 
 interface FormPageProps{
     title: string,
+    subbutton: ButtonProps,
     fields: FieldProps[],
     submitButton: ButtonProps,
 }
@@ -32,12 +33,7 @@ export default class AuthPage extends Block {
         },
       },
     );
-    this.children.subbutton = new Button({
-      label: 'Нет аккаунта?',
-      attrs: {
-        class: styles.subbutton,
-      },
-    });
+    this.children.subbutton = new Button(this.props.subbutton);
   }
 
   render() {
