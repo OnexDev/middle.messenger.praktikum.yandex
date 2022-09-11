@@ -17,7 +17,7 @@ interface ChatsProps extends BlockProps{
     chatList: ChatSelectorProps[]
 }
 
-export default class ChatsPage extends Block {
+export default class ChatsPage extends Block<ChatsProps> {
   constructor(props: ChatsProps) {
     super('div', getPropsWithAugmentedClasses<ChatsProps>(
       { ...props, styles },
@@ -46,6 +46,7 @@ export default class ChatsPage extends Block {
     this.childrenCollection.chats = [
       ...this.props.chatList.map((chat: ChatSelectorProps) => new ChatSelectorBlock(chat)),
     ];
+
     this.children.messageField = new Field({
       placeholder: 'Сообщение...',
       name: 'message',

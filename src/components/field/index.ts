@@ -9,6 +9,9 @@ interface FieldProps extends BlockProps{
     placeholder?: string,
     name: string,
     required: boolean,
+    isFormField?: boolean,
+
+    errors?: string[],
     events?: {
         click: () => void;
     }
@@ -17,14 +20,19 @@ interface FieldProps extends BlockProps{
 export default class Field extends Block {
   constructor(props: FieldProps) {
     super('div', getPropsWithAugmentedClasses<FieldProps>(
-      props,
+      {
+        ...props,
+      },
       [styles.field],
-      [],
+      [
+        props.isFormField ? styles.formField : '',
+        props.errors && props.errors.length > 0 ? styles.hasError : '',
+      ],
     ));
   }
 
   init() {
-
+    this.props.id = this.id;
   }
 
   render() {

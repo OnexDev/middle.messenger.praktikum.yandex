@@ -3,7 +3,7 @@ import template from './lobby.hbs';
 import Button from '../../components/button';
 import * as styles from './lobby.scss';
 import Message from '../../components/message';
-import Field from "../../components/field";
+import Field from '../../components/field';
 
 interface HomePageProps {
 
@@ -15,18 +15,27 @@ export default class HomePage extends Block {
   }
 
   init() {
-      this.childrenCollection.fields = [
-          new Field({
-              name: 'login',
-              required: false,
-              label: 'а',
-          }),
-          new Field({
-              name: 'password',
-              required: true,
-              label: 'password',
-          })
-      ]
+    this.childrenCollection.fields = [
+      new Field({
+        name: 'login',
+        required: false,
+        label: 'а',
+        isFormField: true,
+        errors: ['Логин должен быть больше 6 символов', 'Логин должен содержать только латинские символы'],
+      }),
+      new Field({
+        name: 'password',
+        required: true,
+        label: 'password',
+        isFormField: true,
+      }),
+      new Field({
+        name: 'password',
+        required: true,
+        label: 'password',
+        isFormField: true,
+      }),
+    ];
     this.children.ownerMessage = new Message({
       content: 'Привет! Смотри, тут всплыл интересный кусок лунной космической истории — '
               + 'НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну.\n'
