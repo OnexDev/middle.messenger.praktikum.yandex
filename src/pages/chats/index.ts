@@ -1,18 +1,26 @@
 import Block from '../../utils/Block';
 import template from './chats.hbs';
 import * as styles from './chats.scss';
-import ChatSelectorBlock from '../../components/chats/chatSelectorBlock';
+import ChatSelectorBlock, { ChatSelectorProps } from '../../components/chats/chatSelectorBlock';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 import Button from '../../components/button';
+import { BlockProps } from '../../utils/models/BlockProps';
+import Message, { MessageProps } from '../../components/message';
+import Field from '../../components/field';
 
-interface ChatsProps {
-
+interface ChatsProps extends BlockProps{
+    currentChat: {
+        avatar: string,
+        title: string,
+        messages: MessageProps[],
+    },
+    chatList: ChatSelectorProps[]
 }
 
 export default class ChatsPage extends Block {
   constructor(props: ChatsProps) {
     super('div', getPropsWithAugmentedClasses<ChatsProps>(
-      { props, styles },
+      { ...props, styles },
       [styles.chatsPage],
       [],
     ));
@@ -31,44 +39,33 @@ export default class ChatsPage extends Block {
       },
     });
 
-    const mockedChats = [
-      'hi', 'coolstorybob', 'immessage', 'hi', 'coolstorybob', 'immessage',
-    ].map((chat) => new ChatSelectorBlock({
-      title: chat,
-      subtitle: chat,
-      avatar: 'blank.png',
-      meta: { time: '22:00', count: 0 },
-    }));
+    this.childrenCollection.messages = this.props.currentChat.messages.map(
+      (message: MessageProps) => new Message(message),
+    );
+
     this.childrenCollection.chats = [
-      new ChatSelectorBlock({
-        title: 'login',
-        avatar: 'blank.png',
-        subtitle: 'ваоповытапотывадлптвыт вадотаывдлтав',
-        meta: {
-          time: '11:35',
-          count: 3,
-        },
-      }),
-      new ChatSelectorBlock({
-        title: 'Важно!',
-        avatar: 'blank.png',
-        subtitle: 'Позвони мне, срочно!!',
-        meta: {
-          time: '11:35',
-          count: 3,
-        },
-      }),
-      new ChatSelectorBlock({
-        title: 'Я чат',
-        avatar: 'blank.png',
-        subtitle: 'Я сабтайтл',
-        meta: {
-          time: '11:35',
-          count: 0,
-        },
-      }),
-      ...mockedChats,
+      ...this.props.chatList.map((chat: ChatSelectorProps) => new ChatSelectorBlock(chat)),
     ];
+    this.children.messageField = new Field({
+      placeholder: 'Сообщение...',
+      name: 'message',
+      required: true,
+      attrs: {
+        class: styles.messageField,
+      },
+    });
+    this.children.messageButton = new Button(
+      {
+        label: '',
+        isPrimary: false,
+        attrs: {
+          class: styles.messageButton,
+        },
+        slots: {
+          after: '<img src="pushButton.png"/>',
+        },
+      },
+    );
   }
 
   render() {

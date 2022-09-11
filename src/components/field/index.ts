@@ -16,10 +16,11 @@ interface FieldProps extends BlockProps{
 
 export default class Field extends Block {
   constructor(props: FieldProps) {
-    super('div', getPropsWithAugmentedClasses<FieldProps>(props,
-        [styles.field],
-        [])
-    );
+    super('div', getPropsWithAugmentedClasses<FieldProps>(
+      props,
+      [styles.field],
+      [],
+    ));
   }
 
   init() {

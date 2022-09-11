@@ -1,10 +1,10 @@
 import template from './chatSelectorBlock.hbs';
 import * as styles from './chatSelectorBlock.scss';
-import {BlockProps} from "../../../utils/models/BlockProps";
-import Block from "../../../utils/Block";
-import getPropsWithAugmentedClasses from "../../../utils/atomic/getPropsWithAugmentedClasses";
+import { BlockProps } from '../../../utils/models/BlockProps';
+import Block from '../../../utils/Block';
+import getPropsWithAugmentedClasses from '../../../utils/atomic/getPropsWithAugmentedClasses';
 
-interface ChatSelectorProps extends BlockProps{
+export interface ChatSelectorProps extends BlockProps{
     avatar: string,
     title: string,
     subtitle?: string,
@@ -18,18 +18,19 @@ interface ChatSelectorProps extends BlockProps{
 }
 
 export default class chatSelectorBlock extends Block {
-    constructor(props: ChatSelectorProps) {
-        super('div', getPropsWithAugmentedClasses<ChatSelectorProps>(props,
-            [styles.chatSelectorBlock],
-            [])
-        );
-    }
+  constructor(props: ChatSelectorProps) {
+    super('div', getPropsWithAugmentedClasses<ChatSelectorProps>(
+      props,
+      [styles.chatSelectorBlock],
+      [],
+    ));
+  }
 
-    init() {
+  init() {
 
-    }
+  }
 
-    render() {
-        return this.compile(template, { ...this.props, styles });
-    }
+  render() {
+    return this.compile(template, { ...this.props, styles });
+  }
 }

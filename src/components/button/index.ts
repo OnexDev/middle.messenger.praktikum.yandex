@@ -9,13 +9,17 @@ interface ButtonProps extends BlockProps{
     isPrimary?: boolean,
     events?: {
         click: () => void;
+    },
+    slots?: {
+        after?: string,
+        before?: string,
     }
 }
 
 export default class Button extends Block {
   constructor(props: ButtonProps) {
     super('button', getPropsWithAugmentedClasses<ButtonProps>(props, [styles.button], [
-      props.isPrimary ? styles.button : false,
+      props.isPrimary ? styles.primary : '',
     ]));
   }
 

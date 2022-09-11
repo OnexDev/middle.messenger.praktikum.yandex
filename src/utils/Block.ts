@@ -1,8 +1,9 @@
 import { nanoid } from 'nanoid';
 import { EventBus } from './EventBus';
+import { BlockProps } from './models/BlockProps';
 
 // Нельзя создавать экземпляр данного класса
-export default class Block {
+export default class Block<P extends BlockProps> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -14,9 +15,9 @@ export default class Block {
 
   protected props: any;
 
-  public children: Record<string, Block>;
+  public children: Record<string, Block<P>>;
 
-  public childrenCollection: Record<string, Block[]>;
+  public childrenCollection: Record<string, Block<P>[]>;
 
   private eventBus: () => EventBus;
 
@@ -51,8 +52,8 @@ export default class Block {
 
   private _getChildrenAndProps(childrenAndProps: any) {
     const props: Record<string, any> = {};
-    const children: Record<string, Block> = {};
-    const childrenCollection: Record<string, Block[]> = {};
+    const children: Record<string, Block<P>> = {};
+    const childrenCollection: Record<string, Block<P>[]> = {};
 
     Object.entries(childrenAndProps).forEach(([key, value]) => {
       if (Array.isArray(value) && value.every((element) => element instanceof Block)) {
@@ -168,7 +169,7 @@ export default class Block {
 
     temp.innerHTML = html;
 
-    const replacer = (component: Block) => {
+    const replacer = (component: Block<P>) => {
       const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
 
       if (!stub) {
