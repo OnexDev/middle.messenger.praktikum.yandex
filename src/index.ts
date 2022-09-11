@@ -7,7 +7,11 @@ import LobbyPage from './pages/lobby';
 import ChatsPage from './pages/chats';
 import './components/button/index.ts';
 import './components/message/index.ts';
-import AuthPage from './pages/authentiaction';
+import FormPage from './pages/formPage';
+import useUsernameValidator from './utils/validators/useUsernameValidator';
+import usePasswordValidator from './utils/validators/usePasswordValidator';
+import useMailValidator from './utils/validators/useMailValidator';
+import useNameValidator from './utils/validators/useNameValidator';
 
 const router = (app: Element, pathname: string) => {
   if (pathname === '/500.html') {
@@ -106,14 +110,87 @@ const router = (app: Element, pathname: string) => {
     app.append(lobbyPage.getContent()!);
     lobbyPage.dispatchComponentDidMount();
   } else if (pathname === '/auth.html') {
-    const authPage = new AuthPage({});
+    const authPage = new FormPage({
+      title: 'Вход',
+      fields: [
+        {
+          name: 'login',
+          required: true,
+          label: 'Логин',
+          isFormField: true,
+          validator: useUsernameValidator,
+        },
+        {
+          name: 'password',
+          required: true,
+          label: 'Пароль',
+          isFormField: true,
+          type: 'password',
+          validator: usePasswordValidator,
+        },
+      ],
+      submitButton: {
+        label: 'Авторизоваться',
+        isPrimary: true,
+      },
+    });
 
     app.append(authPage.getContent()!);
     authPage.dispatchComponentDidMount();
   } else if (pathname === '/registration.html') {
-    //
-    // app.append(chatsPage.getContent()!);
-    // chatsPage.dispatchComponentDidMount();
+    const authPage = new FormPage({
+      title: 'Регистрация',
+      fields: [
+        {
+          name: 'mail',
+          required: true,
+          label: 'Почта',
+          isFormField: true,
+          validator: useMailValidator,
+        },
+        {
+          name: 'login',
+          required: true,
+          label: 'Логин',
+          isFormField: true,
+          validator: useUsernameValidator,
+        }, {
+          name: 'first_name',
+          required: true,
+          label: 'Имя',
+          isFormField: true,
+          validator: useNameValidator,
+        },
+        {
+          name: 'second_name ',
+          required: true,
+          label: 'Фамилия',
+          isFormField: true,
+          validator: useUsernameValidator,
+        }, {
+          name: 'name',
+          required: true,
+          label: 'Имя',
+          isFormField: true,
+          validator: useNameValidator,
+        },
+        {
+          name: 'login',
+          required: true,
+          label: 'Логин',
+          isFormField: true,
+          type: 'password',
+          validator: useUsernameValidator,
+        },
+      ],
+      submitButton: {
+        label: 'Авторизоваться',
+        isPrimary: true,
+      },
+    });
+
+    app.append(authPage.getContent()!);
+    authPage.dispatchComponentDidMount();
   } else if (pathname === '/profile.html') {
     app.innerHTML = profile();
   } else if (pathname === '/profile2.html') {

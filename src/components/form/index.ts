@@ -38,7 +38,7 @@ export default class Form extends Block {
           },
         },
       },
-      [styles.field],
+      [styles.form],
       [],
     ));
     this.eventBus().on(Form.EVENTS.SUBMIT, this._submit.bind(this));
