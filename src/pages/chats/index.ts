@@ -51,6 +51,7 @@ export default class ChatsPage extends Block<ChatsProps> {
       placeholder: 'Сообщение...',
       name: 'message',
       required: true,
+      validator: (value) => value.length > 0,
       attrs: {
         class: styles.messageField,
       },

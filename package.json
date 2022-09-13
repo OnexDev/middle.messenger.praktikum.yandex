@@ -5,7 +5,7 @@
   "scripts": {
     "pre:clean": "rimraf dist && rimraf .parcel-cache",
     "dev": "npm run pre:clean && parcel src/index.html --no-cache",
-    "build": "npx stylelint ./src/**/*.scss && parcel build src/index.html",
+    "build": "npx stylelint ./src/**/*.scss && npx tsc --noEmit && parcel build src/index.html",
     "start": "npm run build && node server.js"
   },
   "keywords": [],
