@@ -3,7 +3,7 @@ import * as styles from './form.scss';
 import Block from '../../utils/Block';
 import { BlockProps } from '../../utils/models/BlockProps';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
-import Field, { FieldProps } from '../../components/field';
+import Field, { FieldProps } from '../field';
 import Input from '../input';
 import Button, { ButtonProps } from '../button';
 
@@ -92,8 +92,7 @@ export default class Form extends Block {
         isFormField: true,
         inputEvents: {
           ...field.events,
-          input: (event: InputEvent) => {
-            // TODO: Почему то тут не работают типы.
+          input: (event: InputEvent & {target: HTMLInputElement}) => {
             this.form[field.name] = event.target?.value;
           },
           focus: () => {

@@ -1,66 +1,63 @@
-@import 'src/utils/scss/variables';
+@import "src/utils/scss/variables";
 
-.chatSelectorBlock{
+.chatSelectorBlock {
+  display: flex;
+  height: 70px;
+  width: 290px;
+  padding: 12px 0;
+  justify-content: space-between;
+  border-bottom: 1px solid $gray-border;
+  cursor: pointer;
+
+  .content,
+  .avatarBlock,
+  .meta {
     display: flex;
-    height: 70px;
-    width: 290px;
-    padding: 12px 0;
+    flex-direction: column;
+  }
+
+  .content {
+    width: 193px;
+
+    .title {
+      font-weight: 600;
+      color: $black;
+      font-size: 13px;
+      width: 193px;
+    }
+
+    .subtitle {
+      color: $gray;
+      font-size: 12px;
+    }
+  }
+
+  .avatarBlock {
+    justify-content: center;
+    align-items: center;
+    border-radius: 9999px;
+    overflow: hidden;
+  }
+
+  .meta {
     justify-content: space-between;
-    border-bottom: 1px solid $gray-border;
-    cursor: pointer;
+    align-items: flex-end;
 
-
-    .content, .avatarBlock, .meta{
-        display: flex;
-        flex-direction: column;
+    .time {
+      color: $gray;
+      font-size: 9px;
     }
 
-    .content{
-        width: 193px;
-
-        .title{
-            font-weight: 600;
-            color:$black;
-            font-size: 13px;
-            width: 193px;
-        }
-
-        .subtitle{
-            color:$gray;
-            font-size: 12px;
-        }
+    .count {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: $blue;
+      border-radius: 9999px;
+      width: 20px;
+      height: 20px;
+      color: $white;
+      font-size: 11px;
     }
-
-
-    .avatarBlock{
-        justify-content: center;
-        align-items: center;
-        border-radius: 9999px;
-        overflow: hidden;
-    }
-
-    .meta{
-        justify-content: space-between;
-        align-items: flex-end;
-        .time{
-            color:$gray;
-            font-size: 9px;
-        }
-        .count{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: $blue;
-            border-radius: 9999px;
-
-            width: 20px;
-            height: 20px;
-
-            color:$white;
-            font-size: 11px;
-        }
-    }
-
+  }
 }
-
-

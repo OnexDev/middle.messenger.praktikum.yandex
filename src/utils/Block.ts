@@ -1,8 +1,7 @@
 import { nanoid } from 'nanoid';
 import { EventBus } from './EventBus';
 
-// Нельзя создавать экземпляр данного класса
-export default class Block<P extends Record<string, any> = any> {
+export default abstract class Block<P extends Record<string, any> = any> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -179,16 +178,13 @@ export default class Block<P extends Record<string, any> = any> {
       stub.replaceWith(component.getContent()!);
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    Object.entries(this.childrenCollection).forEach(([_, collection]) => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-shadow
-      Object.entries(collection).forEach(([_, component]) => {
+    Object.entries(this.childrenCollection).forEach(([, collection]) => {
+      Object.entries(collection).forEach(([, component]) => {
         replacer(component);
       });
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    Object.entries(this.children).forEach(([_, component]) => {
+    Object.entries(this.children).forEach(([, component]) => {
       replacer(component);
     });
 

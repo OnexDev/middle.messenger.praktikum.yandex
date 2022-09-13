@@ -28,35 +28,33 @@ export type Options = {
 }
 
 export default class HTTPClient {
-  get = (url:string, options?: Options) => this._request(
+  get = (url: string, options?: Options) => this._request(
     `${url}${queryStringify(options?.data)}`,
     { ...options, method: METHODS.GET },
-    options?.timeout,
   );
 
   put = (url:string, options?: Options) => this._request(
     url,
     { ...options, method: METHODS.PUT },
-    options?.timeout,
   );
 
   post = (url:string, options?: Options) => this._request(
     url,
     { ...options, method: METHODS.POST },
-    options?.timeout,
   );
 
   delete = (url:string, options?: Options) => this._request(
     url,
     { ...options, method: METHODS.DELETE },
-    options?.timeout,
   );
 
   private _request = (url:string, options: Options = {
     method: METHODS.GET,
     headers: { 'Content-Type': 'text/plain' },
-  }, timeout = 5000) => {
-    const { headers, data, method } = options;
+  }) => {
+    const {
+      headers, data, method, timeout,
+    } = options;
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
@@ -64,7 +62,7 @@ export default class HTTPClient {
 
       setTimeout(() => {
         reject();
-      }, timeout);
+      }, timeout ?? 5000);
 
       if (headers) {
         Object.entries(headers).forEach(([key, value]) => {

@@ -1,4 +1,4 @@
-@import './src/utils/scss/variables';
+@import "./src/utils/scss/variables";
 
 .auth {
   display: flex;
@@ -11,16 +11,13 @@
     min-height: 450px;
     height: fit-content;
     gap: 40px;
-
     background: $white;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
+    box-shadow: 0 0 6px rgb(0 0 0 / 14%);
     border-radius: 12px;
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
-    padding: 50px 30px 30px 30px;
+    padding: 50px 30px 30px;
   }
 
   .title {
@@ -37,13 +34,14 @@
     gap: 14px;
   }
 
-    .main {
-        font-size: 13px;
-    }
-    .subbutton {
-        font-weight: 500;
-        font-size: 11px;
-    }
+  .main {
+    font-size: 13px;
+  }
+
+  .subbutton {
+    font-weight: 500;
+    font-size: 11px;
+  }
 
   .form {
     display: flex;

@@ -10,7 +10,7 @@ module.exports = {
     browser: true,
   },
   rules: {
-    'max-len': [1, 80],
+    'max-len': [1, 120],
 
     'no-use-before-define': 0,
     'no-unused-vars': 0,
