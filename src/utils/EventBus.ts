@@ -7,7 +7,7 @@ export interface Bus {
 }
 
 export class EventBus implements Bus {
-  private readonly listeners: Record<string, Array<EventHandler<unknown>>> = {};
+  private readonly listeners: Record<string, Array<EventHandler<any>>> = {};
 
   on(event: string, callback: () => void) {
     if (!this.listeners[event]) {

@@ -1,10 +1,9 @@
-import htmlPage404 from './pages/messages/404/404.hbs';
-import htmlPage500 from './pages/messages/500/500.hbs';
-
 import profile from './pages/profile/profile.hbs';
 
 import LobbyPage from './pages/lobby';
 import ChatsPage from './pages/chats';
+import ExceptionPage from './pages/exceptionPage';
+
 import './components/button/index.ts';
 import './components/message/index.ts';
 import FormPage from './pages/formPage';
@@ -16,9 +15,7 @@ import usePhoneValidator from './utils/validators/usePhoneValidator';
 import * as styles from './pages/formPage/formPage.scss';
 
 const router = (app: Element, pathname: string) => {
-  if (pathname === '/500.html') {
-    app.innerHTML = htmlPage500({ code: 500 });
-  } else if (pathname === '/chats.html') {
+  if (pathname === '/chats.html') {
     const chatsPage = new ChatsPage({
       currentChat: {
         avatar: 'blank.png',
@@ -106,7 +103,16 @@ const router = (app: Element, pathname: string) => {
     && pathname.replace(/[^+\d]/g, '').length === 3
     && pathname.endsWith('.html')
   ) {
-    app.innerHTML = htmlPage500({ code: pathname.replace(/[^+\d]/g, '') });
+    const exceptionPage = new ExceptionPage({
+      code: pathname.replace(/[^+\d]/g, ''),
+      title: 'Мы уже фиксим',
+      return: {
+        label: 'Назад к чатам',
+      },
+    });
+
+    app.append(exceptionPage.getContent()!);
+    exceptionPage.dispatchComponentDidMount();
   } else if (pathname === '/') {
     const lobbyPage = new LobbyPage({ title: 'Home page' });
     app.append(lobbyPage.getContent()!);
@@ -212,7 +218,16 @@ const router = (app: Element, pathname: string) => {
   } else if (pathname === '/profile3.html') {
     app.innerHTML = profile({ isPasswordEditMode: true });
   } else {
-    app.innerHTML = htmlPage404();
+    const exceptionPage = new ExceptionPage({
+      code: `${404}`,
+      title: 'Не туда попали',
+      return: {
+        label: 'Назад к чатам',
+      },
+    });
+
+    app.append(exceptionPage.getContent()!);
+    exceptionPage.dispatchComponentDidMount();
   }
 };
 
