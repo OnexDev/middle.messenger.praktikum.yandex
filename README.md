@@ -25,6 +25,8 @@
 
 Parcel сборка проекта: `npm run build`.
 
+Предсборочная подготовка: `npm run pre:clean`
+
 Parcel сборка и последующее отслеживание изменений: `npm run dev`.
 
 ###### Для эффективной работы рекомендуется добавлять флаг `--no-cache`
@@ -39,6 +41,15 @@ Sprint 2: Pull Requested [Changes required]
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/840fe653-3cee-4c38-99e6-56f885282e0f/deploy-status)](https://app.netlify.com/sites/pritornyi-msg/deploys)
 ![Contributors](https://img.shields.io/website?label=netlify&url=https%3A%2F%2Fpritornyi-msg.netlify.app%2F)
+
+## FAQ 
+Версия ноды: `v16.17.0`
+
+Принято использования `camelCase`
+
+Typescript `only`
+
+CSS Modules: `enabled`
 
 ## Resources
 
