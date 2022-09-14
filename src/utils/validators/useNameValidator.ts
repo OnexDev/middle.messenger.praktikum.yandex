@@ -1,5 +1,5 @@
 const useNameValidator = (value: string) => {
-  const regex = /(^[A-Z|А-Я]{1}[a-zа-я]{1,14})/;
+  const regex = /^[А-ЯЁA-Z][a-zA-Zа-яёЁ]+$/;
   return regex.test(value);
 };
 export default useNameValidator;

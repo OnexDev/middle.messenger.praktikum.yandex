@@ -1,7 +1,6 @@
 import template from './message.hbs';
 import * as styles from './message.scss';
-import Block from '../../utils/Block';
-import { BlockProps } from '../../utils/models/BlockProps';
+import Block, { BlockProps } from '../../utils/Block';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 
 export interface MessageProps extends BlockProps {

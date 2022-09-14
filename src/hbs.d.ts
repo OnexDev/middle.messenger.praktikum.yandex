@@ -1,5 +1,3 @@
-declare module '*.scss';
-
 declare module '*.hbs' {
     import { TemplateDelegate } from 'handlebars';
 
@@ -7,5 +5,3 @@ declare module '*.hbs' {
 
     export default template;
 }
-
-declare module 'handlebars/dist/handlebars.runtime';

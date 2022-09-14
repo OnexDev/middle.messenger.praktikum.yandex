@@ -1,8 +1,8 @@
-import Block from '../../../utils/Block';
+import Block, { BlockProps } from '../../../utils/Block';
 import template from './profileSettingsField.hbs';
 import * as styles from './profileSettingsField.scss';
 import getPropsWithAugmentedClasses from '../../../utils/atomic/getPropsWithAugmentedClasses';
-import { BlockProps } from '../../../utils/models/BlockProps';
+
 import Input, { InputProps } from '../../input';
 
 interface ProfileSettingsFieldProps extends BlockProps{
@@ -23,7 +23,7 @@ export default class ProfileSettingsField extends Block<ProfileSettingsFieldProp
   }
 
   init() {
-    this.children.field = new Input(getPropsWithAugmentedClasses<InputProps>(
+    this.children.input = new Input(getPropsWithAugmentedClasses<InputProps>(
       {
         ...this.props.field,
         attrs: {

@@ -1,17 +1,16 @@
-import Block from '../../utils/Block';
-import { BlockProps } from '../../utils/models/BlockProps';
+import Block, { BlockProps } from '../../utils/Block';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 
 export interface InputProps extends BlockProps{
     attrs:{
         class?: string,
         placeholder?: string,
-        name: string,
-        required: boolean,
-        value: string,
+        name?: string,
+        required?: boolean,
+        value?: string,
         type?: string,
     }
-    events?: Record<string, ()=> void>
+    events?: Record<string, (event: Event)=> void>
 }
 
 export default class Input extends Block<InputProps> {

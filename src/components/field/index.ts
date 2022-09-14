@@ -1,7 +1,6 @@
 import template from './field.hbs';
 import * as styles from './field.scss';
-import Block from '../../utils/Block';
-import { BlockProps } from '../../utils/models/BlockProps';
+import Block, { BlockProps } from '../../utils/Block';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 import Input from '../input';
 import FieldErrors from '../error';
@@ -10,9 +9,10 @@ export interface FieldProps extends BlockProps{
     label?: string,
     placeholder?: string,
     name: string,
-    required: boolean,
+    required?: boolean,
     isFormField?: boolean,
     type?: string,
+    value?: string,
     // TODO: make validator return Error Object
     validator?: (value: string) => boolean,
     errors?: string[],
@@ -45,7 +45,7 @@ export default class Field extends Block<FieldProps> {
     return this.children?.input;
   }
 
-  public getValidator(): (value: string) => boolean {
+  public getValidator(): ((value: string) => boolean) | undefined {
     return this.props.validator;
   }
 

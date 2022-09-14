@@ -1,4 +1,4 @@
-import { BlockProps } from '../models/BlockProps';
+import { BlockProps } from '../Block';
 
 const getComputedBlockClass = (props: BlockProps, defaultInstance: string[], computedInstance: string[]): string => {
   const baseInstance = props.attrs?.class;

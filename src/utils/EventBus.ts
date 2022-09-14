@@ -1,4 +1,4 @@
-type EventHandler<T extends []> = (...args: T) => void;
+type EventHandler<T extends unknown[]> = (...args: T) => void;
 
 export interface Bus {
     on: (event: string, callback: () => void) => void;
@@ -7,7 +7,7 @@ export interface Bus {
 }
 
 export class EventBus implements Bus {
-  private readonly listeners: Record<string, Array<EventHandler<any>>> = {};
+  private readonly listeners: Record<string, Array<EventHandler<unknown[]>>> = {};
 
   on(event: string, callback: () => void) {
     if (!this.listeners[event]) {

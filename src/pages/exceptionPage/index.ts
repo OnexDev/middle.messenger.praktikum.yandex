@@ -1,9 +1,8 @@
-import Block from '../../utils/Block';
+import Block, { BlockProps } from '../../utils/Block';
 import template from './exceptionPage.hbs';
 import * as styles from './exceptionPage.scss';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 import Button, { ButtonProps } from '../../components/button';
-import { BlockProps } from '../../utils/models/BlockProps';
 
 interface ExceptionPageProps extends BlockProps{
     code: string,

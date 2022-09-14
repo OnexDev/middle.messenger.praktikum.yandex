@@ -1,9 +1,8 @@
-import Block from '../../utils/Block';
+import Block, { BlockProps } from '../../utils/Block';
 import template from './profile.hbs';
 import * as styles from './profile.scss';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 import Button from '../../components/button';
-import { BlockProps } from '../../utils/models/BlockProps';
 import ProfileSettingsField from '../../components/profile/profileSettingsField';
 
 export enum editModsProp {
