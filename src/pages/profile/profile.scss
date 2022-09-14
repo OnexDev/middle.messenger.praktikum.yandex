@@ -12,6 +12,10 @@
     align-items: center;
     background: $container;
   }
+    .saveButton{
+        display: flex;
+        justify-content: center;
+    }
 
   .exit {
     cursor: pointer;
@@ -93,28 +97,9 @@
     padding: 0 0 50px;
     margin: 0;
 
-    .input {
-      border: none;
-      text-align: right;
-    }
 
-    // Не придумал как правильно передавать css modules в partials.
     .logout {
-      & > * {
         color: $red;
-      }
-    }
-
-    // Не работают css модули внутри handlebars хелперов.
-    li {
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 1px solid $gray-border;
-      padding: 10px 0;
-
-      span:last-child {
-        color: gray;
-      }
     }
 
     :last-child {
@@ -123,10 +108,7 @@
   }
 
   .saveButton {
-    // Не придумал как правильно передавать css modules в partials.
-    button {
       font-size: 13px;
       margin: 160px auto 0;
-    }
   }
 }

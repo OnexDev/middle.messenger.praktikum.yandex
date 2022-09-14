@@ -1,5 +1,3 @@
-import profile from './pages/profile/profile.hbs';
-
 import LobbyPage from './pages/lobby';
 import ChatsPage from './pages/chats';
 import ExceptionPage from './pages/exceptionPage';
@@ -13,6 +11,7 @@ import useMailValidator from './utils/validators/useMailValidator';
 import useNameValidator from './utils/validators/useNameValidator';
 import usePhoneValidator from './utils/validators/usePhoneValidator';
 import * as styles from './pages/formPage/formPage.scss';
+import ProfilePage, { editModsProp } from './pages/profile';
 
 const router = (app: Element, pathname: string) => {
   if (pathname === '/chats.html') {
@@ -212,11 +211,59 @@ const router = (app: Element, pathname: string) => {
     app.append(authPage.getContent()!);
     authPage.dispatchComponentDidMount();
   } else if (pathname === '/profile.html') {
-    app.innerHTML = profile();
+    const profilePage = new ProfilePage({
+      editMode: editModsProp.NOTHING,
+      isEditMode: false,
+      isPasswordEditMode: false,
+      user: {
+        avatar: 'blank.png',
+        phone: '+ 7 999 888-22-22',
+        name: 'Артём',
+        surname: 'Марченко',
+        login: 'pritornyi',
+        username: 'Pritornyi',
+        mail: 'i@pritornyi.ru',
+      },
+    });
+
+    app.append(profilePage.getContent()!);
+    profilePage.dispatchComponentDidMount();
   } else if (pathname === '/profile2.html') {
-    app.innerHTML = profile({ isEditMode: true });
+    const profilePage = new ProfilePage({
+      editMode: editModsProp.DATA,
+      isEditMode: true,
+      isPasswordEditMode: false,
+      user: {
+        avatar: 'blank.png',
+        phone: '+ 7 999 888-22-22',
+        name: 'Артём',
+        surname: 'Марченко',
+        login: 'pritornyi',
+        username: 'Pritornyi',
+        mail: 'i@pritornyi.ru',
+      },
+    });
+
+    app.append(profilePage.getContent()!);
+    profilePage.dispatchComponentDidMount();
   } else if (pathname === '/profile3.html') {
-    app.innerHTML = profile({ isPasswordEditMode: true });
+    const profilePage = new ProfilePage({
+      editMode: editModsProp.PASSWORD,
+      isEditMode: false,
+      isPasswordEditMode: true,
+      user: {
+        avatar: 'blank.png',
+        phone: '+ 7 999 888-22-22',
+        name: 'Артём',
+        surname: 'Марченко',
+        login: 'pritornyi',
+        username: 'Pritornyi',
+        mail: 'i@pritornyi.ru',
+      },
+    });
+
+    app.append(profilePage.getContent()!);
+    profilePage.dispatchComponentDidMount();
   } else {
     const exceptionPage = new ExceptionPage({
       code: `${404}`,

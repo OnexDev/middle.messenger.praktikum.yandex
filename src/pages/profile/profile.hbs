@@ -6,7 +6,7 @@
 <main class="{{styles.main}}">
     <div class="{{styles.user}}">
         <div class="{{styles.avatar}}">
-            <img width="100%" height="100%" src="{{avatar}}"/>
+            <img width="100%" height="100%" src="{{user.avatar}}"/>
             <input type="file" name="avatar">
         </div>
         <h3>{{user.name}} {{user.surname}}</h3>
@@ -14,12 +14,7 @@
     {{#if isEditMode}}
         <ul class="{{styles.credentials}}">
             {{#each credentials as |credential|}}
-                <li>
-                    <span class="{{../styles.title}}">
-                        {{credential.title}}
-                    </span>
-                    <input value="{{credential.value}}" name="{{credential.name}}" class="{{../styles.input}}"/>
-                </li>
+                {{{this}}}
             {{/each}}
         </ul>
         <div class="{{styles.saveButton}}">
@@ -27,24 +22,9 @@
         </div>
     {{else if isPasswordEditMode}}
         <ul class="{{styles.credentials}}">
-            <li>
-                <span class="{{styles.title}}">
-                    Старый пароль
-                </span>
-                <input value="{{credential.value}}" type="password" name="oldPassword" class="{{styles.input}}"/>
-            </li>
-            <li>
-                <span class="{{styles.title}}">
-                    Новый пароль
-                </span>
-                <input value="{{credential.value}}" type="password" name="newPassword" class="{{styles.input}}"/>
-            </li>
-            <li>
-                <span class="{{styles.title}}">
-                    Повторите новый пароль
-                </span>
-                <input value="{{credential.value}}" type="password" name="password_repeat" class="{{styles.input}}"/>
-            </li>
+            {{#each passwordCredentials}}
+                {{{this}}}
+            {{/each}}
         </ul>
         <div class="{{styles.saveButton}}">
             {{{saveButton}}}
@@ -52,14 +32,7 @@
     {{else}}
         <ul class="{{styles.credentials}}">
             {{#each credentials as |credential|}}
-                <li>
-                    <span class="{{../styles.title}}">
-                        {{credential.title}}
-                    </span>
-                    <span class="{{../styles.value}}">
-                        {{credential.value}}
-                    </span>
-                </li>
+                {{{this}}}
             {{/each}}
         </ul>
         <ul class="{{styles.credentials}}">
@@ -69,7 +42,7 @@
             <li>
                 {{{editPasswordButton}}}
             </li>
-            <li class="{{styles.logout}}">
+            <li>
                 {{{logoutButton}}}
             </li>
         </ul>

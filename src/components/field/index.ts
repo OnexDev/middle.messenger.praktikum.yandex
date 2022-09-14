@@ -14,7 +14,7 @@ export interface FieldProps extends BlockProps{
     isFormField?: boolean,
     type?: string,
     // TODO: make validator return Error Object
-    validator: (value: string) => boolean,
+    validator?: (value: string) => boolean,
     errors?: string[],
     inputEvents?: Record<string, (e:Event)=> void>
 }
