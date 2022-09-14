@@ -8,3 +8,8 @@
 [build]
   publish = "dist"
   command = "npm run build --no-cache"
+
+[[redirects]]
+  from="/*"
+  to="/"
+  status=200
