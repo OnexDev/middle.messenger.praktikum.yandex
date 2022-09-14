@@ -163,6 +163,7 @@ export default abstract class Block<P extends BlockProps = any> {
 
   protected compile(template: (context: any) => string, context: any) {
     const contextAndStubs = { ...context };
+
     Object.entries(this.childrenCollection).forEach(([collectionName, collection]) => {
       Object.entries(collection).forEach(([, component]) => {
         if (Array.isArray(contextAndStubs[collectionName])) {

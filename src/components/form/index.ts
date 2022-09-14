@@ -94,7 +94,7 @@ export default class Form extends Block {
 
   init() {
     this.props.attrs.name = this.id;
-    this.childrenCollection.fields = this.props.fields.map((field: FieldProps) => new Field(
+    this.childrenCollection.fieldsCollection = this.props.fields.map((field: FieldProps) => new Field(
       {
         ...field,
         isFormField: true,
