@@ -1,17 +1,17 @@
 @import "./src/utils/scss/variables";
 
 .profileSettingsField {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid $gray-border;
-    padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid $gray-border;
+  padding: 10px 0;
 
-    :last-child {
-        color: gray;
-    }
+  :last-child {
+    color: gray;
+  }
 
-    .input {
-        border: none;
-        text-align: right;
-    }
+  .input {
+    border: none;
+    text-align: right;
+  }
 }

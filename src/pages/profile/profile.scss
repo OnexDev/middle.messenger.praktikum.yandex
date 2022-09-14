@@ -12,10 +12,6 @@
     align-items: center;
     background: $container;
   }
-    .saveButton{
-        display: flex;
-        justify-content: center;
-    }
 
   .exit {
     cursor: pointer;
@@ -90,25 +86,34 @@
     }
   }
 
-  .credentials {
+  .credentials,
+  .buttons {
     display: flex;
     flex-direction: column;
     list-style: none;
     padding: 0 0 50px;
     margin: 0;
 
-
-    .logout {
-        color: $red;
-    }
-
     :last-child {
       border-bottom: none;
     }
   }
 
+  .buttons {
+    .buttonRow {
+      border-bottom: 1px solid $gray-border;
+      padding: 10px 0;
+    }
+
+    .logout {
+      color: $red;
+    }
+  }
+
   .saveButton {
-      font-size: 13px;
-      margin: 160px auto 0;
+    display: flex;
+    justify-content: center;
+    font-size: 13px;
+    margin: 160px auto 0;
   }
 }
