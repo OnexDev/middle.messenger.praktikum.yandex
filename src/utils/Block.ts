@@ -151,7 +151,6 @@ export default abstract class Block<P extends Record<string, any> = any> {
 
   protected compile(template: (context: any) => string, context: any) {
     const contextAndStubs = { ...context };
-
     Object.entries(this.childrenCollection).forEach(([collectionName, collection]) => {
       Object.entries(collection).forEach(([name, component]) => {
         contextAndStubs[collectionName] = { ...contextAndStubs[collectionName], [name]: `<div data-id="${component.id}"></div>` };

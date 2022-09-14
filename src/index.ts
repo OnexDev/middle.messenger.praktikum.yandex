@@ -179,7 +179,7 @@ const router = (app: Element, pathname: string) => {
           required: true,
           label: 'Фамилия',
           isFormField: true,
-          validator: useUsernameValidator,
+          validator: useNameValidator,
         }, {
           name: 'phone',
           required: true,

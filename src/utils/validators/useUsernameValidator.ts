@@ -1,5 +1,7 @@
 const useUsernameValidator = (value: string) => {
-  const regex = /^[a-zA-Z0-9_-]{3,20}$/;
-  return regex.test(value);
+  const atLeastOneLetter = /[a-zA-Z]/.test(value);
+  const onlyValidChars = /^[A-Za-z0-9-_]+$/.test(value);
+
+  return atLeastOneLetter && onlyValidChars && value.length > 3 && value.length < 20;
 };
 export default useUsernameValidator;

@@ -23,10 +23,6 @@ export default class Button extends Block {
     ]));
   }
 
-  init() {
-
-  }
-
   render() {
     return this.compile(template, { ...this.props, styles });
   }
