@@ -1,7 +1,6 @@
 import template from './button.hbs';
 import * as styles from './button.scss';
-import Block from '../../utils/Block';
-import { BlockProps } from '../../utils/models/BlockProps';
+import Block, { BlockProps } from '../../utils/Block';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 
 export interface ButtonProps extends BlockProps{

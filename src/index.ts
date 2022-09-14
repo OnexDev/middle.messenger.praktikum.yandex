@@ -113,7 +113,7 @@ const router = (app: Element, pathname: string) => {
     app.append(exceptionPage.getContent()!);
     exceptionPage.dispatchComponentDidMount();
   } else if (pathname === '/') {
-    const lobbyPage = new LobbyPage({ title: 'Home page' });
+    const lobbyPage = new LobbyPage({});
     app.append(lobbyPage.getContent()!);
     lobbyPage.dispatchComponentDidMount();
   } else if (pathname === '/auth.html') {

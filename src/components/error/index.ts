@@ -1,10 +1,9 @@
 import * as styles from './fieldErrors.scss';
-import Block from '../../utils/Block';
-import { BlockProps } from '../../utils/models/BlockProps';
+import Block, { BlockProps } from '../../utils/Block';
 import template from './fieldErrors.hbs';
 
 export interface FieldErrorsProps extends BlockProps{
-    errors: string[],
+    errors?: string[],
 }
 
 export default class FieldErrors extends Block<FieldErrorsProps> {

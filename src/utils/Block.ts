@@ -1,7 +1,13 @@
 import { nanoid } from 'nanoid';
 import { EventBus } from './EventBus';
 
-export default abstract class Block<P extends Record<string, any> = any> {
+export type BlockProps = {
+    styles?: string[],
+    attrs?: Record<string, any>
+    events?: Record<string, (...args: any[]) => void>,
+}
+
+export default abstract class Block<P extends BlockProps = any> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -11,17 +17,17 @@ export default abstract class Block<P extends Record<string, any> = any> {
 
   public id = nanoid(6);
 
-  protected props: any;
+  protected props: P;
 
-  public children: Record<string, Block<P>>;
+  public children: Record<string, Block>;
 
-  public childrenCollection: Record<string, Block<P>[]>;
+  public childrenCollection: Record<string, Block[]>;
 
   public eventBus: () => EventBus;
 
   private _element: HTMLElement | null = null;
 
-  private _meta: { tagName: string; props: any; };
+  private _meta: { tagName: string; props: P; };
 
   /** JSDoc
    * @param {string} tagName
@@ -29,13 +35,15 @@ export default abstract class Block<P extends Record<string, any> = any> {
    *
    * @returns {void}
    */
-  constructor(tagName = 'div', propsWithChildren: any = {}) {
+  // TODO: Переделать на default param last
+  // eslint-disable-next-line default-param-last
+  protected constructor(tagName = 'div', propsWithChildren: P) {
     const eventBus = new EventBus();
     const { props, children, childrenCollection } = this._getChildrenAndProps(propsWithChildren);
 
     this._meta = {
       tagName,
-      props,
+      props: props as P,
     };
 
     this.children = children;
@@ -48,14 +56,18 @@ export default abstract class Block<P extends Record<string, any> = any> {
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  private _getChildrenAndProps(childrenAndProps: any) {
+  private _getChildrenAndProps(childrenAndProps: P): {
+      props: P,
+      children: Record<string, Block>,
+      childrenCollection: Record<string, Block[]>
+  } {
     const props: Record<string, any> = {};
-    const children: Record<string, Block<P>> = {};
-    const childrenCollection: Record<string, Block<P>[]> = {};
+    const children: Record<string, Block> = {};
+    const childrenCollection: Record<string, Block[]> = {};
 
     Object.entries(childrenAndProps).forEach(([key, value]) => {
-      if (Array.isArray(value) && value.every((element) => element instanceof Block)) {
-        childrenCollection[key] = value;
+      if (Array.isArray(value) && value.every((element: unknown) => element instanceof Block)) {
+        childrenCollection[key] = value as Block[];
       }
       if (value instanceof Block) {
         children[key] = value;
@@ -64,18 +76,18 @@ export default abstract class Block<P extends Record<string, any> = any> {
       }
     });
 
-    return { props, children, childrenCollection };
+    return { props: props as P, children, childrenCollection };
   }
 
   private _addAttrs() {
-    const { attrs = {} } = this.props as { attrs?: Record<string, string>};
+    const { attrs = {} } = this.props as P & { attrs?: Record<string, string>};
     Object.entries(attrs).forEach(([name, value]) => {
       this._element?.setAttribute(name, value);
     });
   }
 
   private _addEvents() {
-    const { events = {} } = this.props as { events: Record<string, () => void> };
+    const { events = {} } = this.props as P & { events: Record<string, () => void> };
 
     Object.keys(events).forEach((eventName) => {
       this._element?.addEventListener(eventName, events[eventName]);
@@ -116,22 +128,22 @@ export default abstract class Block<P extends Record<string, any> = any> {
     Object.values(this.children).forEach((child) => child.dispatchComponentDidMount());
   }
 
-  private _componentDidUpdate(oldProps: any, newProps: any) {
+  private _componentDidUpdate(oldProps: P, newProps: P) {
     if (this.componentDidUpdate(oldProps, newProps)) {
       this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
   }
 
-  protected componentDidUpdate(oldProps: any, newProps: any) {
+  protected componentDidUpdate(oldProps: P, newProps: P) {
     return JSON.stringify(oldProps) === JSON.stringify(newProps);
   }
 
-  public setProps = (nextProps: any) => {
-    if (!nextProps) {
+  public setProps = (propsPart: P) => {
+    if (!propsPart) {
       return;
     }
 
-    Object.assign(this.props, nextProps);
+    Object.assign(this.props, propsPart);
   };
 
   get element() {
@@ -202,15 +214,15 @@ export default abstract class Block<P extends Record<string, any> = any> {
     return this.element;
   }
 
-  private _makePropsProxy(props: any) {
+  private _makePropsProxy(props: P) {
     return new Proxy(props, {
-      get: (target, prop) => {
-        const value = target[prop];
+      get: (target, prop: string) => {
+        const value = target[prop as keyof P];
         return typeof value === 'function' ? value.bind(target) : value;
       },
-      set: (target, prop, value) => {
+      set: (target, prop: string, value) => {
         const oldTarget = { ...target };
-        target[prop] = value;
+        target[prop as keyof P] = value;
         this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
         return true;
       },

@@ -1,7 +1,6 @@
 import template from './form.hbs';
 import * as styles from './form.scss';
-import Block from '../../utils/Block';
-import { BlockProps } from '../../utils/models/BlockProps';
+import Block, { BlockProps } from '../../utils/Block';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 import Field, { FieldProps } from '../field';
 import Input from '../input';
@@ -50,12 +49,21 @@ export default class Form extends Block {
 
     this.childrenCollection.fields.forEach((field: Field) => {
       const input = field.getFieldValue() as Input;
-      const isValidInput = field.getValidator()(input.getValue() ?? '');
+      const validator = field.getValidator();
+      let isValidInput = true;
+
+      if (validator instanceof Function) {
+        isValidInput = validator(input.getValue() ?? '');
+      }
 
       if (!isValidInput) {
         this.isValidForm = false;
+        // Костыль, Object.assign
+        // @ts-ignore
         field.setProps({ errors: ['Проверьте поле'] });
       } else {
+        // Костыль, Object.assign
+        // @ts-ignore
         field.setProps({ errors: [] });
       }
     });

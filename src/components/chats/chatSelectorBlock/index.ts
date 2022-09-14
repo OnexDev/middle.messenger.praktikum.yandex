@@ -1,7 +1,7 @@
 import template from './chatSelectorBlock.hbs';
 import * as styles from './chatSelectorBlock.scss';
-import { BlockProps } from '../../../utils/models/BlockProps';
-import Block from '../../../utils/Block';
+
+import Block, { BlockProps } from '../../../utils/Block';
 import getPropsWithAugmentedClasses from '../../../utils/atomic/getPropsWithAugmentedClasses';
 
 export interface ChatSelectorProps extends BlockProps{

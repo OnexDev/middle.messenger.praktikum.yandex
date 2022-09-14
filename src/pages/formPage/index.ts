@@ -2,13 +2,13 @@ import template from './formPage.hbs';
 import * as styles from './formPage.scss';
 
 import Form from '../../components/form';
-import Block from '../../utils/Block';
+import Block, { BlockProps } from '../../utils/Block';
 
 import Button, { ButtonProps } from '../../components/button';
 
 import { FieldProps } from '../../components/field';
 
-interface FormPageProps{
+export interface FormPageProps extends BlockProps{
     title: string,
     subbutton: ButtonProps,
     fields: FieldProps[],

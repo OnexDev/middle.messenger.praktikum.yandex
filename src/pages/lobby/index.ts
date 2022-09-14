@@ -1,8 +1,8 @@
-import Block from '../../utils/Block';
+import Block, { BlockProps } from '../../utils/Block';
 import template from './lobby.hbs';
 import * as styles from './lobby.scss';
 
-interface HomePageProps {
+export interface HomePageProps extends BlockProps{
 
 }
 
