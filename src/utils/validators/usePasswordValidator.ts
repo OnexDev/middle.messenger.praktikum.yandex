@@ -1,5 +1,5 @@
 const usePasswordValidator = (value: string) => {
-  const regex = /^(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).{8,40}$/;
+  const regex = /^(?=.*\d)(?=.*[A-Z]).{8,40}$/;
   return regex.test(value);
 };
 export default usePasswordValidator;
