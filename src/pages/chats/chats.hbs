@@ -1,0 +1,41 @@
+<aside class="{{styles.sidePanel}}">
+        {{{profileButton}}}
+    <div class="{{styles.searchBox}}">
+        <label class="{{styles.searchField}}">
+            <input type="text" placeholder="Поиск..." class="{{styles.input}}">
+            <div class="{{styles.searchIcon}}">
+                <img src="searchIcon.png" alt="search" width="15px" height="15px">
+            </div>
+        </label>
+    </div>
+    <div class="{{styles.chatList}}">
+        {{#each chats}}
+            <div class="{{../styles.chatItem}}">
+                {{{this}}}
+            </div>
+        {{/each}}
+    </div>
+</aside>
+<main class="{{styles.main}}">
+    <div class="{{styles.userBar}}">
+        <img class="{{styles.avatar}}" src="{{currentChat.avatar}}" width="34px" height="34px"/>
+        {{currentChat.title}}
+        <div class="{{styles.options}}">
+            <div class="{{styles.optionsIcon}}">
+                <div class="{{styles.dot}}"></div>
+                <div class="{{styles.dot}}"></div>
+                <div class="{{styles.dot}}"></div>
+            </div>
+        </div>
+    </div>
+    <div class="{{styles.chat}}">
+        {{#each messages}}
+            {{{this}}}
+        {{/each}}
+    </div>
+    <div class="{{styles.inputBar}}">
+        <img src="pin.png" width="32px" height="32px">
+        {{{messageField}}}
+        {{{messageButton}}}
+    </div>
+</main>

@@ -1,15 +1,3 @@
-{{#if isPrimary}}
-    <button class="{{ styles.button}} {{styles.primary}} {{ classes }}">
-        {{ label }}
-        {{#if @partial-block}}
-            {{> @partial-block }}
-        {{/if}}
-    </button>
-{{else}}
-    <button class="{{ styles.button }} {{ classes }}">
-        {{ label }}
-        {{#if @partial-block}}
-            {{> @partial-block }}
-        {{/if}}
-    </button>
-{{/if}}
+{{{slots.before}}}
+{{ label }}
+{{{slots.after}}}

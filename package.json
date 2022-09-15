@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "parcel src/index.html",
-    "build": "parcel build src/index.html",
+    "pre:clean": "rimraf dist && rimraf .parcel-cache",
+    "dev": "npm run pre:clean && parcel src/index.html --no-cache",
+    "build": "npx stylelint ./src/**/*.scss --fix && npx tsc --noEmit && parcel build src/index.html",
     "start": "npm run build && node server.js"
   },
   "keywords": [],
@@ -13,11 +14,18 @@
   "devDependencies": {
     "@anikin/parcel-transformer-handlebars-precompile": "1.0.1",
     "@parcel/transformer-sass": "2.7.0",
+    "@typescript-eslint/eslint-plugin": "5.36.1",
+    "@typescript-eslint/parser": "5.36.1",
     "chalk": "5.0.1",
-    "express-history-api-fallback": "^2.2.1",
+    "eslint": "8.23.0",
+    "eslint-config-airbnb": "19.0.4",
     "parcel": "2.7.0",
     "parcel-reporter-static-files-copy": "1.4.0",
-    "prettier": "2.7.1"
+    "prettier": "2.7.1",
+    "rimraf": "^3.0.2",
+    "stylelint": "^14.11.0",
+    "stylelint-config-standard-scss": "^5.0.0",
+    "typescript": "^4.8.3"
   },
   "@parcel/transformer-css": {
     "cssModules": true
@@ -25,6 +33,8 @@
   "dependencies": {
     "@parcel/transformer-css": "2.7.0",
     "express": "4.18.1",
-    "handlebars": "4.7.7"
+    "express-history-api-fallback": "^2.2.1",
+    "handlebars": "4.7.7",
+    "nanoid": "^4.0.0"
   }
 }

@@ -1,0 +1,8 @@
+<span class="{{styles.title}}">
+    {{title}}
+</span>
+{{#if isEditMode}}
+    {{{input}}}
+{{else}}
+    <span class="{{styles.value}}">{{value}}</span>
+{{/if}}

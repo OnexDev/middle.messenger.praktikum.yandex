@@ -6,7 +6,8 @@
 
 ## Руководство
 
-В проекте используется `npm` в качестве пакетного менеджера.
+В проекте используется `npm` в качестве пакетного менеджера. Сборку осуществляет `Parcel`, 
+транспиляция typescript утилитой `tsc`.
 
 ### Установка
 
@@ -14,6 +15,7 @@
 
 1. Выполнить локальное клонирование репозитория.
 2. Установить node.js зависимости воспользовавшись командой `npm install`.
+3. Запустить проект командой `npm run start`.
 
 ### Документация
 
@@ -23,24 +25,33 @@
 
 Parcel сборка проекта: `npm run build`.
 
+Предсборочная подготовка: `npm run pre:clean`
+
 Parcel сборка и последующее отслеживание изменений: `npm run dev`.
 
 ###### Для эффективной работы рекомендуется добавлять флаг `--no-cache`
 
 ## Актуальный статус
 
-Sprint 1: OK
+Sprint 1: Merged.
 
-Sprint 2: Pull requested.
+Sprint 2: Pull Requested [Changes required]
 
 ### Netlify badges
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/840fe653-3cee-4c38-99e6-56f885282e0f/deploy-status)](https://app.netlify.com/sites/pritornyi-msg/deploys)
 ![Contributors](https://img.shields.io/website?label=netlify&url=https%3A%2F%2Fpritornyi-msg.netlify.app%2F)
 
-## FAQ
+## FAQ 
+Версия ноды: `v16.17.0`
 
-Роутинг, так как не является частью задания этого спринта ограниченно работает в условиях `npm run dev` на localhost:1234, при использовании express его работа нарушается.
+Принято использования `camelCase`
+
+Typescript `only`
+
+CSS Modules: `enabled`
+
+## Resources
 
 Figma: https://www.figma.com/file/tJesHhPmqV1zzyNbDJL85m/Y.Messanger?node-id=12%3A35
 

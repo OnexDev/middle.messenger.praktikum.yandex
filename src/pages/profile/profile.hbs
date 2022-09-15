@@ -1,80 +1,50 @@
-<div class="{{styles.profile}}">
-    <aside class="{{styles.sidebar}}">
-        <button class="{{styles.exit}}">
-            <img src="Arrow.png"/>
-        </button>
-    </aside>
-    <main class="{{styles.main}}">
-        <div class="{{styles.user}}">
-            <div class="{{styles.avatar}}">
-                <img width="100%" height="100%" src="blank.png"/>
-                <input type="file" name="avatar">
-            </div>
-            <h3>Артём Марченко</h3>
+<aside class="{{styles.sidebar}}">
+    <button class="{{styles.exit}}">
+        <img src="Arrow.png"/>
+    </button>
+</aside>
+<main class="{{styles.main}}">
+    <div class="{{styles.user}}">
+        <div class="{{styles.avatar}}">
+            <img width="100%" height="100%" src="{{user.avatar}}"/>
+            <input type="file" name="avatar">
         </div>
-        {{#if isEditMode}}
-            <!--    TODO: Разобраться, почему не инакпсулируются css модули внутрь blocked-helper handlebars each    -->
-            <ul class="{{styles.credentials}}">
-                {{#each credentials as |credential|}}
-                    <li>
-                        <span class="{{../styles.title}}">
-                            {{credential.title}}
-                        </span>
-                        <input value="{{credential.value}}" name="{{credential.name}}" class="{{../styles.input}}"/>
-                    </li>
-                {{/each}}
-            </ul>
-            <div class="{{styles.saveButton}}">
-                {{> button isPrimary=true label="Сохранить" }}
-            </div>
-        {{else if isPasswordEditMode}}
-            <ul class="{{styles.credentials}}">
-                <li>
-                    <span class="{{styles.title}}">
-                        Старый пароль
-                    </span>
-                    <input value="{{credential.value}}" type="password" name="oldPassword" class="{{styles.input}}"/>
-                </li>
-                <li>
-                    <span class="{{styles.title}}">
-                        Новый пароль
-                    </span>
-                    <input value="{{credential.value}}" type="password" name="newPassword" class="{{styles.input}}"/>
-                </li>
-                <li>
-                    <span class="{{styles.title}}">
-                        Повторите новый пароль
-                    </span>
-                    <input value="{{credential.value}}" type="password" name="password_repeat" class="{{styles.input}}"/>
-                </li>
-            </ul>
-            <div class="{{styles.saveButton}}">
-                {{> button isPrimary=true label="Сохранить" }}
-            </div>
-        {{else}}
-            <ul class="{{styles.credentials}}">
-                {{#each credentials as |credential|}}
-                    <li>
-                        <span class="{{../styles.title}}">
-                            {{credential.title}}
-                        </span>
-                        <span class="{{../styles.value}}">
-                            {{credential.value}}
-                        </span>
-                    </li>
-                {{/each}}
-            </ul>
-            <ul class="{{styles.credentials}}">
-                <li>
-                    {{> button label='Изменить данные'}}
-                </li>
-                <li>
-                    {{> button label='Изменить пароль'}}
-                </li>
-                <li class="{{styles.logout}}">
-                    {{> button label='Выйти'}}
-                </li>
-            </ul>
-        {{/if}}
-    </main>
-</div>
+        <h3>{{user.name}} {{user.surname}}</h3>
+    </div>
+    {{#if isEditMode}}
+        <ul class="{{styles.credentials}}">
+            {{#each credentials as |credential|}}
+                {{{this}}}
+            {{/each}}
+        </ul>
+        <div class="{{styles.saveButton}}">
+            {{{saveButton}}}
+        </div>
+    {{else if isPasswordEditMode}}
+        <ul class="{{styles.credentials}}">
+            {{#each passwordCredentials}}
+                {{{this}}}
+            {{/each}}
+        </ul>
+        <div class="{{styles.saveButton}}">
+            {{{saveButton}}}
+        </div>
+    {{else}}
+        <ul class="{{styles.credentials}}">
+            {{#each credentials as |credential|}}
+                {{{this}}}
+            {{/each}}
+        </ul>
+        <ul class="{{styles.buttons}}">
+            <li class="{{styles.buttonRow}}">
+                {{{editUserDataButton}}}
+            </li>
+            <li class="{{styles.buttonRow}}">
+                {{{editPasswordButton}}}
+            </li>
+            <li class="{{styles.buttonRow}}">
+                {{{logoutButton}}}
+            </li>
+        </ul>
+    {{/if}}
+</main>

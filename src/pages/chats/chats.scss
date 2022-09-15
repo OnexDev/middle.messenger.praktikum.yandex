@@ -1,0 +1,148 @@
+@import "./src/utils/scss/variables";
+
+.chatsPage {
+  display: flex;
+  height: 100%;
+}
+
+.sidePanel {
+  width: 310px;
+  background: $container;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid $gray-border;
+}
+
+.chatList {
+  padding: 10px 0;
+  overflow: hidden auto;
+
+  .chatItem {
+    padding: 0 10px;
+
+    &:hover {
+      background: #e4edfd;
+    }
+  }
+}
+
+.inputBar {
+  display: flex;
+  gap: 10px;
+  padding: 11px 0;
+  border-top: 1px solid $gray-border;
+  align-items: center;
+}
+
+.main {
+  padding: 0 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.profileButton {
+  color: $gray;
+  font-size: 12px;
+  text-align: right;
+  margin: 15px 0;
+  padding: 0 10px;
+}
+
+.searchBox {
+  padding: 10px;
+}
+
+.chat {
+  overflow: scroll;
+  padding: 20px 0;
+}
+
+.messageField {
+  border-radius: 9999px;
+  overflow: hidden;
+  padding: 3px 20px;
+  border: none;
+  background: $gray-blank;
+  width: 100%;
+  font-size: 12px;
+}
+
+.messageButton {
+  background: $blue;
+  border-radius: 9999px;
+  height: 28px;
+  width: 28px;
+}
+
+.searchField {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row-reverse;
+  background: $gray-blank;
+  border-radius: 5px;
+  padding: 6px 10px;
+
+  .input {
+    background: none;
+    border: none;
+    outline: none;
+    width: 100%;
+  }
+
+  .searchIcon {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 200px;
+    height: 20px;
+    padding: 0 5px;
+    transition: width 23ms ease-out;
+  }
+
+  .input:focus + .searchIcon,
+  .input:not(:placeholder-shown) + .searchIcon {
+    width: 20px;
+  }
+}
+
+.userBar {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 10px 0;
+  font-weight: 500;
+  border-bottom: 1px solid $gray-border;
+
+  .avatar {
+    margin-right: 10px;
+    overflow: hidden;
+    border-radius: 9999px;
+  }
+}
+
+.options {
+  display: flex;
+  width: 20px;
+  height: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+
+  .optionsIcon {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    .dot {
+      content: "";
+      height: 3px;
+      width: 3px;
+      display: flex;
+      border-radius: 9999px;
+      background: $black;
+      position: relative;
+    }
+  }
+}
