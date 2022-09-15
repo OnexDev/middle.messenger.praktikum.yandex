@@ -33,12 +33,12 @@ export default class Field extends Block<FieldProps> {
     ));
   }
 
-  protected componentDidUpdate(oldProps: any, newProps: any) {
-    if (newProps.errors !== oldProps.errors) {
+  protected componentDidUpdate(oldProps: FieldProps, newProps: FieldProps) {
+    if (newProps.errors || newProps.errors !== oldProps.errors) {
       this.children.fieldErrors.setProps({ errors: this.props.errors }); // ререндерим ошибку
       return false; // сам компонент не ререндерим
     }
-    return JSON.stringify(oldProps) === JSON.stringify(newProps);
+    return JSON.stringify(oldProps) !== JSON.stringify(newProps);
   }
 
   public getFieldValue() {

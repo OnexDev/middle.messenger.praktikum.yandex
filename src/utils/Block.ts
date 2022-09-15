@@ -135,7 +135,7 @@ export default abstract class Block<P extends BlockProps = any> {
   }
 
   protected componentDidUpdate(oldProps: P, newProps: P) {
-    return JSON.stringify(oldProps) === JSON.stringify(newProps);
+    return JSON.stringify(oldProps) !== JSON.stringify(newProps);
   }
 
   public setProps = (propsPart: P) => {
@@ -213,6 +213,10 @@ export default abstract class Block<P extends BlockProps = any> {
 
   public getContent() {
     return this.element;
+  }
+
+  public getProps() {
+    return this.props;
   }
 
   private _makePropsProxy(props: P) {

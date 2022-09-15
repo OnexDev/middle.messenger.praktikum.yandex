@@ -13,8 +13,6 @@ interface FormProps extends BlockProps{
 }
 
 export default class Form extends Block {
-  private isValidForm: Boolean = true;
-
   private form: Record<string, string> = {};
 
   static EVENTS = {
@@ -44,44 +42,63 @@ export default class Form extends Block {
     this.eventBus().on(Form.EVENTS.VALIDATE, this._validate.bind(this));
   }
 
-  private _validate = () => {
-    this.isValidForm = true;
-
-    this.childrenCollection.fields.forEach((field: Field) => {
-      const input = field.getFieldValue() as Input;
-      const validator = field.getValidator();
-      let isValidInput = true;
-
-      if (validator instanceof Function) {
-        isValidInput = validator(input.getValue() ?? '');
-      }
-
-      if (!isValidInput) {
-        this.isValidForm = false;
-        // Костыль, Object.assign
-        // @ts-ignore
-        field.setProps({ errors: ['Проверьте поле'] });
-      } else {
-        // Костыль, Object.assign
-        // @ts-ignore
-        field.setProps({ errors: [] });
-      }
+  private _useCollectionValidator = (collection: Field[], callback?: { onSuccess?: () => void, onError: () => void}) => {
+    let isValidCollectionFlag = true;
+    collection.forEach((field: Field) => {
+      this._useFieldValidator(field, {
+        onSuccess: () => {},
+        onError: () => {
+          isValidCollectionFlag = false;
+        },
+      });
     });
 
-    this.validate();
+    if (isValidCollectionFlag) {
+      callback?.onSuccess?.();
+      return;
+    }
+
+    callback?.onError?.();
+  };
+
+  private _useFieldValidator = (field: Field, callback?: { onSuccess?: () => void, onError: () => void}) => {
+    const input = field.getFieldValue() as Input;
+    const validator = field.getValidator();
+    let isValidInput = true;
+
+    if (validator instanceof Function) {
+      isValidInput = validator(input.getValue() ?? '');
+    }
+
+    if (isValidInput) {
+      // Костыль, Object.assign
+      // @ts-ignore
+      field.setProps({ errors: [] });
+      callback?.onSuccess?.();
+    } else {
+      // Костыль, Object.assign
+      field.setProps({ ...field.getProps(), errors: ['Проверьте поле'] });
+      callback?.onError?.();
+    }
   };
 
   public dispatchFormDidSubmit() {
     this.eventBus().emit(Form.EVENTS.VALIDATE);
   }
 
+  private _validate = () => {
+    this._useCollectionValidator(this.childrenCollection.fieldsCollection as Field[]);
+  };
+
   private _submit = () => {
-    this.eventBus().emit(Form.EVENTS.VALIDATE);
-    if (this.isValidForm) {
-      this.submit();
-    } else {
-      console.error('Валидация была завершена с ошибками.', this.form);
-    }
+    this._useCollectionValidator(this.childrenCollection.fieldsCollection as Field[], {
+      onSuccess: () => {
+        this.submit();
+      },
+      onError: () => {
+        console.error('Валидация была завершена с ошибками.', this.form);
+      },
+    });
   };
 
   protected validate = () => {
@@ -94,7 +111,7 @@ export default class Form extends Block {
 
   init() {
     this.props.attrs.name = this.id;
-    this.childrenCollection.fieldsCollection = this.props.fields.map((field: FieldProps) => new Field(
+    this.childrenCollection.fieldsCollection = this.props.fields.map((field: FieldProps, index: number) => new Field(
       {
         ...field,
         isFormField: true,
@@ -104,14 +121,16 @@ export default class Form extends Block {
             this.form[field.name] = event.target?.value;
           },
           focus: () => {
-            this.eventBus().emit(Form.EVENTS.VALIDATE);
+            this._useFieldValidator(this.childrenCollection.fieldsCollection[index] as Field);
+            // this.eventBus().emit(Form.EVENTS.VALIDATE);
           },
           blur: () => {
-            this.eventBus().emit(Form.EVENTS.VALIDATE);
+            this._useFieldValidator(this.childrenCollection.fieldsCollection[index] as Field);
+            // this.eventBus().emit(Form.EVENTS.VALIDATE);
           },
         },
       },
-    ));
+    )) as Field[];
     this.children.submitButton = new Button({
       ...this.props.submitButton,
       events: {
