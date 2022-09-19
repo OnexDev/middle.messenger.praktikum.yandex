@@ -28,5 +28,6 @@ module.exports = {
     'no-underscore-dangle': 0,
     'no-param-reassign': [2, { props: false }],
     'linebreak-style': ['error', 'unix'],
+    'no-constructor-return': 0,
   },
 };
