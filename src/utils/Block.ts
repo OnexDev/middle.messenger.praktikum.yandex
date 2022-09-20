@@ -37,7 +37,7 @@ export default abstract class Block<P extends BlockProps = any> {
    */
   // TODO: Переделать на default param last
   // eslint-disable-next-line default-param-last
-  constructor(tagName = 'div', propsWithChildren: P) {
+  protected constructor(tagName = 'div', propsWithChildren: P) {
     const eventBus = new EventBus();
     const { props, children, childrenCollection } = this._getChildrenAndProps(propsWithChildren);
 

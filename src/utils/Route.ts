@@ -13,6 +13,7 @@ export function render(query: string, block: Block) {
 
   root.innerHTML = '';
   root.append(block.getContent()!);
+  block.dispatchComponentDidMount();
 
   return root;
 }
@@ -50,11 +51,11 @@ export default class Route {
     }
   }
 
-  match(pathname: string) {
+  public match(pathname: string) {
     return isEqualStrings(pathname, this._pathname);
   }
 
-  render() {
+  public render() {
     if (!this._block) {
       this._block = new this._blockClass({});
       render(this._props.rootQuery, this._block!);

@@ -24,22 +24,23 @@ class Router {
     Router.__instance = this;
   }
 
-  use(pathname: string, block: ComponentConstructable<any>) {
+  public use(pathname: string, block: ComponentConstructable<any>) {
     const route = new Route(pathname, block, { rootQuery: this._rootQuery });
     this.routes.push(route);
     return this;
   }
 
-  start() {
+  public start() {
     window.onpopstate = (event: PopStateEvent & { currentTarget: Window }) => {
       this._onRoute(event.currentTarget?.location?.pathname);
     };
     this._onRoute(window.location.pathname);
   }
 
-  _onRoute(pathname: string) {
-    const route = this.getRoute(pathname);
+  private _onRoute(pathname: string) {
+    const route = this._getRoute(pathname);
     if (!route) {
+      this.go('/404');
       return;
     }
 
@@ -51,20 +52,20 @@ class Router {
     route.render();
   }
 
-  go(pathname: string) {
+  public go(pathname: string) {
     this.history.pushState({}, '', pathname);
     this._onRoute(pathname);
   }
 
-  back() {
+  public back() {
     this.history.back();
   }
 
-  forward() {
+  public forward() {
     this.history.forward();
   }
 
-  getRoute(pathname: string) {
+  private _getRoute(pathname: string) {
     return this.routes.find((route) => route.match(pathname));
   }
 }

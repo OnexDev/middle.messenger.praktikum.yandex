@@ -13,6 +13,15 @@ import usePhoneValidator from './utils/validators/usePhoneValidator';
 import * as styles from './pages/formPage/formPage.scss';
 import ProfilePage, { editModsProp } from './pages/profile';
 
+enum Routes {
+    INDEX = '/',
+    REGISTER = '/sign-up',
+    LOGIN = '/sign-in',
+    MESSENGER = '/messenger',
+    SETTINGS = '/settings',
+    PROFILE = '/profile',
+}
+
 const router = (app: Element, pathname: string) => {
   if (pathname === '/chats.html') {
     const chatsPage = new ChatsPage({
@@ -283,6 +292,5 @@ window.addEventListener('DOMContentLoaded', () => {
   if (app === null) {
     throw new Error('#app element does not exist');
   }
-
   router(app, window.location.pathname);
 });
