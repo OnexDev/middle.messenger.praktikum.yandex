@@ -1,21 +1,22 @@
 import template from './formPage.hbs';
 import * as styles from './formPage.scss';
 
-import Form from '../../components/form';
+import Form, {FormType} from '../form';
 import Block, { BlockProps } from '../../utils/Block';
 
-import Button, { ButtonProps } from '../../components/button';
+import Button, { ButtonProps } from '../button';
 
-import { FieldProps } from '../../components/field';
+import { FieldProps } from '../field';
 
 export interface FormPageProps extends BlockProps{
     title: string,
     subbutton: ButtonProps,
     fields: FieldProps[],
     submitButton: ButtonProps,
+    onSubmit: (form: FormType) => void;
 }
 
-export default class AuthPage extends Block {
+export default class FormPage extends Block {
   constructor(props: FormPageProps) {
     super('div', { ...props, attrs: { class: styles.auth }, styles });
   }
@@ -28,9 +29,7 @@ export default class AuthPage extends Block {
         },
         fields: this.props.fields,
         submitButton: this.props.submitButton,
-        onSubmit: (form) => {
-          console.log(form);
-        },
+        onSubmit: this.props.onSubmit,
       },
     );
     this.children.subbutton = new Button(this.props.subbutton);

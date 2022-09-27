@@ -10,7 +10,10 @@ enum METHODS {
  * На входе: объект. Пример: {a: 1, b: 2, c: {d: 123}, k: [1, 2, 3]}
  * На выходе: строка. Пример: ?a=1&b=2&c=[object Object]&k=1,2,3
  */
-export function queryStringify(data: Record<string, any>) {
+export function queryStringify(data?: Record<string, any>) {
+  if (!data) {
+    return '';
+  }
   let accumulator: string = '';
   Object.entries(data).forEach(([key, value]) => {
     const partial = `${key}=${Array.isArray(value) ? value.join(',') : value}`;
@@ -36,43 +39,48 @@ export default class HTTPClient {
     this.endpoint = `${HTTPClient.API_URL}${endpoint}`;
   }
 
-  public get = <Response>(url: string, options?: Options): Promise<Response> => this._request<Response>(
-    `${this.endpoint}${url}${queryStringify(options?.data)}`,
-    { ...options, method: METHODS.GET },
-  );
+  public get = <Response>(url: string, options?: Omit<Options, 'method'>):
+      Promise<Response> => this._request<Response>(
+        `${this.endpoint}${url}${queryStringify(options?.data)}`,
+        { ...options, method: METHODS.GET },
+      );
 
-  public put = <Response>(url:string, options?: Options): Promise<Response> => this._request<Response>(
-    this.endpoint + url,
-    { ...options, method: METHODS.PUT },
-  );
+  public put = <Response>(url:string, options?: Omit<Options, 'method'>):
+      Promise<Response> => this._request<Response>(
+        this.endpoint + url,
+        { ...options, method: METHODS.PUT },
+      );
 
-  public post = <Response = void>(url:string, options?: Options): Promise<Response> => this._request<Response>(
-    this.endpoint + url,
-    { ...options, method: METHODS.POST },
-  );
+  public post = <Response = void>(url:string, options?: Omit<Options, 'method'>):
+      Promise<Response> => this._request<Response>(
+        this.endpoint + url,
+        { ...options, method: METHODS.POST },
+      );
 
-  public delete = <Response>(url:string, options?: Options): Promise<Response> => this._request<Response>(
-    this.endpoint + url,
-    { ...options, method: METHODS.DELETE },
-  );
+  public delete = <Response>(url:string, options?: Omit<Options, 'method'>):
+      Promise<Response> => this._request<Response>(
+        this.endpoint + url,
+        { ...options, method: METHODS.DELETE },
+      );
 
-  public patch = <Response = void>(path: string, options?: Options): Promise<Response> => this._request<Response>(
-    this.endpoint + path,
-    {
-      ...options,
-      method: METHODS.PATCH,
-    },
-  );
+  public patch = <Response = void>(path: string, options?: Omit<Options, 'method'>):
+      Promise<Response> => this._request<Response>(
+        this.endpoint + path,
+        {
+          ...options,
+          method: METHODS.PATCH,
+        },
+      );
 
-  private _request = <Response>(url:string, options: Options = {
+  private _request = <Response>(url: string, options: Options = {
     method: METHODS.GET,
-    headers: { 'Content-Type': 'text/plain' },
+    headers: { 'Content-Type': 'application/json' },
   }): Promise<Response> => {
     const {
       headers, data, method, timeout,
     } = options;
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject: (reason?: Error | string) => void) => {
       const xhr = new XMLHttpRequest();
       xhr.open(method, url);
 
@@ -84,10 +92,18 @@ export default class HTTPClient {
         Object.entries(headers).forEach(([key, value]) => {
           xhr.setRequestHeader(key, value);
         });
+      } else {
+        xhr.setRequestHeader('Content-Type', 'application/json');
       }
 
-      xhr.onload = () => {
-        resolve(xhr.response);
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status < 400) {
+            resolve(xhr.response);
+          } else {
+            reject(xhr.response.reason);
+          }
+        }
       };
 
       xhr.onabort = () => reject(new Error('abort'));
@@ -97,10 +113,10 @@ export default class HTTPClient {
       xhr.withCredentials = true;
       xhr.responseType = 'json';
 
-      if (!data || method === METHODS.GET) {
+      if (method === METHODS.GET || !data) {
         xhr.send();
       } else {
-        xhr.send(data);
+        xhr.send(JSON.stringify(data));
       }
     });
   };

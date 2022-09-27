@@ -6,14 +6,16 @@ import Field, { FieldProps } from '../field';
 import Input from '../input';
 import Button, { ButtonProps } from '../button';
 
+export type FormType = Record<string, unknown>
+
 interface FormProps extends BlockProps{
     fields: FieldProps[],
     submitButton: ButtonProps,
-    onSubmit?: (form: Record<string, string>) => void;
+    onSubmit?: (form: FormType) => void;
 }
 
 export default class Form extends Block {
-  private form: Record<string, string> = {};
+  private form: FormType = {};
 
   static EVENTS = {
     INIT: 'init',

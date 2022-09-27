@@ -1,9 +1,11 @@
 import Block, { BlockProps } from '../../utils/Block';
 import template from './profile.hbs';
 import * as styles from './profile.scss';
-import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 import Button from '../../components/button';
 import ProfileSettingsField from '../../components/profile/profileSettingsField';
+import { withStore } from '../../utils/Store';
+import AuthController from '../../controllers/AuthController';
+import { User } from '../../api/AuthAPI';
 
 export enum editModsProp {
     PASSWORD = 'password',
@@ -11,33 +13,12 @@ export enum editModsProp {
     NOTHING = 'nothing'
 }
 
-export interface ProfileProps extends BlockProps{
-    editMode: editModsProp,
-    // TODO: Remove this shit.
-    isEditMode: boolean,
-    isPasswordEditMode: boolean
-    // =======================
-    user: {
-        avatar: string,
-        mail: string,
-        login: string,
-        name: string,
-        surname: string,
-        username: string,
-        phone: string,
-    }
-}
+interface ProfileProps extends User {}
+const userFields = ['id', 'first_name', 'second_name', 'display_name', 'login', 'avatar', 'email', 'phone'] as Array<keyof ProfileProps>;
 
-export default class ProfilePage extends Block<ProfileProps> {
-  constructor(props: ProfileProps) {
-    super('div', getPropsWithAugmentedClasses<ProfileProps>(
-      { ...props, styles },
-      [styles.profile],
-      [],
-    ));
-  }
-
+class Profile extends Block {
   init() {
+    AuthController.fetchUser();
     const isEditMode = this.props.editMode === editModsProp.DATA;
     this.childrenCollection.passwordCredentials = [
       new ProfileSettingsField({
@@ -86,45 +67,42 @@ export default class ProfilePage extends Block<ProfileProps> {
     this.childrenCollection.credentials = [
       new ProfileSettingsField({
         title: 'Почта',
-        value: this.props.user.mail,
+        value: this.props.email,
         isEditMode,
         name: 'email',
       }),
       new ProfileSettingsField({
         title: 'Логин',
-        value: this.props.user.login,
+        value: this.props.login,
         isEditMode,
         name: 'login',
       }),
       new ProfileSettingsField({
         title: 'Имя',
-        value: this.props.user.name,
+        value: this.props.name,
         isEditMode,
-
         name: 'first_name',
       }),
       new ProfileSettingsField({
         title: 'Фамилия',
-        value: this.props.user.surname,
+        value: this.props.surname,
         isEditMode,
-
         name: 'second_name',
       }),
       new ProfileSettingsField({
         title: 'Имя в чате',
-        value: this.props.user.username,
+        value: this.props.username,
         isEditMode,
 
         name: 'chat_name',
       }),
       new ProfileSettingsField({
         title: 'Телефон',
-        value: this.props.user.phone,
+        value: this.props.phone,
         isEditMode,
         name: 'phone',
       }),
     ];
-
     this.children.logoutButton = new Button({
       label: 'Выйти',
       attrs: {
@@ -143,7 +121,20 @@ export default class ProfilePage extends Block<ProfileProps> {
     });
   }
 
+  protected componentDidUpdate(oldProps: ProfileProps, newProps: ProfileProps): boolean {
+    /**
+         * Обновляем детей
+         */
+    (this.childrenCollection.credentials).forEach((field, i) => {
+      field.setProps({ value: newProps[userFields[i]] });
+    });
+    return false;
+  }
+
   render() {
-    return this.compile(template, this.props);
+    console.log(this.childrenCollection.credentials);
+    return this.compile(template, { ...this.props, styles });
   }
 }
+const withUser = withStore((state) => ({ ...state.user }));
+export const ProfilePage = withUser(Profile);

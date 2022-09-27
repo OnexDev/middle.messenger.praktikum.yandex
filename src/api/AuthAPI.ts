@@ -1,12 +1,12 @@
 import BaseAPI from './BaseAPI';
 import { Options } from '../utils/HTTPClient';
 
-export interface SigninData extends Options{
+export interface SigninData extends Options {
     login: string;
     password: string;
 }
 
-export interface SignupData extends Options{
+export interface SignupData extends Options {
     first_name: string;
     second_name: string;
     login: string;
@@ -32,15 +32,15 @@ export class AuthAPI extends BaseAPI {
   }
 
   signin(data: SigninData) {
-    return this.http.post('/signin', data);
+    return this.http.post('/signin', { data });
   }
 
   signup(data: SignupData) {
-    return this.http.post('/signup', data);
+    return this.http.post('/signup', { data });
   }
 
-  read(): Promise<unknown> {
-    return Promise.resolve(undefined);
+  read(): Promise<User> {
+    return this.http.get('/user');
   }
 
   logout() {
