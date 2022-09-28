@@ -8,6 +8,7 @@ export enum StoreEvents {
 }
 interface State {
     user?: User,
+    chatsTokens?: Record<number, string>
 }
 
 export class Store extends EventBus {
@@ -18,7 +19,7 @@ export class Store extends EventBus {
     this.emit(StoreEvents.UPDATED, this.getState());
   }
 
-  public getState() {
+  public getState(): State {
     return this._state;
   }
 }
@@ -32,12 +33,14 @@ export function withStore(mapStateToProps: (state: any) => any) {
     return class WithStore<P extends BlockProps = any> extends Component {
       constructor(props: P) {
         previousState = mapStateToProps(store.getState());
-        super('template', { ...props, ...previousState });
+        super('div', { ...props, ...previousState });
 
         store.on(StoreEvents.UPDATED, () => {
           const stateProps = mapStateToProps(store.getState());
+          // if (isEqual(previousState, stateProps)) {
+          //     return;
+          // }
           previousState = stateProps;
-
           this.setProps({ ...stateProps });
         });
       }

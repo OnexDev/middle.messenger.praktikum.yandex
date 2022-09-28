@@ -74,10 +74,9 @@ export default class HTTPClient {
 
   private _request = <Response>(url: string, options: Options = {
     method: METHODS.GET,
-    headers: { 'Content-Type': 'application/json' },
   }): Promise<Response> => {
     const {
-      headers, data, method, timeout,
+      headers = { 'Content-Type': 'application/json' }, data, method, timeout,
     } = options;
 
     return new Promise((resolve, reject: (reason?: Error | string) => void) => {
@@ -92,8 +91,6 @@ export default class HTTPClient {
         Object.entries(headers).forEach(([key, value]) => {
           xhr.setRequestHeader(key, value);
         });
-      } else {
-        xhr.setRequestHeader('Content-Type', 'application/json');
       }
 
       xhr.onreadystatechange = () => {
@@ -115,6 +112,8 @@ export default class HTTPClient {
 
       if (method === METHODS.GET || !data) {
         xhr.send();
+      } else if (data instanceof FormData) {
+
       } else {
         xhr.send(JSON.stringify(data));
       }

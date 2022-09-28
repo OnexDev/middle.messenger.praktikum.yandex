@@ -7,11 +7,13 @@ import { ProfilePage } from './pages/profile';
 import Router from './utils/Router';
 import signinPage from './pages/signin';
 import signupPage from './pages/signup';
+import AuthController from './controllers/AuthController';
+import store from './utils/Store';
 
 export enum Routes {
-    INDEX = '/',
+    INDEX = '/index',
     REGISTER = '/sign-up',
-    LOGIN = '/sign-in',
+    LOGIN = '/',
     MESSENGER = '/messenger',
     SETTINGS = '/settings',
     PROFILE = '/profile',
@@ -190,18 +192,15 @@ export enum Routes {
 //   }
 // };
 
-window.addEventListener('DOMContentLoaded', () => {
-  const app = document.querySelector('#app');
-  if (app === null) {
-    throw new Error('#app element does not exist');
-  }
+window.addEventListener('DOMContentLoaded', async () => {
+  await AuthController.fetchUser();
 
   Router
     .use(Routes.INDEX, LobbyPage)
     .use(Routes.REGISTER, signupPage)
     .use(Routes.LOGIN, signinPage)
-    .use(Routes.MESSENGER, LobbyPage)
-    .use(Routes.SETTINGS, LobbyPage)
-    .use(Routes.PROFILE, ProfilePage)
+    .use(Routes.MESSENGER, LobbyPage, () => store.getState().user !== undefined)
+    .use(Routes.SETTINGS, LobbyPage, () => store.getState().user !== undefined)
+    .use(Routes.PROFILE, ProfilePage, () => store.getState().user !== undefined)
     .start();
 });

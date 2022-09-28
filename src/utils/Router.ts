@@ -1,4 +1,5 @@
 import Route, { ComponentConstructable } from './Route';
+import { Routes } from '../index';
 
 class Router {
   private static __instance: Router;
@@ -9,14 +10,14 @@ class Router {
 
   private history: History;
 
-  private routes: Route[] = [];
+  private _routes: Route[] = [];
 
   constructor(rootQuery: string) {
     if (Router.__instance) {
       return Router.__instance;
     }
 
-    this.routes = [];
+    this._routes = [];
     this.history = window.history;
     this._currentRoute = null;
     this._rootQuery = rootQuery;
@@ -24,9 +25,9 @@ class Router {
     Router.__instance = this;
   }
 
-  public use(pathname: string, block: ComponentConstructable<any>) {
-    const route = new Route(pathname, block, { rootQuery: this._rootQuery });
-    this.routes.push(route);
+  public use(pathname: string, block: ComponentConstructable<any>, isAvailablePath?: () => boolean) {
+    const route = new Route(pathname, block, { rootQuery: this._rootQuery }, isAvailablePath);
+    this._routes.push(route);
     return this;
   }
 
@@ -39,8 +40,8 @@ class Router {
 
   private _onRoute(pathname: string) {
     const route = this._getRoute(pathname);
-    if (!route) {
-      this.go('/404');
+    if (!route || (route.isAvailableRoute && !route.isAvailableRoute?.())) {
+      this.go(Routes.INDEX);
       return;
     }
 
@@ -66,7 +67,7 @@ class Router {
   }
 
   private _getRoute(pathname: string) {
-    return this.routes.find((route) => route.match(pathname));
+    return this._routes.find((route) => route.match(pathname));
   }
 }
 

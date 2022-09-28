@@ -13,7 +13,6 @@ class AuthController {
   public async signIn(data: SigninData) {
     try {
       await this.api.signin(data);
-
       router.go(Routes.PROFILE);
     } catch (e: any) {
       console.error(e);
@@ -24,22 +23,26 @@ class AuthController {
     try {
       await this.api.signup(data);
       await this.fetchUser();
-      router.go(Routes.PROFILE);
+      router.go(Routes.MESSENGER);
     } catch (e: any) {
       console.error(e);
     }
   }
 
   public async fetchUser() {
-    const user = await this.api.read();
-    store.set('user', user);
+    try {
+      const user = await this.api.read();
+      store.set('user', user);
+    } catch (e) {
+      router.go(Routes.INDEX);
+      throw new Error(e);
+    }
   }
 
   public async logout() {
     try {
       await this.api.logout();
-
-      router.go('/');
+      router.go(Routes.INDEX);
     } catch (e: any) {
       console.error(e.message);
     }

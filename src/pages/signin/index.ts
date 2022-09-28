@@ -21,6 +21,8 @@ export default class signinPage extends Block {
   }
 
   init() {
+      AuthController.fetchUser();
+
     this.children.form = new FormPage({
       title: 'Вход',
       fields: [

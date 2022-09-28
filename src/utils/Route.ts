@@ -29,13 +29,16 @@ export default class Route {
 
   private _props: {rootQuery: string};
 
+  public isAvailableRoute: (() => boolean) | undefined;
+
   private readonly _blockClass: ComponentConstructable<any>;
 
-  constructor(pathname: string, view: ComponentConstructable<any>, props: {rootQuery: string}) {
+  constructor(pathname: string, view: ComponentConstructable<any>, props: {rootQuery: string}, isAvailablePath?: () => boolean) {
     this._pathname = pathname;
     this._blockClass = view;
     this._block = null;
     this._props = props;
+    this.isAvailableRoute = isAvailablePath;
   }
 
   public navigate(pathname: string) {
@@ -47,7 +50,7 @@ export default class Route {
 
   public leave() {
     if (this._block) {
-      this._block.hide();
+      this._block = null;
     }
   }
 
@@ -59,9 +62,6 @@ export default class Route {
     if (!this._block) {
       this._block = new this._blockClass({});
       render(this._props.rootQuery, this._block!);
-      return;
     }
-
-    this._block.show();
   }
 }

@@ -1,4 +1,4 @@
-import Block, { BlockProps } from '../../utils/Block';
+import Block from '../../utils/Block';
 import template from './profile.hbs';
 import * as styles from './profile.scss';
 import Button from '../../components/button';
@@ -6,6 +6,8 @@ import ProfileSettingsField from '../../components/profile/profileSettingsField'
 import { withStore } from '../../utils/Store';
 import AuthController from '../../controllers/AuthController';
 import { User } from '../../api/AuthAPI';
+import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
+import router from '../../utils/Router';
 
 export enum editModsProp {
     PASSWORD = 'password',
@@ -14,12 +16,23 @@ export enum editModsProp {
 }
 
 interface ProfileProps extends User {}
-const userFields = ['id', 'first_name', 'second_name', 'display_name', 'login', 'avatar', 'email', 'phone'] as Array<keyof ProfileProps>;
+const userFields = ['email', 'login', 'first_name', 'second_name', 'display_name', 'phone'] as Array<keyof ProfileProps>;
 
 class Profile extends Block {
   init() {
-    AuthController.fetchUser();
     const isEditMode = this.props.editMode === editModsProp.DATA;
+    this.children.goBack = new Button({
+      label: '',
+      slots: {
+        after: '<img src="Arrow.png"/>',
+      },
+      events: {
+        click: () => router.back(),
+      },
+      attrs: {
+        class: styles.exit,
+      },
+    });
     this.childrenCollection.passwordCredentials = [
       new ProfileSettingsField({
         title: 'Старый пароль',
@@ -85,7 +98,7 @@ class Profile extends Block {
       }),
       new ProfileSettingsField({
         title: 'Фамилия',
-        value: this.props.surname,
+        value: this.props.second_name,
         isEditMode,
         name: 'second_name',
       }),
@@ -93,8 +106,7 @@ class Profile extends Block {
         title: 'Имя в чате',
         value: this.props.username,
         isEditMode,
-
-        name: 'chat_name',
+        name: 'display_name',
       }),
       new ProfileSettingsField({
         title: 'Телефон',
@@ -107,6 +119,9 @@ class Profile extends Block {
       label: 'Выйти',
       attrs: {
         class: styles.logout,
+      },
+      events: {
+        click: () => AuthController.logout(),
       },
     });
     this.children.editUserDataButton = new Button({
@@ -122,18 +137,18 @@ class Profile extends Block {
   }
 
   protected componentDidUpdate(oldProps: ProfileProps, newProps: ProfileProps): boolean {
-    /**
-         * Обновляем детей
-         */
-    (this.childrenCollection.credentials).forEach((field, i) => {
+    this.childrenCollection.credentials.forEach((field, i) => {
       field.setProps({ value: newProps[userFields[i]] });
     });
     return false;
   }
 
   render() {
-    console.log(this.childrenCollection.credentials);
-    return this.compile(template, { ...this.props, styles });
+    return this.compile(template, getPropsWithAugmentedClasses(
+      { ...this.props, styles },
+      [styles.profile],
+      [],
+    ));
   }
 }
 const withUser = withStore((state) => ({ ...state.user }));
