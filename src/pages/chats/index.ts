@@ -6,6 +6,7 @@ import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugment
 import Button from '../../components/button';
 import Message, { MessageProps } from '../../components/message';
 import Field from '../../components/field';
+import { withStore } from '../../utils/Store';
 
 interface ChatsProps extends BlockProps{
     currentChat: {
@@ -16,7 +17,7 @@ interface ChatsProps extends BlockProps{
     chatList: ChatSelectorProps[]
 }
 
-export default class ChatsPage extends Block<ChatsProps> {
+export class ChatsPage extends Block<ChatsProps> {
   constructor(props: ChatsProps) {
     super('div', getPropsWithAugmentedClasses<ChatsProps>(
       { ...props, styles },
@@ -73,3 +74,6 @@ export default class ChatsPage extends Block<ChatsProps> {
     return this.compile(template, this.props);
   }
 }
+
+const withChats = withStore((state) => ({ chats: [...state.chats || []] }));
+export default withChats(ChatsPage);

@@ -7,7 +7,7 @@ export type BlockProps = {
     events?: Record<string, (...args: any[]) => void>,
 }
 
-export default abstract class Block<P extends BlockProps = any> {
+export default abstract class Block<P extends BlockProps = any > {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',

@@ -26,16 +26,20 @@ export class ChatsAPI extends BaseAPI {
     super('/chats');
   }
 
+  create(data:{ title: string}) {
+    return this.http.post('/', { data });
+  }
+
   get(data: ChatsOptions): Promise<Chat[]> {
     return this.http.get('/', { data });
   }
 
-  getChatsArchive(): Promise<Chat> {
-    return this.http.get('/archive');
+  read(): Promise<Chat[]> {
+    return this.http.get('/');
   }
 
-  create(data:{ title: string}) {
-    return this.http.post('/', { data });
+  getChatsArchive(): Promise<Chat> {
+    return this.http.get('/archive');
   }
 
   delete(data: { chatId: number }):
@@ -92,8 +96,6 @@ export class ChatsAPI extends BaseAPI {
   getMessagerServerToken(identifier: number) {
     return this.http.get(`/token/${identifier}`);
   }
-
-  read = undefined;
 
   update = undefined;
 }
