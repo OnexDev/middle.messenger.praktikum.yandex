@@ -12,11 +12,11 @@ interface ExceptionPageProps extends BlockProps{
 
 export default class ExceptionPage extends Block<ExceptionPageProps> {
   constructor(props: ExceptionPageProps) {
-    super('div', getPropsWithAugmentedClasses<ExceptionPageProps>(
+    super(getPropsWithAugmentedClasses<ExceptionPageProps>(
       { ...props, styles },
       [styles.messagePage],
       [],
-    ));
+    ), 'div');
   }
 
   init() {

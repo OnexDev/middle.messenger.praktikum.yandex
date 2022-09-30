@@ -1,13 +1,13 @@
-import Block from '../utils/Block';
+import Block, { BlockProps } from '../utils/Block';
 import Router from '../utils/Router';
 
 export function withRouter(Component: typeof Block<any>) {
-    // @ts-ignore
-    type Props = typeof Component extends typeof Block<infer P> ? P : any;
+    // type Props<T extends BlockProps> = T extends infer P ? P : any;
+    type Props = typeof Component extends typeof Block<infer P & BlockProps> ? P : any;
 
     return class WithRouter extends Component {
       constructor(props: Props & PropsWithRouter) {
-        super('div', { ...props, router: Router });
+        super({ ...props, router: Router }, 'div');
       }
     };
 }

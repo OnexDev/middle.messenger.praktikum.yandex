@@ -1,12 +1,13 @@
 import Block, { BlockProps } from '../../utils/Block';
 import template from './chats.hbs';
 import * as styles from './chats.scss';
-import ChatSelectorBlock, { ChatSelectorProps } from '../../components/chats/chatSelectorBlock';
+import ChatSelectorBlock from '../../components/chats/chatSelectorBlock';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 import Button from '../../components/button';
 import Message, { MessageProps } from '../../components/message';
 import Field from '../../components/field';
 import { withStore } from '../../utils/Store';
+import { Chat } from '../../api/ChatsAPI';
 
 interface ChatsProps extends BlockProps{
     currentChat: {
@@ -14,12 +15,12 @@ interface ChatsProps extends BlockProps{
         title: string,
         messages: MessageProps[],
     },
-    chatList: ChatSelectorProps[]
+    chatList: Chat[]
 }
 
-export class ChatsPage extends Block<ChatsProps> {
+export class ChatsPage extends Block {
   constructor(props: ChatsProps) {
-    super('div', getPropsWithAugmentedClasses<ChatsProps>(
+    super(getPropsWithAugmentedClasses<ChatsProps>(
       { ...props, styles },
       [styles.chatsPage],
       [],
@@ -44,7 +45,12 @@ export class ChatsPage extends Block<ChatsProps> {
     );
 
     this.childrenCollection.chats = [
-      ...this.props.chatList.map((chat: ChatSelectorProps) => new ChatSelectorBlock(chat)),
+      ...this.props.chatList.map((chat: Chat) => new ChatSelectorBlock({
+        avatar: chat.avatar,
+        title: chat.title,
+        subtitle: chat.last_message.content,
+        meta: { time: chat.last_message.time, count: chat.unread_count },
+      })),
     ];
 
     this.children.messageField = new Field({
@@ -75,5 +81,5 @@ export class ChatsPage extends Block<ChatsProps> {
   }
 }
 
-const withChats = withStore((state) => ({ chats: [...state.chats || []] }));
+const withChats = withStore((state) => ({ chatList: [...state.chats || []] }));
 export default withChats(ChatsPage);

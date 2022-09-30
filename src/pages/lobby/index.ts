@@ -8,7 +8,7 @@ import AuthController from '../../controllers/AuthController';
 
 export default class HomePage extends Block {
   constructor() {
-    super('div', { styles });
+    super({ styles });
   }
 
   init() {

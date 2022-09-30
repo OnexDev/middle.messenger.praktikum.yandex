@@ -22,7 +22,7 @@ export enum editModsProp {
 
 export default class signupPage extends Block {
   constructor() {
-    super('div', {});
+    super({});
   }
 
   init() {

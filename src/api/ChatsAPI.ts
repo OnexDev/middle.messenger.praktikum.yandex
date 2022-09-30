@@ -1,15 +1,14 @@
 import BaseAPI from './BaseAPI';
-import { Options } from '../utils/HTTPClient';
 import { User } from './AuthAPI';
 import { GetListWithPagination } from '../models/GetListWithPagination';
 
-export interface Message extends Options {
+export interface Message {
     'user': Omit<User, 'id'>
     'time': string,
     'content': string,
 }
 
-export interface Chat extends Options {
+export interface Chat {
     'id': number,
     'title': string,
     'avatar': string,

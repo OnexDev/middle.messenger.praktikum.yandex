@@ -19,11 +19,11 @@ export interface ChatSelectorProps extends BlockProps{
 
 export default class chatSelectorBlock extends Block {
   constructor(props: ChatSelectorProps) {
-    super('div', getPropsWithAugmentedClasses<ChatSelectorProps>(
+    super(getPropsWithAugmentedClasses<ChatSelectorProps>(
       props,
       [styles.chatSelectorBlock],
       [],
-    ));
+    ), 'div');
   }
 
   init() {

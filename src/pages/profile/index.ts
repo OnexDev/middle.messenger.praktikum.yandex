@@ -5,9 +5,9 @@ import Button from '../../components/button';
 import ProfileSettingsField from '../../components/profile/profileSettingsField';
 import { withStore } from '../../utils/Store';
 import AuthController from '../../controllers/AuthController';
-import { User } from '../../api/AuthAPI';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 import router from '../../utils/Router';
+import { User } from '../../api/AuthAPI';
 
 export enum editModsProp {
     PASSWORD = 'password',
@@ -15,10 +15,17 @@ export enum editModsProp {
     NOTHING = 'nothing'
 }
 
-interface ProfileProps extends User {}
+interface ProfileProps extends User {
+
+}
+
 const userFields = ['email', 'login', 'first_name', 'second_name', 'display_name', 'phone'] as Array<keyof ProfileProps>;
 
 class Profile extends Block {
+  constructor() {
+    super({});
+  }
+
   init() {
     const isEditMode = this.props.editMode === editModsProp.DATA;
     this.children.goBack = new Button({
@@ -136,7 +143,7 @@ class Profile extends Block {
     });
   }
 
-  protected componentDidUpdate(oldProps: ProfileProps, newProps: ProfileProps): boolean {
+  protected componentDidUpdate(_: any, newProps: any): boolean {
     this.childrenCollection.credentials.forEach((field, i) => {
       field.setProps({ value: newProps[userFields[i]] });
     });
@@ -151,5 +158,5 @@ class Profile extends Block {
     ));
   }
 }
-const withUser = withStore((state) => ({ ...state.user }));
+const withUser = withStore((state) => ({ user: state.user }));
 export const ProfilePage = withUser(Profile);

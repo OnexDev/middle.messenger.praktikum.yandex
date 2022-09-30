@@ -10,7 +10,7 @@ export interface MessageProps extends BlockProps {
 
 export default class Message extends Block {
   constructor(props: MessageProps) {
-    super('div', getPropsWithAugmentedClasses<MessageProps>(props, [styles.message], [
+    super(getPropsWithAugmentedClasses<MessageProps>(props, [styles.message], [
       props.isOwner ? styles.isOwner : '',
     ]));
   }

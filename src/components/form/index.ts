@@ -28,7 +28,7 @@ export default class Form extends Block {
   };
 
   constructor(props: FormProps) {
-    super('form', getPropsWithAugmentedClasses<FormProps>(
+    super(getPropsWithAugmentedClasses<FormProps>(
       {
         ...props,
         events: {
@@ -39,7 +39,7 @@ export default class Form extends Block {
       },
       [styles.form],
       [],
-    ));
+    ), 'form');
     this.eventBus().on(Form.EVENTS.SUBMIT, this._submit.bind(this));
     this.eventBus().on(Form.EVENTS.VALIDATE, this._validate.bind(this));
   }

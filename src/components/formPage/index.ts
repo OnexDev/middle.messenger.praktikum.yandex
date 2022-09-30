@@ -1,7 +1,7 @@
 import template from './formPage.hbs';
 import * as styles from './formPage.scss';
 
-import Form, {FormType} from '../form';
+import Form, { FormType } from '../form';
 import Block, { BlockProps } from '../../utils/Block';
 
 import Button, { ButtonProps } from '../button';
@@ -18,7 +18,7 @@ export interface FormPageProps extends BlockProps{
 
 export default class FormPage extends Block {
   constructor(props: FormPageProps) {
-    super('div', { ...props, attrs: { class: styles.auth }, styles });
+    super({ ...props, attrs: { class: styles.auth }, styles }, 'div');
   }
 
   init() {

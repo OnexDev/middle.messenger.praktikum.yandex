@@ -2,12 +2,14 @@ import { set } from './helpers';
 import { EventBus } from './EventBus';
 import Block, { BlockProps } from './Block';
 import { User } from '../api/AuthAPI';
+import { Chat } from '../api/ChatsAPI';
 
 export enum StoreEvents {
     UPDATED = 'updated'
 }
 interface State {
     user?: User,
+    chats?: Chat[],
     chatsTokens?: Record<number, string>
 }
 
@@ -26,14 +28,12 @@ export class Store extends EventBus {
 
 const store = new Store();
 
-export function withStore(mapStateToProps: (state: State) => State) {
-  return function wrap(Component: typeof Block) {
-    let previousState: any;
-
-    return class WithStore<P extends BlockProps = any> extends Component {
-      constructor(props: P) {
-        previousState = mapStateToProps(store.getState());
-        super('div', { ...props, ...previousState });
+export function withStore<StoreGeneric extends Record<string, any>>(mapStateToProps: (state: State) => StoreGeneric) {
+  return function wrap<PropsGeneric extends BlockProps = any>(Component: typeof Block<PropsGeneric>) {
+    return class WithStore extends Component {
+      constructor(props: Omit<PropsGeneric, keyof StoreGeneric>) {
+        let previousState = mapStateToProps(store.getState());
+        super({ ...props as PropsGeneric, ...previousState });
 
         store.on(StoreEvents.UPDATED, () => {
           const stateProps = mapStateToProps(store.getState());
@@ -41,6 +41,7 @@ export function withStore(mapStateToProps: (state: State) => State) {
           //     return;
           // }
           previousState = stateProps;
+          // @ts-ignore // Не разобрался пока
           this.setProps({ ...stateProps });
         });
       }

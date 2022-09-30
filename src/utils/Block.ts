@@ -1,11 +1,11 @@
 import { nanoid } from 'nanoid';
 import { EventBus } from './EventBus';
 
-export type BlockProps = {
-    styles?: string[],
-    attrs?: Record<string, any>
-    events?: Record<string, (...args: any[]) => void>,
-}
+export type BlockProps = Partial<{
+    styles: string[],
+    attrs: Record<string, any>
+    events: Record<string, (...args: any[]) => void>,
+}>
 
 export default abstract class Block<P extends BlockProps = any > {
   static EVENTS = {
@@ -35,9 +35,7 @@ export default abstract class Block<P extends BlockProps = any > {
    *
    * @returns {void}
    */
-  // TODO: Переделать на default param last
-  // eslint-disable-next-line default-param-last
-  protected constructor(tagName = 'div', propsWithChildren: P) {
+  protected constructor(propsWithChildren: P, tagName = 'div') {
     const eventBus = new EventBus();
     const { props, children, childrenCollection } = this._getChildrenAndProps(propsWithChildren);
 

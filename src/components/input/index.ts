@@ -15,13 +15,13 @@ export interface InputProps extends BlockProps{
 
 export default class Input extends Block<InputProps> {
   constructor(props: InputProps) {
-    super('input', getPropsWithAugmentedClasses<InputProps>(
+    super(getPropsWithAugmentedClasses<InputProps>(
       {
         ...props,
       },
       [],
       [],
-    ));
+    ), 'input');
   }
 
   public getValue = () => {

@@ -1,18 +1,18 @@
-class MessagesController {
-  private channels: Partial<Record<number, WebSocket>>;
+// class MessagesController {
+//   private channels: Partial<Record<number, WebSocket>>;
+//
+//   public async connect(chatId: number, userId: number, token: string): void {
+//     const socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`);
+//     this.channels[chatId] = socket;
+//   }
+//
+//   public sendMessage(chatId: number, message: string): void {
+//     console.log(chatId, message);
+//   }
+//
+//   public onMessage(message: string): void {
+//     console.log(message);
+//   }
+// }
 
-  public async connect(chatId: number, userId: number, token: string): void {
-    const socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`);
-    this.channels[chatId] = socket;
-  }
-
-  public sendMessage(chatId: number, message: string): void {
-    console.log(chatId, message);
-  }
-
-  public onMessage(message: string): void {
-    console.log(message);
-  }
-}
-
-export default new MessagesController();
+// export default new MessagesController();

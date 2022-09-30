@@ -21,7 +21,7 @@ export interface FieldProps extends BlockProps{
 
 export default class Field extends Block<FieldProps> {
   constructor(props: FieldProps) {
-    super('label', getPropsWithAugmentedClasses<FieldProps>(
+    super(getPropsWithAugmentedClasses<FieldProps>(
       {
         ...props,
       },
@@ -30,7 +30,7 @@ export default class Field extends Block<FieldProps> {
         props.isFormField ? styles.formField : '',
         props.errors && props.errors.length > 0 ? styles.hasError : '',
       ],
-    ));
+    ), 'label');
   }
 
   protected componentDidUpdate(oldProps: FieldProps, newProps: FieldProps) {

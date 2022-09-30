@@ -17,11 +17,11 @@ export enum editModsProp {
 
 export default class signinPage extends Block {
   constructor() {
-    super('div', {});
+    super({});
   }
 
   init() {
-      AuthController.fetchUser();
+    AuthController.fetchUser();
 
     this.children.form = new FormPage({
       title: 'Вход',

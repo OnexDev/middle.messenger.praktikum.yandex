@@ -17,9 +17,9 @@ export interface ButtonProps extends BlockProps{
 
 export default class Button extends Block {
   constructor(props: ButtonProps) {
-    super('button', getPropsWithAugmentedClasses<ButtonProps>(props, [styles.button], [
+    super(getPropsWithAugmentedClasses<ButtonProps>(props, [styles.button], [
       props.isPrimary ? styles.primary : '',
-    ]));
+    ]), 'button');
   }
 
   render() {
