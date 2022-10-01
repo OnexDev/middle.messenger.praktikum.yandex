@@ -35,7 +35,9 @@ Parcel сборка и последующее отслеживание изме�
 
 Sprint 1: Merged.
 
-Sprint 2: Pull Requested [Changes required]
+Sprint 2: Merged.
+
+Sprint 3: In Progress.
 
 ### Netlify badges
 
