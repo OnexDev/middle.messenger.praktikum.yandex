@@ -64,7 +64,7 @@ export default abstract class Block<P extends BlockProps = any > {
     const childrenCollection: Record<string, Block[]> = {};
 
     Object.entries(childrenAndProps).forEach(([key, value]) => {
-      if (Array.isArray(value) && value.every((element: unknown) => element instanceof Block)) {
+      if (Array.isArray(value) && value.length > 0 && value.every((element: unknown) => element instanceof Block)) {
         childrenCollection[key] = value as Block[];
       }
       if (value instanceof Block) {

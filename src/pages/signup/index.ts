@@ -14,12 +14,6 @@ import { FormType } from '../../components/form';
 import { SignupData } from '../../api/AuthAPI';
 import AuthController from '../../controllers/AuthController';
 
-export enum editModsProp {
-    PASSWORD = 'password',
-    DATA = 'data',
-    NOTHING = 'nothing'
-}
-
 export default class signupPage extends Block {
   constructor() {
     super({});

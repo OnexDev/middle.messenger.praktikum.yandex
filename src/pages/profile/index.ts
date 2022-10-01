@@ -21,7 +21,7 @@ interface ProfileProps extends User {
 
 const userFields = ['email', 'login', 'first_name', 'second_name', 'display_name', 'phone'] as Array<keyof ProfileProps>;
 
-class Profile extends Block {
+class ProfilePageBase extends Block {
   constructor() {
     super({});
   }
@@ -159,4 +159,4 @@ class Profile extends Block {
   }
 }
 const withUser = withStore((state) => ({ user: state.user }));
-export const ProfilePage = withUser(Profile);
+export const ProfilePage = withUser(ProfilePageBase);

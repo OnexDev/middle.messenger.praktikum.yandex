@@ -27,10 +27,10 @@ class ChatsController {
   async fetchChats() {
     const chats = await this.api.read();
 
-    chats.map(async (chat) => {
-      const token = await this.getChatToken(chat.id);
-      console.log(token);
-    });
+    // chats.map(async (chat) => {
+    //   const token = await this.getChatToken(chat.id);
+    //   console.log(token);
+    // });
 
     store.set('chats', chats);
   }

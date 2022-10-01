@@ -9,8 +9,8 @@ export interface ChatSelectorProps extends BlockProps{
     title: string,
     subtitle?: string,
     meta:{
-        time: string,
-        count: number,
+        time?: string,
+        count?: number,
     }
     events?: {
         click: () => void;

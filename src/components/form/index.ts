@@ -92,6 +92,14 @@ export default class Form extends Block {
     this._useCollectionValidator(this.childrenCollection.fieldsCollection as Field[]);
   };
 
+  private _clearForm = () => {
+    // TODO:
+    // (this.childrenCollection.fieldsCollection as Field[]).forEach((field) => {
+    //   const input = field.getFieldValue() as Input;
+    //   input.setProps({ attrs: { value: undefined } });
+    // });
+  };
+
   private _submit = () => {
     this._useCollectionValidator(this.childrenCollection.fieldsCollection as Field[], {
       onSuccess: () => {
@@ -109,6 +117,7 @@ export default class Form extends Block {
 
   protected submit = () => {
     this.props.onSubmit(this.form);
+    this._clearForm();
   };
 
   init() {

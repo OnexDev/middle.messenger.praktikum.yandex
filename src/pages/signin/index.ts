@@ -9,11 +9,6 @@ import { FormType } from '../../components/form';
 import AuthController from '../../controllers/AuthController';
 import { SigninData } from '../../api/AuthAPI';
 
-export enum editModsProp {
-    PASSWORD = 'password',
-    DATA = 'data',
-    NOTHING = 'nothing'
-}
 
 export default class signinPage extends Block {
   constructor() {

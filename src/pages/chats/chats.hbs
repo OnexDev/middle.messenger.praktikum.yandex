@@ -17,25 +17,35 @@
     </div>
 </aside>
 <main class="{{styles.main}}">
-    <div class="{{styles.userBar}}">
-        <img class="{{styles.avatar}}" src="{{currentChat.avatar}}" width="34px" height="34px"/>
-        {{currentChat.title}}
-        <div class="{{styles.options}}">
-            <div class="{{styles.optionsIcon}}">
-                <div class="{{styles.dot}}"></div>
-                <div class="{{styles.dot}}"></div>
-                <div class="{{styles.dot}}"></div>
+    {{#if currentChat}}
+        <div class="{{styles.userBar}}">
+            <img class="{{styles.avatar}}" src="{{currentChat.avatar}}" width="34px" height="34px"/>
+            {{currentChat.title}}
+            <div class="{{styles.options}}">
+                <div class="{{styles.optionsIcon}}">
+                    <div class="{{styles.dot}}"></div>
+                    <div class="{{styles.dot}}"></div>
+                    <div class="{{styles.dot}}"></div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="{{styles.chat}}">
-        {{#each messages}}
-            {{{this}}}
-        {{/each}}
-    </div>
-    <div class="{{styles.inputBar}}">
-        <img src="pin.png" width="32px" height="32px">
-        {{{messageField}}}
-        {{{messageButton}}}
-    </div>
+        <div class="{{styles.chat}}">
+            {{#if messages}}
+                {{#each messages}}
+                    {{{this}}}
+                {{/each}}
+            {{else}}
+                <span class="{{styles.blank}}">Начните переписку первым.</span>
+            {{/if}}
+
+        </div>
+        <div class="{{styles.inputBar}}">
+            <img src="pin.png" width="32px" height="32px">
+            {{{messageField}}}
+            {{{messageButton}}}
+        </div>
+    {{else}}
+        <span class="{{styles.blank}}">Выберете чат или {{{addContact}}}</span>
+    {{/if}}
 </main>
+{{{createChatModal}}}
