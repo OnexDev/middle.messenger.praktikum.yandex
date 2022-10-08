@@ -8,11 +8,11 @@ import usePasswordValidator from '../../utils/validators/usePasswordValidator';
 import useMailValidator from '../../utils/validators/useMailValidator';
 import useNameValidator from '../../utils/validators/useNameValidator';
 import usePhoneValidator from '../../utils/validators/usePhoneValidator';
-import router from '../../utils/Router';
 import { Routes } from '../../index';
 import { FormType } from '../../components/form';
 import { SignupData } from '../../api/AuthAPI';
 import AuthController from '../../controllers/AuthController';
+import Router from '../../utils/Router';
 
 export default class signupPage extends Block {
   constructor() {
@@ -20,6 +20,8 @@ export default class signupPage extends Block {
   }
 
   init() {
+    AuthController.fetchUser().then(() => Router.go(Routes.MESSENGER));
+
     this.children.form = new FormPage({
       title: 'Регистрация',
       fields: [
@@ -73,7 +75,7 @@ export default class signupPage extends Block {
       subbutton: {
         label: 'Войти',
         events: {
-          click: () => router.go(Routes.LOGIN),
+          click: () => Router.go(Routes.LOGIN),
         },
         attrs: {
           class: styles.subbutton,

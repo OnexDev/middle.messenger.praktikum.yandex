@@ -8,7 +8,8 @@ import usePasswordValidator from '../../utils/validators/usePasswordValidator';
 import { FormType } from '../../components/form';
 import AuthController from '../../controllers/AuthController';
 import { SigninData } from '../../api/AuthAPI';
-
+import { Routes } from '../../index';
+import Router from '../../utils/Router';
 
 export default class signinPage extends Block {
   constructor() {
@@ -16,7 +17,7 @@ export default class signinPage extends Block {
   }
 
   init() {
-    AuthController.fetchUser();
+    AuthController.fetchUser().then(() => Router.go(Routes.MESSENGER));
 
     this.children.form = new FormPage({
       title: 'Вход',
@@ -46,6 +47,9 @@ export default class signinPage extends Block {
         label: 'Нет аккаунта?',
         attrs: {
           class: styles.subbutton,
+        },
+        events: {
+          click: () => Router.go(Routes.REGISTER),
         },
       },
     });

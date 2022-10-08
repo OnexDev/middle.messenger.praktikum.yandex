@@ -20,6 +20,7 @@
   .chatItem {
     padding: 0 10px;
 
+    &.isSelected,
     &:hover {
       background: #e4edfd;
     }
@@ -54,7 +55,7 @@
 }
 
 .chat {
-  overflow: scroll;
+    overflow: scroll;
     height: 100%;
     padding: 20px 0;
     box-sizing: border-box;

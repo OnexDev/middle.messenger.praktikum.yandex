@@ -1,7 +1,7 @@
 import Block, { BlockProps } from '../../utils/Block';
 import template from './chats.hbs';
 import * as styles from './chats.scss';
-import ChatSelectorBlock from '../../components/chats/chatSelectorBlock';
+import ChatSelectorBlock, { ChatSelectorProps } from '../../components/chats/chatSelectorBlock';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 import Button from '../../components/button';
 import Message, { MessageProps } from '../../components/message';
@@ -11,6 +11,23 @@ import { Chat } from '../../api/ChatsAPI';
 import ChatsController from '../../controllers/ChatsController';
 import Modal from '../../components/modal';
 import CreateChatModal from '../../components/chats/createChatModal';
+import router from '../../utils/Router';
+import { Routes } from '../../index';
+
+type chatTransformerOverload = {
+    (chat:Chat): ChatSelectorProps,
+}
+
+const chatTransformer: chatTransformerOverload = (chat: Chat): ChatSelectorProps => ({
+  id: chat.id,
+  avatar: chat.avatar,
+  title: chat.title,
+  subtitle: chat.last_message?.content,
+  meta: { time: chat.last_message?.time, count: chat.unread_count },
+  events: {
+    click: () => ChatsController.selectChat(chat.id),
+  },
+});
 
 interface ChatsProps extends BlockProps{
     currentChat?: {
@@ -18,7 +35,8 @@ interface ChatsProps extends BlockProps{
         title: string,
         messages: MessageProps[],
     },
-    chatList: Chat[]
+    isLoaded: boolean,
+    chatList: Chat[],
 }
 
 export class ChatsPageBase extends Block {
@@ -32,6 +50,7 @@ export class ChatsPageBase extends Block {
 
   init() {
     ChatsController.fetchChats();
+
     this.children.profileButton = new Button({
       label: 'Профиль >',
       attrs: {
@@ -39,25 +58,19 @@ export class ChatsPageBase extends Block {
       },
       events: {
         click: () => {
-          console.log('profile');
+          router.go(Routes.PROFILE);
         },
       },
     });
 
-    if (this.props.currentChat) {
+    if (this.props.currentChat && this.props.currentChat.messages) {
       this.childrenCollection.messages = this.props.currentChat?.messages.map(
         (message: MessageProps) => new Message(message),
       );
     }
 
-    this.childrenCollection.chats = [
-      ...this.props.chatList.map((chat: Chat) => new ChatSelectorBlock({
-        avatar: chat.avatar,
-        title: chat.title,
-        subtitle: chat.last_message?.content,
-        meta: { time: chat.last_message?.time, count: chat.unread_count },
-      })),
-    ];
+    // Duplicate from Component Did Update
+    this.childrenCollection.chats = this.createChats(this.props);
 
     this.children.messageField = new Field({
       placeholder: 'Сообщение...',
@@ -99,15 +112,12 @@ export class ChatsPageBase extends Block {
     );
   }
 
+  private createChats(props: ChatsProps) {
+    return props.chatList.map((chat: Chat) => new ChatSelectorBlock(chatTransformer(chat)));
+  }
+
   protected componentDidUpdate(): boolean {
-    this.childrenCollection.chats = [
-      ...this.props.chatList.map((chat: Chat) => new ChatSelectorBlock({
-        avatar: chat.avatar,
-        title: chat.title,
-        subtitle: chat.last_message?.content,
-        meta: { time: chat.last_message?.time, count: chat.unread_count },
-      })),
-    ];
+    this.childrenCollection.chats = this.createChats(this.props);
     return true;
   }
 
@@ -124,5 +134,14 @@ export class ChatsPageBase extends Block {
   }
 }
 
-const withChats = withStore((state) => ({ chatList: [...state.chats || []] }));
+const withChats = withStore((state) => ({
+  chatList: state.chats?.data || [],
+  isLoaded: state.chats?.isLoaded,
+  error: state.chats?.error,
+  currentChat: (() => {
+    const currentChat: Chat | undefined = (state.chats?.data || []).find(({ id }) => id === state.chats?.selectedChat);
+    return currentChat ? chatTransformer(currentChat) : undefined;
+  })(),
+}));
+
 export const ChatsPage = withChats(ChatsPageBase);

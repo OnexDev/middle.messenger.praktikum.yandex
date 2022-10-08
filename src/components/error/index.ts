@@ -10,11 +10,8 @@ export default class FieldErrors extends Block<FieldErrorsProps> {
   constructor(props: FieldErrorsProps) {
     super({
       ...props,
-      attrs: {
-        class: styles.error,
-      },
       styles,
-    }, 'div');
+    });
   }
 
   render() {

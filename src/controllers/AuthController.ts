@@ -34,7 +34,7 @@ class AuthController {
       const user = await this.api.read();
       store.set('user', user);
     } catch (e) {
-      router.go(Routes.INDEX);
+      router.go(Routes.LOGIN);
       throw new Error(e);
     }
   }

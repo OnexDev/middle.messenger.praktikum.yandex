@@ -16,18 +16,15 @@ export enum editModsProp {
 }
 
 interface ProfileProps extends User {
-
+    user?: User,
 }
 
 const userFields = ['email', 'login', 'first_name', 'second_name', 'display_name', 'phone'] as Array<keyof ProfileProps>;
 
 class ProfilePageBase extends Block {
-  constructor() {
-    super({});
-  }
-
   init() {
     const isEditMode = this.props.editMode === editModsProp.DATA;
+    AuthController.fetchUser();
     this.children.goBack = new Button({
       label: '',
       slots: {
@@ -99,7 +96,7 @@ class ProfilePageBase extends Block {
       }),
       new ProfileSettingsField({
         title: 'Имя',
-        value: this.props.name,
+        value: this.props.first_name,
         isEditMode,
         name: 'first_name',
       }),
@@ -122,6 +119,7 @@ class ProfilePageBase extends Block {
         name: 'phone',
       }),
     ];
+
     this.children.logoutButton = new Button({
       label: 'Выйти',
       attrs: {
@@ -145,9 +143,9 @@ class ProfilePageBase extends Block {
 
   protected componentDidUpdate(_: any, newProps: any): boolean {
     this.childrenCollection.credentials.forEach((field, i) => {
-      field.setProps({ value: newProps[userFields[i]] });
+      field.setProps({ value: newProps.user?.[userFields[i]] });
     });
-    return false;
+    return true;
   }
 
   render() {
@@ -158,5 +156,6 @@ class ProfilePageBase extends Block {
     ));
   }
 }
-const withUser = withStore((state) => ({ user: state.user }));
+const withUser = withStore((state) => ({ ...state.user }));
+
 export const ProfilePage = withUser(ProfilePageBase);

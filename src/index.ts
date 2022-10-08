@@ -194,14 +194,14 @@ export enum Routes {
 // };
 
 window.addEventListener('DOMContentLoaded', async () => {
-  await AuthController.fetchUser();
-
   Router
     .use(Routes.INDEX, LobbyPage)
     .use(Routes.REGISTER, signupPage)
     .use(Routes.LOGIN, signinPage)
     .use(Routes.MESSENGER, ChatsPage, () => store.getState().user !== undefined)
     .use(Routes.SETTINGS, LobbyPage, () => store.getState().user !== undefined)
-    .use(Routes.PROFILE, ProfilePage, () => store.getState().user !== undefined)
-    .start();
+    .use(Routes.PROFILE, ProfilePage, () => store.getState().user !== undefined);
+  await AuthController.fetchUser();
+
+  Router.start();
 });

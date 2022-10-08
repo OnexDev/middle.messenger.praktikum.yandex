@@ -19,20 +19,26 @@ class ChatsController {
   public async create(title: string) {
     try {
       await this.api.create({ title });
+      await this.fetchChats();
     } catch (e: any) {
       console.error(e);
     }
   }
 
   async fetchChats() {
-    const chats = await this.api.read();
+    store.set('chats.isLoaded', false);
+    try {
+      const chats = await this.api.read();
+      // chats.map(async (chat) => {
+      //   const token = await this.getChatToken(chat.id);
+      //   console.log(token);
+      // });
+      store.set('chats.data', chats);
+    } catch (e) {
+      store.set('chats.error', e);
+    }
 
-    // chats.map(async (chat) => {
-    //   const token = await this.getChatToken(chat.id);
-    //   console.log(token);
-    // });
-
-    store.set('chats', chats);
+    store.set('chats.isLoaded', true);
   }
 
   public async getChatToken(id: number) {
@@ -44,6 +50,10 @@ class ChatsController {
     } catch (e) {
       throw Error(e);
     }
+  }
+
+  selectChat(id: number) {
+    store.set('chats.selectedChat', id);
   }
 }
 

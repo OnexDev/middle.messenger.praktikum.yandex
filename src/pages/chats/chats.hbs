@@ -1,5 +1,5 @@
 <aside class="{{styles.sidePanel}}">
-        {{{profileButton}}}
+    {{{profileButton}}}
     <div class="{{styles.searchBox}}">
         <label class="{{styles.searchField}}">
             <input type="text" placeholder="Поиск..." class="{{styles.input}}">
@@ -8,6 +8,7 @@
             </div>
         </label>
     </div>
+    {{#if isLoaded}}
     <div class="{{styles.chatList}}">
         {{#each chats}}
             <div class="{{../styles.chatItem}}">
@@ -15,6 +16,9 @@
             </div>
         {{/each}}
     </div>
+    {{else}}
+        Loading...
+    {{/if}}
 </aside>
 <main class="{{styles.main}}">
     {{#if currentChat}}

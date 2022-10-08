@@ -1,4 +1,4 @@
-import { set } from './helpers';
+import { isEqual, set } from './helpers';
 import { EventBus } from './EventBus';
 import Block, { BlockProps } from './Block';
 import { User } from '../api/AuthAPI';
@@ -9,7 +9,12 @@ export enum StoreEvents {
 }
 interface State {
     user?: User,
-    chats?: Chat[],
+    chats?: {
+        data: Chat[],
+        isLoaded: boolean,
+        selectedChat: number,
+        error: string,
+    },
     chatsTokens?: Record<number, string>
 }
 
@@ -27,7 +32,7 @@ export class Store extends EventBus {
 }
 
 const store = new Store();
-
+window.store = store;
 export function withStore<StoreGeneric extends Record<string, any>>(mapStateToProps: (state: State) => StoreGeneric) {
   return function wrap<PropsGeneric extends BlockProps = any>(Component: typeof Block<PropsGeneric>) {
     return class WithStore extends Component {
@@ -37,10 +42,9 @@ export function withStore<StoreGeneric extends Record<string, any>>(mapStateToPr
 
         store.on(StoreEvents.UPDATED, () => {
           const stateProps = mapStateToProps(store.getState());
-          console.log(this, stateProps);
-          // if (isEqual(previousState, stateProps)) {
-          //     return;
-          // }
+          if (isEqual(previousState, stateProps)) {
+            return;
+          }
           previousState = stateProps;
           // @ts-ignore // Не разобрался пока
           this.setProps({ ...stateProps });

@@ -3,8 +3,10 @@ import * as styles from './chatSelectorBlock.scss';
 
 import Block, { BlockProps } from '../../../utils/Block';
 import getPropsWithAugmentedClasses from '../../../utils/atomic/getPropsWithAugmentedClasses';
+import { withStore } from '../../../utils/Store';
 
 export interface ChatSelectorProps extends BlockProps{
+    id: number,
     avatar: string,
     title: string,
     subtitle?: string,
@@ -12,18 +14,19 @@ export interface ChatSelectorProps extends BlockProps{
         time?: string,
         count?: number,
     }
+    isSelected?: boolean;
     events?: {
         click: () => void;
     }
 }
 
-export default class chatSelectorBlock extends Block {
+export default class ChatSelectorBase extends Block {
   constructor(props: ChatSelectorProps) {
     super(getPropsWithAugmentedClasses<ChatSelectorProps>(
       props,
       [styles.chatSelectorBlock],
       [],
-    ), 'div');
+    ));
   }
 
   init() {
@@ -31,6 +34,12 @@ export default class chatSelectorBlock extends Block {
   }
 
   render() {
-    return this.compile(template, { ...this.props, styles });
+    return this.compile(template, { ...this.props, styles, isSelected: this.props.id === this.props.selectedChat?.id });
   }
 }
+
+const withSelectedChats = withStore((state) => ({
+  selectedChat: (state.chats?.data || []).find(({ id }) => id === state.chats?.selectedChat),
+}));
+
+export const ChatSelector = withSelectedChats(ChatSelectorBase);

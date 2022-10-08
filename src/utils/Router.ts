@@ -26,8 +26,12 @@ class Router {
   }
 
   public use(pathname: string, block: ComponentConstructable<any>, isAvailablePath?: () => boolean) {
-    const route = new Route(pathname, block, { rootQuery: this._rootQuery }, isAvailablePath);
-    this._routes.push(route);
+    try {
+      const route = new Route(pathname, block, { rootQuery: this._rootQuery }, isAvailablePath);
+      this._routes.push(route);
+    } catch (e) {
+      throw Error(e);
+    }
     return this;
   }
 
