@@ -11,9 +11,7 @@
     {{#if isLoaded}}
     <div class="{{styles.chatList}}">
         {{#each chats}}
-            <div class="{{../styles.chatItem}}">
-                {{{this}}}
-            </div>
+            {{{this}}}
         {{/each}}
     </div>
     {{else}}
@@ -23,7 +21,7 @@
 <main class="{{styles.main}}">
     {{#if currentChat}}
         <div class="{{styles.userBar}}">
-            <img class="{{styles.avatar}}" src="{{currentChat.avatar}}" width="34px" height="34px"/>
+            {{{avatarImage}}}
             {{currentChat.title}}
             <div class="{{styles.options}}">
                 <div class="{{styles.optionsIcon}}">

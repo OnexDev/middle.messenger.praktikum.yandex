@@ -10,7 +10,7 @@ export interface InputProps extends BlockProps{
         value?: string,
         type?: string,
     }
-    events?: Record<string, (event: Event)=> void>
+    events?: Record<string, (event: Event) => void>
 }
 
 export default class Input extends Block<InputProps> {

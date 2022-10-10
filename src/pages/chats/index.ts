@@ -1,7 +1,7 @@
 import Block, { BlockProps } from '../../utils/Block';
 import template from './chats.hbs';
 import * as styles from './chats.scss';
-import ChatSelectorBlock, { ChatSelectorProps } from '../../components/chats/chatSelectorBlock';
+import { ChatSelector, ChatSelectorProps } from '../../components/chats/chatSelectorBlock';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 import Button from '../../components/button';
 import Message, { MessageProps } from '../../components/message';
@@ -13,6 +13,7 @@ import Modal from '../../components/modal';
 import CreateChatModal from '../../components/chats/createChatModal';
 import router from '../../utils/Router';
 import { Routes } from '../../index';
+import LoadingImage from '../../components/image';
 
 type chatTransformerOverload = {
     (chat:Chat): ChatSelectorProps,
@@ -30,9 +31,7 @@ const chatTransformer: chatTransformerOverload = (chat: Chat): ChatSelectorProps
 });
 
 interface ChatsProps extends BlockProps{
-    currentChat?: {
-        avatar: string,
-        title: string,
+    currentChat?: Chat & {
         messages: MessageProps[],
     },
     isLoaded: boolean,
@@ -50,6 +49,11 @@ export class ChatsPageBase extends Block {
 
   init() {
     ChatsController.fetchChats();
+    this.children.avatarImage = new LoadingImage({
+      attrs: {
+        class: styles.avatar, src: this.props.currentChat?.avatar, width: '34px', height: '34px',
+      },
+    });
 
     this.children.profileButton = new Button({
       label: 'Профиль >',
@@ -70,7 +74,7 @@ export class ChatsPageBase extends Block {
     }
 
     // Duplicate from Component Did Update
-    this.childrenCollection.chats = this.createChats(this.props);
+    this.createChats(this.props);
 
     this.children.messageField = new Field({
       placeholder: 'Сообщение...',
@@ -113,11 +117,19 @@ export class ChatsPageBase extends Block {
   }
 
   private createChats(props: ChatsProps) {
-    return props.chatList.map((chat: Chat) => new ChatSelectorBlock(chatTransformer(chat)));
+    this.childrenCollection.chats = props.chatList.map((chat: Chat) => new ChatSelector(
+      chatTransformer(chat),
+    ));
   }
 
-  protected componentDidUpdate(): boolean {
-    this.childrenCollection.chats = this.createChats(this.props);
+  protected componentDidUpdate(oldProps: ChatsProps, newProps: ChatsProps): boolean {
+    const isEqualArray = <T>(array: T[], other: T[]) => array.length === other.length
+        && array.every((v, i) => v === other[i]);
+
+    if (!isEqualArray(oldProps.chatList, newProps.chatList)) {
+      this.createChats(newProps);
+    }
+
     return true;
   }
 

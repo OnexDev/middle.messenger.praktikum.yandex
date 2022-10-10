@@ -4,23 +4,26 @@ import * as styles from './chatSelectorBlock.scss';
 import Block, { BlockProps } from '../../../utils/Block';
 import getPropsWithAugmentedClasses from '../../../utils/atomic/getPropsWithAugmentedClasses';
 import { withStore } from '../../../utils/Store';
+import { Chat } from '../../../api/ChatsAPI';
+import LoadingImage from '../../image';
+import { isEqual } from '../../../utils/helpers';
 
 export interface ChatSelectorProps extends BlockProps{
     id: number,
     avatar: string,
     title: string,
     subtitle?: string,
-    meta:{
+    meta: {
         time?: string,
         count?: number,
     }
-    isSelected?: boolean;
     events?: {
         click: () => void;
-    }
+    },
+    selectedChat?: Chat,
 }
 
-export default class ChatSelectorBase extends Block {
+class ChatSelectorBase extends Block {
   constructor(props: ChatSelectorProps) {
     super(getPropsWithAugmentedClasses<ChatSelectorProps>(
       props,
@@ -30,11 +33,31 @@ export default class ChatSelectorBase extends Block {
   }
 
   init() {
+    this.children.avatarImage = new LoadingImage({ attrs: { src: this.props.avatar, width: '47px', height: '47px' } });
+  }
 
+  protected componentDidUpdate(oldProps: any, newProps: any): boolean {
+    return !isEqual(oldProps, newProps);
+  }
+
+  public select() {
+    this.getContent()!.classList.add(styles.isSelected);
+  }
+
+  public unselect() {
+    this.getContent()!.classList.remove(styles.isSelected);
   }
 
   render() {
-    return this.compile(template, { ...this.props, styles, isSelected: this.props.id === this.props.selectedChat?.id });
+    return this.compile(template, { ...this.props, styles });
+  }
+
+  componentWasRendered() {
+    if (this.props.selectedChat?.id === this.props.id) {
+      this.select();
+    } else {
+      this.unselect();
+    }
   }
 }
 

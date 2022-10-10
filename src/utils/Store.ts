@@ -42,9 +42,6 @@ export function withStore<StoreGeneric extends Record<string, any>>(mapStateToPr
 
         store.on(StoreEvents.UPDATED, () => {
           const stateProps = mapStateToProps(store.getState());
-          if (isEqual(previousState, stateProps)) {
-            return;
-          }
           previousState = stateProps;
           // @ts-ignore // Не разобрался пока
           this.setProps({ ...stateProps });

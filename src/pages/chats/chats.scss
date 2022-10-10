@@ -16,15 +16,6 @@
 .chatList {
   padding: 10px 0;
   overflow: hidden auto;
-
-  .chatItem {
-    padding: 0 10px;
-
-    &.isSelected,
-    &:hover {
-      background: #e4edfd;
-    }
-  }
 }
 
 .inputBar {
