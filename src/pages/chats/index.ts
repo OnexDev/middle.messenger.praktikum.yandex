@@ -14,6 +14,9 @@ import CreateChatModal from '../../components/chats/createChatModal';
 import router from '../../utils/Router';
 import { Routes } from '../../index';
 import LoadingImage from '../../components/image';
+import MessagesController, { Message as MessageInfo } from '../../controllers/MessagesController';
+import Input from '../../components/input';
+import { User } from '../../api/AuthAPI';
 
 type chatTransformerOverload = {
     (chat:Chat): ChatSelectorProps,
@@ -30,12 +33,19 @@ const chatTransformer: chatTransformerOverload = (chat: Chat): ChatSelectorProps
   },
 });
 
+const messageTransformer = (message: MessageInfo, ownerId: number): MessageProps => ({
+  content: message.content,
+  isOwner: message.user_id === ownerId,
+});
+
 interface ChatsProps extends BlockProps{
     currentChat?: Chat & {
         messages: MessageProps[],
     },
+    user: User,
     isLoaded: boolean,
     chatList: Chat[],
+    messages: MessageInfo[]
 }
 
 export class ChatsPageBase extends Block {
@@ -67,10 +77,8 @@ export class ChatsPageBase extends Block {
       },
     });
 
-    if (this.props.currentChat && this.props.currentChat.messages) {
-      this.childrenCollection.messages = this.props.currentChat?.messages.map(
-        (message: MessageProps) => new Message(message),
-      );
+    if (this.props.currentChat && this.props.messages) {
+      this.createMessages(this.props);
     }
 
     // Duplicate from Component Did Update
@@ -109,6 +117,17 @@ export class ChatsPageBase extends Block {
         attrs: {
           class: styles.messageButton,
         },
+        events: {
+          click: () => {
+            if (!this.props.currentChat) {
+              return;
+            }
+            const input = (this.children.messageField as Field).getFieldValue() as Input;
+            const message = input.getValue();
+            MessagesController.sendMessage(this.props.currentChat.id, message ?? '');
+            input.setValue('');
+          },
+        },
         slots: {
           after: '<img src="pushButton.png"/>',
         },
@@ -122,6 +141,12 @@ export class ChatsPageBase extends Block {
     ));
   }
 
+  private createMessages(props: ChatsProps) {
+    this.childrenCollection.messages = props.messages.map((message: MessageInfo) => new Message(
+      messageTransformer(message, props.user.id),
+    ));
+  }
+
   protected componentDidUpdate(oldProps: ChatsProps, newProps: ChatsProps): boolean {
     const isEqualArray = <T>(array: T[], other: T[]) => array.length === other.length
         && array.every((v, i) => v === other[i]);
@@ -129,6 +154,8 @@ export class ChatsPageBase extends Block {
     if (!isEqualArray(oldProps.chatList, newProps.chatList)) {
       this.createChats(newProps);
     }
+
+    this.createMessages(newProps);
 
     return true;
   }
@@ -146,14 +173,26 @@ export class ChatsPageBase extends Block {
   }
 }
 
-const withChats = withStore((state) => ({
-  chatList: state.chats?.data || [],
-  isLoaded: state.chats?.isLoaded,
-  error: state.chats?.error,
-  currentChat: (() => {
-    const currentChat: Chat | undefined = (state.chats?.data || []).find(({ id }) => id === state.chats?.selectedChat);
-    return currentChat ? chatTransformer(currentChat) : undefined;
-  })(),
-}));
+const withChats = withStore((state) => {
+  const chatId = state.chats?.selectedChat;
+  let messages: MessageInfo[];
+
+  if (!chatId) {
+    messages = [];
+  } else {
+    messages = (state.messages || {})[chatId] || [];
+  }
+  return {
+    chatList: state.chats?.data || [],
+    isLoaded: state.chats?.isLoaded,
+    error: state.chats?.error,
+    messages,
+    user: state.user,
+    currentChat: (() => {
+      const currentChat: Chat | undefined = (state.chats?.data || []).find(({ id }) => id === state.chats?.selectedChat);
+      return currentChat ? chatTransformer(currentChat) : undefined;
+    })(),
+  };
+});
 
 export const ChatsPage = withChats(ChatsPageBase);

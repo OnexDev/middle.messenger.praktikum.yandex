@@ -1,5 +1,6 @@
 import API, { ChatsAPI, ChatsOptions } from '../api/ChatsAPI';
 import store from '../utils/Store';
+import MessagesController from './MessagesController';
 
 class ChatsController {
   private readonly api: ChatsAPI;
@@ -29,10 +30,10 @@ class ChatsController {
     store.set('chats.isLoaded', false);
     try {
       const chats = await this.api.read();
-      // chats.map(async (chat) => {
-      //   const token = await this.getChatToken(chat.id);
-      //   console.log(token);
-      // });
+      chats.map(async (chat) => {
+        const token = await this.getChatToken(chat.id);
+        await MessagesController.connect(chat.id, token);
+      });
       store.set('chats.data', chats);
     } catch (e) {
       store.set('chats.error', e);
@@ -43,10 +44,10 @@ class ChatsController {
 
   public async getChatToken(id: number) {
     try {
-      const token = await this.api.getMessagerServerToken(id);
+      const token = await this.api.getToken(id);
       const { chatsTokens } = store.getState();
-      store.set('chatsTokens', { chatsTokens, [id]: token });
-      return chatsTokens;
+      store.set('chatsTokens', { ...chatsTokens, [id]: token });
+      return token;
     } catch (e) {
       throw Error(e);
     }

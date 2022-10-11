@@ -24,6 +24,10 @@ export default class Input extends Block<InputProps> {
     ), 'input');
   }
 
+  setValue(value: string) {
+    (this.element as HTMLInputElement).value = value;
+  }
+
   public getValue = () => {
     const content = this.getContent();
     if (content instanceof HTMLInputElement) {

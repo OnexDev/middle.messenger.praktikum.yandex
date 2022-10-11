@@ -1,7 +1,6 @@
 import * as handlebarsRuntime from 'handlebars/runtime';
 import * as handlebars from 'handlebars';
 
-console.log('d');
 handlebars.registerHelper('compareStrings', (
   firstString: string,
   secondString: string,

@@ -92,8 +92,10 @@ export class ChatsAPI extends BaseAPI {
     return this.http.delete('/users', { data });
   }
 
-  getMessagerServerToken(identifier: number) {
-    return this.http.get(`/token/${identifier}`);
+  async getToken(identifier: number): Promise<string> {
+    const response = await this.http.post<{ token: string }>(`/token/${identifier}`);
+
+    return response.token;
   }
 
   update = undefined;

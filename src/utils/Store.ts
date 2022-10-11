@@ -1,8 +1,9 @@
-import { isEqual, set } from './helpers';
+import { set } from './helpers';
 import { EventBus } from './EventBus';
 import Block, { BlockProps } from './Block';
 import { User } from '../api/AuthAPI';
 import { Chat } from '../api/ChatsAPI';
+import { Message } from '../controllers/MessagesController';
 
 export enum StoreEvents {
     UPDATED = 'updated'
@@ -15,6 +16,7 @@ interface State {
         selectedChat: number,
         error: string,
     },
+    messages?: Record<number, Message[]>
     chatsTokens?: Record<number, string>
 }
 
