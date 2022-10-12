@@ -37,7 +37,7 @@ Sprint 1: Merged.
 
 Sprint 2: Merged.
 
-Sprint 3: In Progress.
+Sprint 3: In review.
 
 ### Netlify badges
 
@@ -50,6 +50,8 @@ Sprint 3: In Progress.
 Принято использования `camelCase`
 
 Typescript `only`
+
+Websocket `ready`
 
 CSS Modules: `enabled`
 
