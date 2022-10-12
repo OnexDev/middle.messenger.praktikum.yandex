@@ -14,6 +14,8 @@ import { Routes } from '../../index';
 import { Message as MessageInfo } from '../../controllers/MessagesController';
 import { User } from '../../api/AuthAPI';
 import { Messanger as MessangerBlock } from '../../components/chats/messanger';
+import { AddUserModal } from '../../components/chats/addUserModal';
+import { RemoveUserModal } from '../../components/chats/removeUserModal';
 
 type chatTransformerOverload = {
     (chat:Chat): ChatSelectorProps,
@@ -29,7 +31,8 @@ export const chatTransformer: chatTransformerOverload = (chat: Chat): ChatSelect
     click: () => ChatsController.selectChat(chat.id),
   },
 });
-
+export const isEqualArray = <T>(array: T[], other: T[]) => array.length === other.length
+    && array.every((v, i) => v === other[i]);
 interface ChatsProps extends BlockProps{
     user: User,
     isLoaded: boolean,
@@ -67,13 +70,35 @@ export class ChatsPageBase extends Block {
     this.children.createChatModal = new Modal({
       template: new CreateChatModal({
         events: {
-          submitCallback: () => this.toggleChatModal('close'),
+          submitCallback: () => this.toggleModal(this.children.createChatModal as Modal, 'close'),
         },
       }),
       wrapper: true,
     });
 
-    this.children.messangerBlock = new MessangerBlock({ createChatModal: () => this.children.createChatModal });
+    this.children.addUserModal = new Modal({
+      template: new AddUserModal({
+        events: {
+          submitCallback: () => this.toggleModal(this.children.addUserModal as Modal, 'close'),
+        },
+      }),
+      wrapper: true,
+    });
+
+    this.children.removeUserModal = new Modal({
+      template: new RemoveUserModal({
+        events: {
+          submitCallback: () => this.toggleModal(this.children.removeUserModal as Modal, 'close'),
+        },
+      }),
+      wrapper: true,
+    });
+
+    this.children.messangerBlock = new MessangerBlock({
+      addUserModal: () => this.children.addUserModal,
+      createChatModal: () => this.children.createChatModal,
+      removeUserModal: () => this.children.removeUserModal,
+    });
   }
 
   private createChats(props: ChatsProps) {
@@ -83,21 +108,20 @@ export class ChatsPageBase extends Block {
   }
 
   protected componentDidUpdate(oldProps: ChatsProps, newProps: ChatsProps): boolean {
-    const isEqualArray = <T>(array: T[], other: T[]) => array.length === other.length
-        && array.every((v, i) => v === other[i]);
-
-    if (!isEqualArray(oldProps.chatList, newProps.chatList)) {
-      this.createChats(newProps);
+    if (Array.isArray(oldProps.chatList) && Array.isArray(newProps.chatList)) {
+      if (!isEqualArray(oldProps.chatList, newProps.chatList)) {
+        this.createChats(newProps);
+      }
     }
 
     return true;
   }
 
-  toggleChatModal(action: 'open' | 'close') {
+  toggleModal(modal: Modal, action: 'open' | 'close') {
     if (action === 'open') {
-      (this.children.createChatModal as Modal).open();
+      modal.open();
     } else {
-      (this.children.createChatModal as Modal).close();
+      modal.close();
     }
   }
 

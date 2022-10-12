@@ -64,7 +64,7 @@ export class ChatsAPI extends BaseAPI {
     return this.http.post('/archive', { data });
   }
 
-  getChatUsers(identifier: number, data:{offset: number, limit: number, name: string, email: string}): Promise<User[]> {
+  getChatUsers(identifier: number, data?:{offset: number, limit: number, name: string, email: string}): Promise<User[]> {
     return this.http.get(`/${identifier}/`, { data });
   }
 
@@ -86,9 +86,9 @@ export class ChatsAPI extends BaseAPI {
   }
 
   removeUsersFromChat(data: {
-        users: number[],
-        chatId: number
-    }) {
+    users: number[],
+    chatId: number
+  }) {
     return this.http.delete('/users', { data });
   }
 

@@ -12,11 +12,12 @@ interface State {
     user?: User,
     chats?: {
         data: Chat[],
+        userLists?: Record<number, User[]>,
         isLoaded: boolean,
         selectedChat: number,
         error: string,
     },
-    messages?: Record<number, Message[]>
+    messages?: Record<number, Message[]>,
     chatsTokens?: Record<number, string>
 }
 

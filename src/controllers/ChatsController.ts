@@ -1,6 +1,7 @@
 import API, { ChatsAPI, ChatsOptions } from '../api/ChatsAPI';
 import store from '../utils/Store';
 import MessagesController from './MessagesController';
+import { User } from '../api/AuthAPI';
 
 class ChatsController {
   private readonly api: ChatsAPI;
@@ -12,6 +13,41 @@ class ChatsController {
   public async get(data: ChatsOptions) {
     try {
       await this.api.get(data);
+    } catch (e: any) {
+      console.error(e);
+    }
+  }
+
+  public async addUserToChat(chatId:number, userId:number) {
+    try {
+      await this.api.addUsersToChat({
+        users: [userId],
+        chatId,
+      });
+    } catch (e: any) {
+      console.error(e);
+    }
+  }
+
+  public async getUsersFromChat(chatId?:number) {
+    if (!chatId) {
+      return;
+    }
+    try {
+      const users = await this.api.getChatUsers(chatId);
+      const { userLists } = store.getState().chats;
+      store.set('chats.userList', { ...userLists, [chatId]: users });
+    } catch (e: any) {
+      console.error(e);
+    }
+  }
+
+  public async removeUserFromChat(chatId: number, userId: number) {
+    try {
+      await this.api.removeUsersFromChat({
+        users: [userId],
+        chatId,
+      });
     } catch (e: any) {
       console.error(e);
     }

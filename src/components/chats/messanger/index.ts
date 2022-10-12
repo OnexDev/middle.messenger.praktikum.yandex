@@ -17,7 +17,9 @@ import { chatTransformer } from '../../../pages/chats';
 import Modal from '../../modal';
 
 export interface MessangerProps extends BlockProps{
-    createChatModal?: ()=>Modal;
+    createChatModal?: ()=> Modal;
+    addUserModal?: () => Modal;
+    removeUserModal?: () => Modal;
     messages: MessageInfo[],
     userId?: number,
     currentChat?: Chat & {
@@ -55,7 +57,7 @@ class MessangerBase extends Block {
       label: 'создайте новый.',
       events: {
         click: () => {
-          console.log(this.props.createChatModal().open());
+          this.props.createChatModal().open();
         },
       },
     });
@@ -101,6 +103,7 @@ class MessangerBase extends Block {
         label: 'Добавить пользователя',
         events: {
           click: () => {
+            this.props.addUserModal().show();
             this.props.optionsVisible = false;
           },
         },
@@ -115,6 +118,7 @@ class MessangerBase extends Block {
         label: 'Удалить пользователя',
         events: {
           click: () => {
+            this.props.removeUserModal().open();
             this.props.optionsVisible = false;
           },
         },

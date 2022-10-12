@@ -93,11 +93,10 @@ export default class Form extends Block {
   };
 
   private _clearForm = () => {
-    // TODO:
-    // (this.childrenCollection.fieldsCollection as Field[]).forEach((field) => {
-    //   const input = field.getFieldValue() as Input;
-    //   input.setProps({ attrs: { value: undefined } });
-    // });
+    (this.childrenCollection.fieldsCollection as Field[]).forEach((field) => {
+      const input = field.getFieldValue() as Input;
+      input.setValue('');
+    });
   };
 
   private _submit = () => {
