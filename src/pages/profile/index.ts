@@ -7,7 +7,7 @@ import { withStore } from '../../utils/Store';
 import AuthController from '../../controllers/AuthController';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 import router from '../../utils/Router';
-import { User } from '../../api/AuthAPI';
+import LoadingImage from '../../components/image';
 
 export enum editModsProp {
     PASSWORD = 'password',
@@ -15,11 +15,8 @@ export enum editModsProp {
     NOTHING = 'nothing'
 }
 
-interface ProfileProps extends User {
-    user?: User,
-}
-
-const userFields = ['email', 'login', 'first_name', 'second_name', 'display_name', 'phone'] as Array<keyof ProfileProps>;
+// const userFields = ['email', 'login', 'first_name',
+// 'second_name', 'display_name', 'phone'] as Array<keyof ProfileProps>;
 
 class ProfilePageBase extends Block {
   init() {
@@ -35,6 +32,11 @@ class ProfilePageBase extends Block {
       },
       attrs: {
         class: styles.exit,
+      },
+    });
+    this.children.avatarImage = new LoadingImage({
+      attrs: {
+        src: this.props.avatar,
       },
     });
     this.childrenCollection.passwordCredentials = [
@@ -141,10 +143,7 @@ class ProfilePageBase extends Block {
     });
   }
 
-  protected componentDidUpdate(_: any, newProps: any): boolean {
-    this.childrenCollection.credentials.forEach((field, i) => {
-      field.setProps({ value: newProps.user?.[userFields[i]] });
-    });
+  protected componentDidUpdate(): boolean {
     return true;
   }
 

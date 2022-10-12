@@ -1,7 +1,6 @@
 import API, { ChatsAPI, ChatsOptions } from '../api/ChatsAPI';
 import store from '../utils/Store';
 import MessagesController from './MessagesController';
-import { User } from '../api/AuthAPI';
 
 class ChatsController {
   private readonly api: ChatsAPI;
@@ -35,7 +34,7 @@ class ChatsController {
     }
     try {
       const users = await this.api.getChatUsers(chatId);
-      const { userLists } = store.getState().chats;
+      const { userLists } = store.getState().chats!;
       store.set('chats.userList', { ...userLists, [chatId]: users });
     } catch (e: any) {
       console.error(e);

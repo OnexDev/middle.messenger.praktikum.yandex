@@ -35,7 +35,6 @@ export class Store extends EventBus {
 }
 
 const store = new Store();
-window.store = store;
 export function withStore<StoreGeneric extends Record<string, any>>(mapStateToProps: (state: State) => StoreGeneric) {
   return function wrap<PropsGeneric extends BlockProps = any>(Component: typeof Block<PropsGeneric>) {
     return class WithStore extends Component {

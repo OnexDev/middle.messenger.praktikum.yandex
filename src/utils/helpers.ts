@@ -68,12 +68,13 @@ export function isEqual(lhs: PlainObject, rhs: PlainObject) {
     return false;
   }
 
+  // eslint-disable-next-line no-restricted-syntax
   for (const [key, value] of Object.entries(lhs)) {
     const rightValue = rhs[key];
     if (isArrayOrObject(value) && isArrayOrObject(rightValue)) {
       // Здесь value и rightValue может быть только массивом или объектом
       // И TypeScript это обрабатывает
-      if (!isEqual(value, rightValue)) {
+      if (!isEqual(value as {}, rightValue as {})) {
         return false;
       }
     }
