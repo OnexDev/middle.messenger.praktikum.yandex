@@ -2,6 +2,7 @@ import API, { AuthAPI, SigninData, SignupData } from '../api/AuthAPI';
 import router from '../utils/Router';
 import { Routes } from '../index';
 import store from '../utils/Store';
+import MessagesController from './MessagesController';
 
 class AuthController {
   private readonly api: AuthAPI;
@@ -42,6 +43,7 @@ class AuthController {
   public async logout() {
     try {
       await this.api.logout();
+      MessagesController.closeAll();
       router.go(Routes.INDEX);
     } catch (e: any) {
       console.error(e.message);

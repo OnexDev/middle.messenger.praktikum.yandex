@@ -41,6 +41,10 @@ class MessagesController {
     socket.send({ type: 'message', content: message });
   }
 
+  closeAll() {
+    Array.from(this.channels.values()).forEach((socket) => socket.close());
+  }
+
   public onMessage(chatId: number, message: Message | Message[]): void {
     let messagesToAdd: Message[] = [];
 
@@ -55,6 +59,17 @@ class MessagesController {
     messagesToAdd = [...currentMessages, ...messagesToAdd];
 
     store.set(`messages.${chatId}`, messagesToAdd);
+
+    store.set('chats.data', store.getState().chats?.data.map((chat) => {
+      if (chatId !== chat.id) {
+        return chat;
+      }
+
+      return {
+        ...chat,
+        last_message: messagesToAdd[messagesToAdd.length - 1],
+      };
+    }));
   }
 
   onClose(id: number) {

@@ -7,6 +7,8 @@ import { withStore } from '../../../utils/Store';
 import { Chat } from '../../../api/ChatsAPI';
 import LoadingImage from '../../image';
 import { isEqual } from '../../../utils/helpers';
+import getTimeString from '../../../utils/atomic/getShortTimeString';
+import getTextWidth from '../../../utils/atomic/getTextWidth';
 
 export interface ChatSelectorProps extends BlockProps{
     id: number,
@@ -34,6 +36,14 @@ class ChatSelectorBase extends Block {
 
   init() {
     this.children.avatarImage = new LoadingImage({ attrs: { src: this.props.avatar, width: '47px', height: '47px' } });
+    this.props.timeString = getTimeString(this.props.meta.time);
+    this.props.shortSubtitle = (() => {
+      const width = getTextWidth(this.props.subtitle, 'font-size:12px;');
+      if (width / 2 > 193) {
+        return `${this.props.subtitle?.slice(0, 42)}...`;
+      }
+      return this.props.subtitle;
+    })();
   }
 
   protected componentDidUpdate(oldProps: any, newProps: any): boolean {

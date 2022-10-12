@@ -9,6 +9,8 @@ export enum WSClientEvents{
 export default class WSClient extends EventBus {
   private socket: WebSocket | null = null;
 
+  private pingInterval: number = 0;
+
   constructor(private url: string) {
     super();
   }
@@ -41,9 +43,19 @@ export default class WSClient extends EventBus {
   }
 
   private setupPing() {
-    setInterval(() => {
+    this.pingInterval = setInterval(() => {
       this.send({ type: 'ping' });
     }, 5000);
+
+    this.on(WSClientEvents.CLOSE, () => {
+      clearInterval(this.pingInterval);
+
+      this.pingInterval = 0;
+    });
+  }
+
+  public close() {
+    this.socket?.close();
   }
 
   public send(data: unknown) {

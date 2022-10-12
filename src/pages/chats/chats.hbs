@@ -18,36 +18,6 @@
         Loading...
     {{/if}}
 </aside>
-<main class="{{styles.main}}">
-    {{#if currentChat}}
-        <div class="{{styles.userBar}}">
-            {{{avatarImage}}}
-            {{currentChat.title}}
-            <div class="{{styles.options}}">
-                <div class="{{styles.optionsIcon}}">
-                    <div class="{{styles.dot}}"></div>
-                    <div class="{{styles.dot}}"></div>
-                    <div class="{{styles.dot}}"></div>
-                </div>
-            </div>
-        </div>
-        <div class="{{styles.chat}}">
-            {{#if messages}}
-                {{#each messages}}
-                    {{{this}}}
-                {{/each}}
-            {{else}}
-                <span class="{{styles.blank}}">Начните переписку первым.</span>
-            {{/if}}
+{{{messangerBlock}}}
 
-        </div>
-        <div class="{{styles.inputBar}}">
-            <img src="pin.png" width="32px" height="32px">
-            {{{messageField}}}
-            {{{messageButton}}}
-        </div>
-    {{else}}
-        <span class="{{styles.blank}}">Выберете чат или {{{addContact}}}</span>
-    {{/if}}
-</main>
 {{{createChatModal}}}

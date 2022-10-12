@@ -13,6 +13,7 @@ import { FormType } from '../../components/form';
 import { SignupData } from '../../api/AuthAPI';
 import AuthController from '../../controllers/AuthController';
 import Router from '../../utils/Router';
+import store from '../../utils/Store';
 
 export default class signupPage extends Block {
   constructor() {
@@ -20,7 +21,9 @@ export default class signupPage extends Block {
   }
 
   init() {
-    AuthController.fetchUser().then(() => Router.go(Routes.MESSENGER));
+    if (store.getState().user) {
+      Router.go(Routes.MESSENGER);
+    }
 
     this.children.form = new FormPage({
       title: 'Регистрация',

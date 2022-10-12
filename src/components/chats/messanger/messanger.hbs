@@ -1,0 +1,33 @@
+{{#if selectedChat}}
+    <div class="{{styles.userBar}}">
+        {{{avatarImage}}}
+        {{currentChat.title}}
+        <div class="{{styles.options}}">
+            {{{optionsButton}}}
+            {{#if optionsVisible}}
+                <div class="{{styles.optionsTip}}">
+                    {{#each options}}
+                        {{{this}}}
+                    {{/each}}
+                </div>
+            {{/if}}
+        </div>
+    </div>
+    <div class="{{styles.chat}}">
+        {{#if messages}}
+            {{#each messagesCollection}}
+                {{{this}}}
+            {{/each}}
+        {{else}}
+            <span class="{{styles.blank}}">Начните переписку первым.</span>
+        {{/if}}
+
+    </div>
+    <div class="{{styles.inputBar}}">
+        <img src="./pin.png" width="32px" height="32px">
+        {{{messageField}}}
+        {{{messageButton}}}
+    </div>
+{{else}}
+    <span class="{{styles.blank}}">Выберете чат или {{{addContact}}}</span>
+{{/if}}

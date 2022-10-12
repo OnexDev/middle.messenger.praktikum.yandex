@@ -24,7 +24,7 @@ export default class LoadingImage extends Block<ImageProps> {
           }),
           load: () => this.setProps({
             attrs: {
-              class: props.attrs.class,
+              class: props.attrs.class ?? '',
             },
           }),
         },

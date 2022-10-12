@@ -8,6 +8,7 @@
   justify-content: space-between;
   border-bottom: 1px solid $gray-border;
   cursor: pointer;
+    gap: 10px;
 
     &:hover{
         background: #F1F6FF;
@@ -16,7 +17,7 @@
         background: #e4edfd;
     }
 
-    .content,
+.content,
   .avatarBlock,
   .meta {
     display: flex;
@@ -24,22 +25,22 @@
   }
 
   .content {
-    width: 193px;
-
+    width: auto;
     .title {
       font-weight: 600;
       color: $black;
       font-size: 13px;
-      width: 193px;
     }
 
     .subtitle {
+      min-width: 180px;
       color: $gray;
       font-size: 12px;
     }
   }
 
   .avatarBlock {
+    min-width: 47px;
     justify-content: center;
     align-items: center;
     border-radius: 9999px;
@@ -49,6 +50,7 @@
   .meta {
     justify-content: space-between;
     align-items: flex-end;
+      min-width: 24px;
 
     .time {
       color: $gray;

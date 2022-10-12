@@ -54,6 +54,10 @@ class ChatsController {
   }
 
   selectChat(id: number) {
+    if (store.getState().chats?.selectedChat === id) {
+      store.set('chats.selectedChat', undefined);
+      return;
+    }
     store.set('chats.selectedChat', id);
   }
 }
