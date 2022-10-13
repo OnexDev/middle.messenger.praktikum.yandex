@@ -150,7 +150,7 @@ class ProfilePageBase extends Block {
   render() {
     return this.compile(template, getPropsWithAugmentedClasses(
       { ...this.props, styles },
-      [styles.profile],
+      [],
       [],
     ));
   }
