@@ -16,6 +16,7 @@
     "@parcel/transformer-sass": "2.7.0",
     "@typescript-eslint/eslint-plugin": "5.36.1",
     "@typescript-eslint/parser": "5.36.1",
+    "chai": "^4.3.6",
     "chalk": "5.0.1",
     "eslint": "8.23.0",
     "eslint-config-airbnb": "19.0.4",
