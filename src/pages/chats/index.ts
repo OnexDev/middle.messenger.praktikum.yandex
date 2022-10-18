@@ -25,8 +25,8 @@ export const chatTransformer: chatTransformerOverload = (chat: Chat): ChatSelect
   id: chat.id,
   avatar: chat.avatar,
   title: chat.title,
-  subtitle: chat.last_message?.content,
-  meta: { time: chat.last_message?.time, count: chat.unread_count },
+  subtitle: chat.lastMessage?.content,
+  meta: { time: chat.lastMessage?.time, count: chat.unreadCount },
   events: {
     click: () => ChatsController.selectChat(chat.id),
   },

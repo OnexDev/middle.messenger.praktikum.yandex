@@ -3,17 +3,24 @@ import { User } from './AuthAPI';
 import { GetListWithPagination } from '../models/GetListWithPagination';
 
 export interface Message {
-    'user': Omit<User, 'id'>
-    'time': string,
-    'content': string,
+    user: Omit<User, 'id'>
+    time: string,
+    content: string,
 }
 
+export interface ChatDTO {
+    id: number,
+    title: string,
+    avatar: string,
+    unread_count: number,
+    last_message?: Message
+}
 export interface Chat {
-    'id': number,
-    'title': string,
-    'avatar': string,
-    'unread_count': number,
-    'last_message'?: Message
+    id: number,
+    title: string,
+    avatar: string,
+    unreadCount: number,
+    lastMessage?: Message
 }
 
 export interface ChatsOptions extends GetListWithPagination{
@@ -33,7 +40,7 @@ export class ChatsAPI extends BaseAPI {
     return this.http.get('/', { data });
   }
 
-  read(): Promise<Chat[]> {
+  read(): Promise<ChatDTO[]> {
     return this.http.get('/');
   }
 
@@ -56,11 +63,11 @@ export class ChatsAPI extends BaseAPI {
     return this.http.get(`/${identifier}/files`);
   }
 
-  archiveChat(data: {chatId: number}): Promise<Chat> {
+  archiveChat(data: {chatId: number}): Promise<ChatDTO> {
     return this.http.post('/archive', { data });
   }
 
-  unArchiveChat(data: {chatId: number}): Promise<Chat> {
+  unArchiveChat(data: {chatId: number}): Promise<ChatDTO> {
     return this.http.post('/archive', { data });
   }
 
@@ -74,7 +81,7 @@ export class ChatsAPI extends BaseAPI {
     return this.http.get(`/new/${identifier}`);
   }
 
-  updateAvatar(data: FormData): Promise<Chat> {
+  updateAvatar(data: FormData): Promise<ChatDTO> {
     return this.http.post('/chats/avatar', { headers: { 'Content-Type': 'multipart/form-data' }, data });
   }
 

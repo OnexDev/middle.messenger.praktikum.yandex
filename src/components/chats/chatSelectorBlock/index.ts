@@ -39,7 +39,9 @@ class ChatSelectorBase extends Block {
     this.props.timeString = getTimeString(this.props.meta.time);
     this.props.shortSubtitle = (() => {
       const width = getTextWidth(this.props.subtitle, 'font-size:12px;');
-      if (width / 2 > 193) {
+      const cellWidth = 193;
+      const countOfRows = 2;
+      if (width / countOfRows > cellWidth) {
         return `${this.props.subtitle?.slice(0, 42)}...`;
       }
       return this.props.subtitle;

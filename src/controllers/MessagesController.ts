@@ -67,7 +67,7 @@ class MessagesController {
 
       return {
         ...chat,
-        last_message: messagesToAdd[messagesToAdd.length - 1],
+        lastMessage: messagesToAdd[messagesToAdd.length - 1],
       };
     }));
   }

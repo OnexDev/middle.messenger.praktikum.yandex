@@ -1,4 +1,4 @@
-import API, { AuthAPI, SigninData, SignupData } from '../api/AuthAPI';
+import { AuthAPI, SigninData, SignupData } from '../api/AuthAPI';
 import router from '../utils/Router';
 import { Routes } from '../index';
 import store from '../utils/Store';
@@ -8,7 +8,7 @@ class AuthController {
   private readonly api: AuthAPI;
 
   constructor() {
-    this.api = API;
+    this.api = new AuthAPI();
   }
 
   public async signIn(data: SigninData) {
@@ -16,6 +16,7 @@ class AuthController {
       await this.api.signin(data);
       router.go(Routes.PROFILE);
     } catch (e: any) {
+      alert(e);
       console.error(e);
     }
   }
@@ -36,7 +37,7 @@ class AuthController {
       store.set('user', user);
     } catch (e) {
       router.go(Routes.LOGIN);
-      throw new Error(e);
+      console.error(e);
     }
   }
 

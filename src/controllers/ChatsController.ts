@@ -1,6 +1,20 @@
-import API, { ChatsAPI, ChatsOptions } from '../api/ChatsAPI';
+import API, {
+  Chat, ChatDTO, ChatsAPI, ChatsOptions,
+} from '../api/ChatsAPI';
 import store from '../utils/Store';
 import MessagesController from './MessagesController';
+
+export const transformerChat2DTO = (chat: Chat): ChatDTO => ({
+  ...chat,
+  unread_count: chat.unreadCount,
+  last_message: chat.lastMessage,
+});
+
+export const transformerDTO2Chat = (dto: ChatDTO): Chat => ({
+  ...dto,
+  unreadCount: dto.unread_count,
+  lastMessage: dto.last_message,
+});
 
 class ChatsController {
   private readonly api: ChatsAPI;
@@ -65,11 +79,12 @@ class ChatsController {
     store.set('chats.isLoaded', false);
     try {
       const chats = await this.api.read();
-      chats.map(async (chat) => {
+      const normalChats = chats.map(async (chat) => {
         const token = await this.getChatToken(chat.id);
         await MessagesController.connect(chat.id, token);
+        return transformerDTO2Chat(chat);
       });
-      store.set('chats.data', chats);
+      store.set('chats.data', normalChats);
     } catch (e) {
       store.set('chats.error', e);
     }

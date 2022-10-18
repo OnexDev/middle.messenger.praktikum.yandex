@@ -40,7 +40,9 @@ export default class RemoveUserModalBase extends Block {
   }
 
   protected componentDidUpdate(oldProps: any, newProps: any): boolean {
-    ChatsController.getUsersFromChat(this.props.chatId);
+    (async () => {
+      await ChatsController.getUsersFromChat(this.props.chatId);
+    })();
 
     if (Array.isArray(oldProps.chatList) && Array.isArray(newProps.userList)) {
       if (!isEqualArray(oldProps.userList, newProps.userList)) {
