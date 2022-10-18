@@ -6,7 +6,8 @@
     "pre:clean": "rimraf dist && rimraf .parcel-cache",
     "dev": "npm run pre:clean && parcel src/index.html --no-cache",
     "build": "npx stylelint ./src/**/*.scss --fix && npx tsc --noEmit && parcel build src/index.html",
-    "start": "npm run build && node server.js"
+    "start": "npm run build && node server.js",
+    "test": "mocha --require ts-node/register './mochaSetup.js' './src/**/*.test.ts'"
   },
   "keywords": [],
   "author": "Pritornyi",
@@ -14,12 +15,17 @@
   "devDependencies": {
     "@anikin/parcel-transformer-handlebars-precompile": "1.0.1",
     "@parcel/transformer-sass": "2.7.0",
+    "@types/chai": "4.3.3",
+    "@types/handlebars": "4.1.0",
+    "@types/jsdom": "^20.0.0",
+    "@types/mocha": "10.0.0",
     "@typescript-eslint/eslint-plugin": "5.36.1",
     "@typescript-eslint/parser": "5.36.1",
     "chai": "4.3.6",
     "chalk": "5.0.1",
     "eslint": "8.23.0",
     "eslint-config-airbnb": "19.0.4",
+    "jsdom": "20.0.1",
     "mocha": "10.0.0",
     "parcel": "2.7.0",
     "parcel-reporter-static-files-copy": "1.4.0",
@@ -27,6 +33,7 @@
     "rimraf": "3.0.2",
     "stylelint": "14.11.0",
     "stylelint-config-standard-scss": "^5.0.0",
+    "ts-node": "10.9.1",
     "typescript": "4.8.3"
   },
   "@parcel/transformer-css": {

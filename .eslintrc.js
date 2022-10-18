@@ -1,7 +1,7 @@
 module.exports = {
-  extends: 'airbnb',
+  extends: ['airbnb', 'plugin:mocha/recommended'],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'mocha'],
   globals: {
     window: true,
     document: true,
@@ -29,5 +29,8 @@ module.exports = {
     'no-param-reassign': [2, { props: false }],
     'linebreak-style': ['error', 'unix'],
     'no-constructor-return': 0,
+
+    'import/no-extraneous-dependencies': ['warn', { devDependencies: true }],
+    'mocha/no-mocha-arrows': 0,
   },
 };
