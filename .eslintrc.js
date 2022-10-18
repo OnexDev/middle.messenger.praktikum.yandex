@@ -32,5 +32,6 @@ module.exports = {
 
     'import/no-extraneous-dependencies': ['warn', { devDependencies: true }],
     'mocha/no-mocha-arrows': 0,
+    'mocha/no-setup-in-describe': 0,
   },
 };

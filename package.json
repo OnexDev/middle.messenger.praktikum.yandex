@@ -7,7 +7,7 @@
     "dev": "npm run pre:clean && parcel src/index.html --no-cache",
     "build": "npx stylelint ./src/**/*.scss --fix && npx tsc --noEmit && parcel build src/index.html",
     "start": "npm run build && node server.js",
-    "test": "mocha --require ts-node/register './mochaSetup.js' './src/**/*.test.ts'"
+    "test": "mocha --require ts-node/register --require ./mochaSetup.js './src/**/*.test.ts'"
   },
   "keywords": [],
   "author": "Pritornyi",
@@ -17,20 +17,23 @@
     "@parcel/transformer-sass": "2.7.0",
     "@types/chai": "4.3.3",
     "@types/handlebars": "4.1.0",
-    "@types/jsdom": "^20.0.0",
+    "@types/jsdom": "20.0.0",
     "@types/mocha": "10.0.0",
+    "@types/sinon": "10.0.13",
     "@typescript-eslint/eslint-plugin": "5.36.1",
     "@typescript-eslint/parser": "5.36.1",
     "chai": "4.3.6",
     "chalk": "5.0.1",
     "eslint": "8.23.0",
     "eslint-config-airbnb": "19.0.4",
+    "eslint-plugin-mocha": "10.1.0",
     "jsdom": "20.0.1",
     "mocha": "10.0.0",
     "parcel": "2.7.0",
     "parcel-reporter-static-files-copy": "1.4.0",
     "prettier": "2.7.1",
     "rimraf": "3.0.2",
+    "sinon": "14.0.1",
     "stylelint": "14.11.0",
     "stylelint-config-standard-scss": "^5.0.0",
     "ts-node": "10.9.1",
@@ -44,6 +47,6 @@
     "express": "4.18.1",
     "express-history-api-fallback": "^2.2.1",
     "handlebars": "4.7.7",
-    "nanoid": "^4.0.0"
+    "nanoid": "3"
   }
 }

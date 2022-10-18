@@ -7,8 +7,11 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "sourceMap": true,
-    "strictNullChecks": true
+    "esModuleInterop": true,
+    "strictNullChecks": true,
+    "allowSyntheticDefaultImports": true
   },
+  "ts-node": { "files": true },
   "lib": [
     "ESNext",
     "DOM"
