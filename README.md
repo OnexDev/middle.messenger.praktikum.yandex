@@ -35,7 +35,9 @@ Parcel сборка и последующее отслеживание изме�
 
 Sprint 1: Merged.
 
-Sprint 2: Pull Requested [Changes required]
+Sprint 2: Merged.
+
+Sprint 3: In review.
 
 ### Netlify badges
 
@@ -48,6 +50,8 @@ Sprint 2: Pull Requested [Changes required]
 Принято использования `camelCase`
 
 Typescript `only`
+
+Websocket `ready`
 
 CSS Modules: `enabled`
 

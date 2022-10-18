@@ -1,13 +1,14 @@
 import { nanoid } from 'nanoid';
 import { EventBus } from './EventBus';
+import { isEqual } from './helpers';
 
-export type BlockProps = {
-    styles?: string[],
-    attrs?: Record<string, any>
-    events?: Record<string, (...args: any[]) => void>,
-}
+export type BlockProps = Partial<{
+    styles: string[],
+    attrs: Record<string, any>
+    events: Record<string, (...args: any[]) => void>,
+}>
 
-export default abstract class Block<P extends BlockProps = any> {
+export default abstract class Block<P extends BlockProps = any > {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -35,9 +36,7 @@ export default abstract class Block<P extends BlockProps = any> {
    *
    * @returns {void}
    */
-  // TODO: Переделать на default param last
-  // eslint-disable-next-line default-param-last
-  protected constructor(tagName = 'div', propsWithChildren: P) {
+  protected constructor(propsWithChildren: P, tagName = 'div') {
     const eventBus = new EventBus();
     const { props, children, childrenCollection } = this._getChildrenAndProps(propsWithChildren);
 
@@ -66,13 +65,13 @@ export default abstract class Block<P extends BlockProps = any> {
     const childrenCollection: Record<string, Block[]> = {};
 
     Object.entries(childrenAndProps).forEach(([key, value]) => {
-      if (Array.isArray(value) && value.every((element: unknown) => element instanceof Block)) {
-        childrenCollection[key] = value as Block[];
+      if (Array.isArray(value) && value.length > 0 && value.every((element: unknown) => element instanceof Block)) {
+        childrenCollection[key as string] = value as Block[];
       }
       if (value instanceof Block) {
-        children[key] = value;
+        children[key as string] = value;
       } else {
-        props[key] = value;
+        props[key as string] = value;
       }
     });
 
@@ -122,6 +121,8 @@ export default abstract class Block<P extends BlockProps = any> {
 
   componentDidMount() {}
 
+  componentWasRendered() {}
+
   public dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
 
@@ -135,7 +136,7 @@ export default abstract class Block<P extends BlockProps = any> {
   }
 
   protected componentDidUpdate(oldProps: P, newProps: P) {
-    return JSON.stringify(oldProps) !== JSON.stringify(newProps);
+    return !isEqual(oldProps, newProps);
   }
 
   public setProps = (propsPart: P) => {
@@ -159,6 +160,8 @@ export default abstract class Block<P extends BlockProps = any> {
 
     this._addAttrs();
     this._addEvents();
+
+    this.componentWasRendered();
   }
 
   protected compile(template: (context: any) => string, context: any) {
@@ -180,7 +183,6 @@ export default abstract class Block<P extends BlockProps = any> {
 
     const html = template(contextAndStubs);
     const temp = document.createElement('template');
-
     temp.innerHTML = html;
 
     const replacer = (component: Block<P>) => {

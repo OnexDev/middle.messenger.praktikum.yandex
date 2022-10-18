@@ -15,11 +15,11 @@ interface ProfileSettingsFieldProps extends BlockProps{
 
 export default class ProfileSettingsField extends Block<ProfileSettingsFieldProps> {
   constructor(props: ProfileSettingsFieldProps) {
-    super('li', getPropsWithAugmentedClasses<ProfileSettingsFieldProps>(
+    super(getPropsWithAugmentedClasses<ProfileSettingsFieldProps>(
       { ...props, styles },
       [styles.profileSettingsField],
       [],
-    ));
+    ), 'li');
   }
 
   init() {

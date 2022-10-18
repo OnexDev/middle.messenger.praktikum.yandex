@@ -10,18 +10,22 @@ export interface InputProps extends BlockProps{
         value?: string,
         type?: string,
     }
-    events?: Record<string, (event: Event)=> void>
+    events?: Record<string, (event: Event) => void>
 }
 
 export default class Input extends Block<InputProps> {
   constructor(props: InputProps) {
-    super('input', getPropsWithAugmentedClasses<InputProps>(
+    super(getPropsWithAugmentedClasses<InputProps>(
       {
         ...props,
       },
       [],
       [],
-    ));
+    ), 'input');
+  }
+
+  setValue(value: string) {
+    (this.element as HTMLInputElement).value = value;
   }
 
   public getValue = () => {

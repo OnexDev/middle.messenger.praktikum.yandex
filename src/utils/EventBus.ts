@@ -9,7 +9,7 @@ export interface Bus {
 export class EventBus implements Bus {
   private readonly listeners: Record<string, Array<EventHandler<unknown[]>>> = {};
 
-  on(event: string, callback: () => void) {
+  on(event: string, callback: (...args: any[]) => void) {
     if (!this.listeners[event]) {
       this.listeners[event] = [];
     }
@@ -29,7 +29,9 @@ export class EventBus implements Bus {
 
   emit<T extends unknown[]>(event: string, ...args: T) {
     if (!this.listeners[event]) {
-      throw new Error(`Нет события: ${event}`);
+      // Не ошибка, эмит без слушателей существует.
+      console.warn(`Нет слушателей для события: ${event}`);
+      return;
     }
 
     this.listeners[event].forEach((listener) => {

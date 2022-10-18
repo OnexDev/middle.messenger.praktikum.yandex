@@ -1,16 +1,15 @@
 <div class="{{styles.avatarBlock}}">
-    <img src="{{avatar}}" width="47px" height="47px">
+    {{{avatarImage}}}
 </div>
 <div class="{{styles.content}}">
     <h5 class="{{styles.title}}">{{title}}</h5>
-    <span class="{{styles.subtitle}}">{{subtitle}}</span>
+    <span class="{{styles.subtitle}}">{{shortSubtitle}}</span>
 </div>
 <div class="{{styles.meta}}">
-    <span class="{{styles.time}}">{{meta.time}}</span>
+    <span class="{{styles.time}}">{{timeString}}</span>
     {{#if meta.count}}
         <div class="{{styles.count}}">
             {{meta.count}}
         </div>
     {{/if}}
-
 </div>

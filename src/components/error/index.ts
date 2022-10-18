@@ -8,11 +8,8 @@ export interface FieldErrorsProps extends BlockProps{
 
 export default class FieldErrors extends Block<FieldErrorsProps> {
   constructor(props: FieldErrorsProps) {
-    super('div', {
+    super({
       ...props,
-      attrs: {
-        class: styles.error,
-      },
       styles,
     });
   }

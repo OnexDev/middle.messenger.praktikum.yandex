@@ -6,14 +6,16 @@ import Field, { FieldProps } from '../field';
 import Input from '../input';
 import Button, { ButtonProps } from '../button';
 
+export type FormType = Record<string, unknown>
+
 interface FormProps extends BlockProps{
     fields: FieldProps[],
     submitButton: ButtonProps,
-    onSubmit?: (form: Record<string, string>) => void;
+    onSubmit?: (form: FormType) => void;
 }
 
 export default class Form extends Block {
-  private form: Record<string, string> = {};
+  private form: FormType = {};
 
   static EVENTS = {
     INIT: 'init',
@@ -26,7 +28,7 @@ export default class Form extends Block {
   };
 
   constructor(props: FormProps) {
-    super('form', getPropsWithAugmentedClasses<FormProps>(
+    super(getPropsWithAugmentedClasses<FormProps>(
       {
         ...props,
         events: {
@@ -37,7 +39,7 @@ export default class Form extends Block {
       },
       [styles.form],
       [],
-    ));
+    ), 'form');
     this.eventBus().on(Form.EVENTS.SUBMIT, this._submit.bind(this));
     this.eventBus().on(Form.EVENTS.VALIDATE, this._validate.bind(this));
   }
@@ -90,6 +92,13 @@ export default class Form extends Block {
     this._useCollectionValidator(this.childrenCollection.fieldsCollection as Field[]);
   };
 
+  private _clearForm = () => {
+    (this.childrenCollection.fieldsCollection as Field[]).forEach((field) => {
+      const input = field.getFieldValue() as Input;
+      input.setValue('');
+    });
+  };
+
   private _submit = () => {
     this._useCollectionValidator(this.childrenCollection.fieldsCollection as Field[], {
       onSuccess: () => {
@@ -107,6 +116,7 @@ export default class Form extends Block {
 
   protected submit = () => {
     this.props.onSubmit(this.form);
+    this._clearForm();
   };
 
   init() {

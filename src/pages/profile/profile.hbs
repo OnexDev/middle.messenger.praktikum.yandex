@@ -1,15 +1,14 @@
 <aside class="{{styles.sidebar}}">
-    <button class="{{styles.exit}}">
-        <img src="Arrow.png"/>
-    </button>
+    {{{goBack}}}
 </aside>
+
 <main class="{{styles.main}}">
     <div class="{{styles.user}}">
         <div class="{{styles.avatar}}">
-            <img width="100%" height="100%" src="{{user.avatar}}"/>
+            {{{avatarImage}}}
             <input type="file" name="avatar">
         </div>
-        <h3>{{user.name}} {{user.surname}}</h3>
+        <h3>{{user.first_name}} {{user.second_name}}</h3>
     </div>
     {{#if isEditMode}}
         <ul class="{{styles.credentials}}">

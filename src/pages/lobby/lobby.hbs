@@ -1,33 +1,8 @@
 <div class="{{styles.index}}">
-    {{ variable }}
-
     <div>
-        <a href="/chats.html">chats</a><br>
-        <a href="/404.html">404</a><br>
-        <div>
-            <a href="/500.html">5xx</a>
-            <a href="/503.html">503</a>
-            <a href="/504.html">504</a>
-        </div>
-        <div>
-            <a href="/auth.html">Authorization</a><br>
-            <a href="/registration.html">Registration</a><br>
-        </div>
-
-        <a href="/profile.html">Profile</a><br>
-        <a href="/profile2.html">Profile edit mode</a><br>
-        <a href="/profile3.html">Profile password edit mode</a><br>
+        {{#each routes}}
+            {{{this}}}
+        {{/each}}
     </div>
-
-    {{{form}}}
-    {{{ button }}}
-<!--    -->
-    {{#each fields}}
-        {{{this}}}
-    {{/each}}
-
-    {{field}}
-    {{{message}}}
-    {{{ownerMessage}}}
-
+    {{{logout}}}
 </div>
