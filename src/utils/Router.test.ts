@@ -19,7 +19,7 @@ describe('Router', () => {
 
   const BlockMock = class {
     getContent = getContentFake;
-  } as unknown as ComponentConstructable<any>;
+  } as unknown as ComponentConstructable;
 
   describe('.use()', () => {
     it('should return Router instance', () => {
@@ -30,14 +30,21 @@ describe('Router', () => {
 
   describe('.back()', () => {
     it('should render a page on history back action', () => {
-      window.location.pathname = '/profile';
-      Router.use('/', BlockMock)
-        .use('/profile', BlockMock)
+      Router
+        .use('/', BlockMock)
         .start();
-      window.location.pathname = '/';
 
       Router.back();
+
       expect(getContentFake.callCount).to.eq(1);
     });
+  });
+
+  it('should render a page on start', () => {
+    Router
+      .use('/', BlockMock)
+      .start();
+
+    expect(getContentFake.callCount).to.eq(1);
   });
 });
