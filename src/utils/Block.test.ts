@@ -20,12 +20,20 @@ const { default: Block } = proxyquire('./Block', {
 }) as { default: typeof BlockType };
 
 describe('Block', () => {
-  class ComponentMock extends Block {}
+  class ComponentMock extends Block {
+
+  }
 
   it('should fire init event on initialization', () => {
     // eslint-disable-next-line no-new
     new ComponentMock({});
 
     expect(eventBusMock.emit.calledWith('init')).to.eq(true);
+  });
+
+  it('should fire CDU event on setting props', () => {
+    const component = new ComponentMock({});
+    component.setProps({ prop: 'newProp' });
+    expect(eventBusMock.emit.calledWith('flow:component-did-update')).to.eq(true);
   });
 });

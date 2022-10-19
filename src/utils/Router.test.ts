@@ -19,6 +19,8 @@ describe('Router', () => {
 
   const BlockMock = class {
     getContent = getContentFake;
+
+    dispatchComponentDidMount = sinon.fake();
   } as unknown as ComponentConstructable;
 
   describe('.use()', () => {
