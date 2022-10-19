@@ -1,6 +1,6 @@
 import Block, { BlockProps } from '../../utils/Block';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
-import * as styles from './image.scss';
+import styles from './image.scss';
 
 export interface ImageProps extends BlockProps{
     attrs: Partial<{

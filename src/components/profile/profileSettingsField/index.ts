@@ -1,6 +1,6 @@
 import Block, { BlockProps } from '../../../utils/Block';
 import template from './profileSettingsField.hbs';
-import * as styles from './profileSettingsField.scss';
+import styles from './profileSettingsField.scss';
 import getPropsWithAugmentedClasses from '../../../utils/atomic/getPropsWithAugmentedClasses';
 
 import Input, { InputProps } from '../../input';

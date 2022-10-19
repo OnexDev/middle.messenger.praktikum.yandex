@@ -1,6 +1,6 @@
 import Block, { BlockProps } from '../../../utils/Block';
 import template from './createChatModal.hbs';
-import * as styles from './styles.scss';
+import styles from './styles.scss';
 import ChatsController from '../../../controllers/ChatsController';
 import Form, { FormType } from '../../form';
 import getPropsWithAugmentedClasses from '../../../utils/atomic/getPropsWithAugmentedClasses';

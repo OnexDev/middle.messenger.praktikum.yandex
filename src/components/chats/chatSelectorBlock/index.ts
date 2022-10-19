@@ -1,5 +1,5 @@
 import template from './chatSelectorBlock.hbs';
-import * as styles from './chatSelectorBlock.scss';
+import styles from './chatSelectorBlock.scss';
 
 import Block, { BlockProps } from '../../../utils/Block';
 import getPropsWithAugmentedClasses from '../../../utils/atomic/getPropsWithAugmentedClasses';

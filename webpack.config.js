@@ -9,13 +9,17 @@ const config = {
   entry: {
       main: "./src/index.ts"
   },
+
   output: {
     path: path.resolve(__dirname, "dist"),
+    filename: 'bundle.js',
   },
+
   devServer: {
     open: true,
     port: 3000,
     host: "localhost",
+      historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -47,13 +51,24 @@ const config = {
                 }
             },
             "postcss-loader",
-            "sass-loader"
+            {
+                loader: "sass-loader",
+                options: {
+                    sassOptions: {
+                        outputStyle: "compressed",
+                    },
+                }
+            }
         ],
       },
-      {
-        test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-        type: "asset",
-      },
+        {
+            test: /\.(png|svg|jpg|jpeg|gif)$/i,
+            type: 'asset/resource',
+        },
+        {
+            test: /\.(woff|woff2|eot|ttf|otf)$/i,
+            type: 'asset/resource',
+        },
 
       // Add your rules for custom modules here
       // Learn more about loaders from https://webpack.js.org/loaders/

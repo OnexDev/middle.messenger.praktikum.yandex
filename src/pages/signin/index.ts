@@ -1,7 +1,7 @@
 import Block from '../../utils/Block';
 import template from './signin.hbs';
 import FormPage from '../../components/formPage';
-import * as styles from '../../components/formPage/formPage.scss';
+import styles from '../../components/formPage/formPage.scss';
 
 import useUsernameValidator from '../../utils/validators/useUsernameValidator';
 import usePasswordValidator from '../../utils/validators/usePasswordValidator';

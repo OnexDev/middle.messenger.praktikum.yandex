@@ -1,5 +1,5 @@
 import template from './message.hbs';
-import * as styles from './message.scss';
+import styles from './message.scss';
 import Block, { BlockProps } from '../../utils/Block';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 

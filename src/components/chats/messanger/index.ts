@@ -1,4 +1,4 @@
-import * as styles from './messanger.scss';
+import styles from './messanger.scss';
 
 import Block, { BlockProps } from '../../../utils/Block';
 import getPropsWithAugmentedClasses from '../../../utils/atomic/getPropsWithAugmentedClasses';

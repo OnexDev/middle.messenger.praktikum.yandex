@@ -1,6 +1,6 @@
 import Block, { BlockProps } from '../../utils/Block';
 import template from './chats.hbs';
-import * as styles from './chats.scss';
+import styles from './chats.scss';
 import { ChatSelector, ChatSelectorProps } from '../../components/chats/chatSelectorBlock';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 import Button from '../../components/button';

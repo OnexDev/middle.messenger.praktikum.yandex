@@ -1,5 +1,5 @@
 import template from './form.hbs';
-import * as styles from './form.scss';
+import styles from './form.scss';
 import Block, { BlockProps } from '../../utils/Block';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 import Field, { FieldProps } from '../field';

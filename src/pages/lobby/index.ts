@@ -1,6 +1,6 @@
 import Block from '../../utils/Block';
 import template from './lobby.hbs';
-import * as styles from './lobby.scss';
+import styles from './lobby.scss';
 import { Routes } from '../../index';
 import Button from '../../components/button';
 import Router from '../../utils/Router';

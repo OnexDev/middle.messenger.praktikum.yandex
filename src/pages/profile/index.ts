@@ -1,6 +1,6 @@
 import Block from '../../utils/Block';
 import template from './profile.hbs';
-import * as styles from './profile.scss';
+import styles from './profile.scss';
 import Button from '../../components/button';
 import ProfileSettingsField from '../../components/profile/profileSettingsField';
 import { withStore } from '../../utils/Store';
