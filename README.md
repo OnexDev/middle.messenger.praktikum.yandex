@@ -62,3 +62,5 @@ CSS Modules: `enabled`
 Figma: https://www.figma.com/file/tJesHhPmqV1zzyNbDJL85m/Y.Messanger?node-id=12%3A35
 
 Netlify: https://pritornyi-msg.netlify.app/
+
+Heroku: https://pritornyi.herokuapp.com/
