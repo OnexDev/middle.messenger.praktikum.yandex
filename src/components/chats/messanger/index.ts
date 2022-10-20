@@ -15,9 +15,9 @@ import template from './messanger.hbs';
 import { Chat } from '../../../api/ChatsAPI';
 import { chatTransformer } from '../../../pages/chats';
 import Modal from '../../modal';
-import pin from '/static/pin.png'
-import pushButton from '/static/pushButton.png'
-import plusIcon from '/static/plusIcon.png'
+import pin from '../../../../static/pin.png'
+import pushButton from '../../../../static/pushButton.png'
+import plusIcon from '../../../../static/plusIcon.png'
 
 export interface MessangerProps extends BlockProps{
     createChatModal?: ()=> Modal;
