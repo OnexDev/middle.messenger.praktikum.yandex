@@ -8,6 +8,7 @@ import AuthController from '../../controllers/AuthController';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 import router from '../../utils/Router';
 import LoadingImage from '../../components/image';
+import Arrow from './../../../static/Arrow.png';
 
 export enum editModsProp {
     PASSWORD = 'password',
@@ -22,10 +23,11 @@ class ProfilePageBase extends Block {
   init() {
     const isEditMode = this.props.editMode === editModsProp.DATA;
     AuthController.fetchUser();
+
     this.children.goBack = new Button({
       label: '',
       slots: {
-        after: '<img src="Arrow.png"/>',
+        after: `<img src="${Arrow}"/>`,
       },
       events: {
         click: () => router.back(),
