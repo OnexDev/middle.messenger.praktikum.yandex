@@ -11,7 +11,23 @@
     "strictNullChecks": true,
     "allowSyntheticDefaultImports": true
   },
-  "ts-node": { "files": true },
+  "ts-node": {
+    "files": true,
+    "compilerOptions": {
+      "module": "commonjs",
+      "target": "ESNext",
+
+      "noImplicitAny": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "sourceMap": true,
+      "esModuleInterop": true,
+      "strictNullChecks": true,
+      "allowSyntheticDefaultImports": true
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "src/**/*.test.ts"]
+  },
   "lib": [
     "ESNext",
     "DOM"

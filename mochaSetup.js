@@ -16,6 +16,10 @@ require.extensions['.hbs'] = function (module, filename) {
 
   module.exports = Handlebars.compile(contents);
 };
+require.extensions['.svg', '.png'] = function () {
+    module.exports = () => '';
+};
+
 // eslint-disable-next-line func-names
 require.extensions['.scss'] = function () {
   module.exports = () => ({});
