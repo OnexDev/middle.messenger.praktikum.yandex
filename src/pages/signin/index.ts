@@ -10,6 +10,7 @@ import AuthController from '../../controllers/AuthController';
 import { SigninData } from '../../api/AuthAPI';
 import { Routes } from '../../index';
 import Router from '../../utils/Router';
+import store from "../../utils/Store";
 
 export default class signinPage extends Block {
   constructor() {
@@ -17,7 +18,11 @@ export default class signinPage extends Block {
   }
 
   init() {
-    AuthController.fetchUser().then(() => Router.go(Routes.MESSENGER));
+    AuthController.fetchUser().then(() => {
+      if(store.getState().user){
+          Router.go(Routes.MESSENGER)
+      }
+    });
 
     this.children.form = new FormPage({
       title: 'Вход',

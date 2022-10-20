@@ -44,9 +44,14 @@ class Router {
 
   private _onRoute(pathname: string) {
     const route = this._getRoute(pathname);
-    if (!route || (route.isAvailableRoute && !route.isAvailableRoute?.())) {
-      this.go(Routes.INDEX);
+    console.log(route, route?.isAvailableRoute)
+    if (!route) {
+      this.go(Routes.error404);
       return;
+    }
+    if(route.isAvailableRoute && !route.isAvailableRoute?.()){
+        this.go(Routes.error404);
+        return;;
     }
 
     if (this._currentRoute && this._currentRoute !== route) {

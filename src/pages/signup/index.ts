@@ -21,9 +21,11 @@ export default class signupPage extends Block {
   }
 
   init() {
-    if (store.getState().user) {
-      Router.go(Routes.MESSENGER);
-    }
+      AuthController.fetchUser().then(() => {
+          if(store.getState().user){
+              Router.go(Routes.MESSENGER)
+          }
+      });
 
     this.children.form = new FormPage({
       title: 'Регистрация',
