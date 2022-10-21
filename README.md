@@ -39,7 +39,7 @@ Sprint 2: Merged.
 
 Sprint 3: Merged.
 
-Sprint 4: In review...
+Sprint 4: Merged with issues.
 
 ### Netlify badges
 
