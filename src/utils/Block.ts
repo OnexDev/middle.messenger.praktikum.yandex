@@ -36,7 +36,7 @@ export default abstract class Block<P extends BlockProps = any > {
    *
    * @returns {void}
    */
-  protected constructor(propsWithChildren: P, tagName = 'div') {
+  constructor(propsWithChildren: P, tagName = 'div') {
     const eventBus = new EventBus();
     const { props, children, childrenCollection } = this._getChildrenAndProps(propsWithChildren);
 

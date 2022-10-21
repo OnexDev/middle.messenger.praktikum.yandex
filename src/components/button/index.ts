@@ -1,5 +1,5 @@
 import template from './button.hbs';
-import * as styles from './button.scss';
+import styles from './button.scss';
 import Block, { BlockProps } from '../../utils/Block';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 

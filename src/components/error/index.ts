@@ -1,4 +1,4 @@
-import * as styles from './fieldErrors.scss';
+import styles from './fieldErrors.scss';
 import Block, { BlockProps } from '../../utils/Block';
 import template from './fieldErrors.hbs';
 

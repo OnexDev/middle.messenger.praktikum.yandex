@@ -1,9 +1,9 @@
 import Block from '../../utils/Block';
 import template from './lobby.hbs';
-import * as styles from './lobby.scss';
+import styles from './lobby.scss';
 import { Routes } from '../../index';
 import Button from '../../components/button';
-import router from '../../utils/Router';
+import Router from '../../utils/Router';
 import AuthController from '../../controllers/AuthController';
 
 export default class HomePage extends Block {
@@ -16,7 +16,7 @@ export default class HomePage extends Block {
       {
         label: key,
         events: {
-          click: () => router.go(value),
+          click: () => Router.go(value),
         },
       },
     ));

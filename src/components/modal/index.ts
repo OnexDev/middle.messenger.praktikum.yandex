@@ -1,7 +1,7 @@
 import template from './modal.hbs';
 import Block, { BlockProps } from '../../utils/Block';
 import ModalWrapper from './modalWrapper';
-import * as styles from './styles.scss';
+import styles from './styles.scss';
 
 interface ModalProps extends BlockProps{
     template: Block;

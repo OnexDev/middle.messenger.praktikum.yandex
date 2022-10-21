@@ -1,6 +1,6 @@
 import Block, { BlockProps } from '../../utils/Block';
 import template from './chats.hbs';
-import * as styles from './chats.scss';
+import styles from './chats.scss';
 import { ChatSelector, ChatSelectorProps } from '../../components/chats/chatSelectorBlock';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 import Button from '../../components/button';
@@ -16,6 +16,8 @@ import { User } from '../../api/AuthAPI';
 import { Messanger as MessangerBlock } from '../../components/chats/messanger';
 import { AddUserModal } from '../../components/chats/addUserModal';
 import { RemoveUserModal } from '../../components/chats/removeUserModal';
+import searchIcon from './../../../static/searchIcon.png';
+
 
 type chatTransformerOverload = {
     (chat:Chat): ChatSelectorProps,
@@ -66,7 +68,7 @@ export class ChatsPageBase extends Block {
 
     // Duplicate from Component Did Update
     this.createChats(this.props);
-
+    this.props.searchIcon = searchIcon;
     this.children.createChatModal = new Modal({
       template: new CreateChatModal({
         events: {
@@ -102,6 +104,7 @@ export class ChatsPageBase extends Block {
   }
 
   private createChats(props: ChatsProps) {
+      console.log(props.chatList)
     this.childrenCollection.chats = props.chatList.map((chat: Chat) => new ChatSelector(
       chatTransformer(chat),
     ));

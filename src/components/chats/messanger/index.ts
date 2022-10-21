@@ -1,4 +1,4 @@
-import * as styles from './messanger.scss';
+import styles from './messanger.scss';
 
 import Block, { BlockProps } from '../../../utils/Block';
 import getPropsWithAugmentedClasses from '../../../utils/atomic/getPropsWithAugmentedClasses';
@@ -15,6 +15,9 @@ import template from './messanger.hbs';
 import { Chat } from '../../../api/ChatsAPI';
 import { chatTransformer } from '../../../pages/chats';
 import Modal from '../../modal';
+import pin from '../../../../static/pin.png'
+import pushButton from '../../../../static/pushButton.png'
+import plusIcon from '../../../../static/plusIcon.png'
 
 export interface MessangerProps extends BlockProps{
     createChatModal?: ()=> Modal;
@@ -46,6 +49,7 @@ class MessangerBase extends Block {
     if (this.props.selectedChat && this.props.messages) {
       this.createMessages(this.props);
     }
+    this.props.pinIcon = pin;
 
     this.children.avatarImage = new LoadingImage({
       attrs: {
@@ -111,7 +115,7 @@ class MessangerBase extends Block {
           class: styles.option,
         },
         slots: {
-          before: '<img src="./plusIcon.png">',
+          before: `<img src="${plusIcon}">`,
         },
       }),
       new Button({
@@ -126,7 +130,7 @@ class MessangerBase extends Block {
           class: styles.option,
         },
         slots: {
-          before: '<img src="./plusIcon.png">',
+          before: `<img src="${plusIcon}">`,
         },
       }),
 
@@ -142,7 +146,7 @@ class MessangerBase extends Block {
           click: () => this.sendMessage({ props: this.props, children: this.children }),
         },
         slots: {
-          after: '<img src="pushButton.png"/>',
+          after: `<img src="${pushButton}"/>`,
         },
       },
     );

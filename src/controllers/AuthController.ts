@@ -14,7 +14,9 @@ class AuthController {
   public async signIn(data: SigninData) {
     try {
       await this.api.signin(data);
-      router.go(Routes.PROFILE);
+      if(store.getState().user){
+        router.go(Routes.MESSENGER);
+      }
     } catch (e: any) {
       alert(e);
       console.error(e);
@@ -25,7 +27,9 @@ class AuthController {
     try {
       await this.api.signup(data);
       await this.fetchUser();
-      router.go(Routes.MESSENGER);
+      if(store.getState().user){
+        router.go(Routes.MESSENGER);
+      }
     } catch (e: any) {
       console.error(e);
     }
@@ -36,7 +40,6 @@ class AuthController {
       const user = await this.api.read();
       store.set('user', user);
     } catch (e) {
-      router.go(Routes.LOGIN);
       console.error(e);
     }
   }

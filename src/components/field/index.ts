@@ -1,5 +1,5 @@
 import template from './field.hbs';
-import * as styles from './field.scss';
+import styles from './field.scss';
 import Block, { BlockProps } from '../../utils/Block';
 import getPropsWithAugmentedClasses from '../../utils/atomic/getPropsWithAugmentedClasses';
 import Input from '../input';

@@ -1,6 +1,6 @@
 import Block, { BlockProps } from '../../../utils/Block';
 import template from './removeUserModal.hbs';
-import * as styles from './removeUserModal.scss';
+import styles from './removeUserModal.scss';
 import getPropsWithAugmentedClasses from '../../../utils/atomic/getPropsWithAugmentedClasses';
 import { withStore } from '../../../utils/Store';
 import ChatsController from '../../../controllers/ChatsController';

@@ -79,11 +79,11 @@ class ChatsController {
     store.set('chats.isLoaded', false);
     try {
       const chats = await this.api.read();
-      const normalChats = chats.map(async (chat) => {
+      const normalChats = await Promise.all(chats.map(async (chat) => {
         const token = await this.getChatToken(chat.id);
         await MessagesController.connect(chat.id, token);
         return transformerDTO2Chat(chat);
-      });
+      }));
       store.set('chats.data', normalChats);
     } catch (e) {
       store.set('chats.error', e);

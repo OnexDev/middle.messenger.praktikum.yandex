@@ -1,5 +1,5 @@
 import template from './formPage.hbs';
-import * as styles from './formPage.scss';
+import styles from './formPage.scss';
 
 import Form, { FormType } from '../form';
 import Block, { BlockProps } from '../../utils/Block';

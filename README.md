@@ -1,35 +1,35 @@
-# [Yandex Praktikum Messenger](https://github.com/OnexDev/middle.messenger.praktikum.yandex) &middot; Demo project &middot; ![Repo size](https://img.shields.io/github/repo-size/onexdev/middle.messenger.praktikum.yandex)
+# [Yandex Praktikum Messenger](https://github.com/OnexDev/middle.messenger.praktikum.yandex) &middot; Training project &middot; ![Repo size](https://img.shields.io/github/repo-size/onexdev/middle.messenger.praktikum.yandex)
 
 #### Данный проект создан в рамках прохождения первого модуля обучения по программе курса middle frontend разработчик.
 
-Реализуется от прототипа на бумаге до развёртывания на Heroku.
+Реализуется от прототипа на бумаге до развёртывания в Docker контейнере на Heroku.
 
 ## Руководство
 
-В проекте используется `npm` в качестве пакетного менеджера. Сборку осуществляет `Parcel`, 
-транспиляция typescript утилитой `tsc`.
+В проекте используется `yarn` в качестве пакетного менеджера. Сборку осуществляет `webpack`.
 
 ### Установка
 
 Для установки проекта необходимо:
 
 1. Выполнить локальное клонирование репозитория.
-2. Установить node.js зависимости воспользовавшись командой `npm install`.
-3. Запустить проект командой `npm run start`.
+2. Установить node.js зависимости воспользовавшись командой `yarn install` или `yarn`.
+3. Запустить проект командой `yarn serve`.
 
 ### Документация
 
-Запуск проекта: `npm run start`. Адрес: `localhost:3000`.
+Запуск проекта: `yarn serve`. Адрес: `localhost:3000`.
+
+Сборка docker образа `docker build -t chat-app .`
+
+Запуск docker образа `docker run -p 3000:3000 -t chat-app`
+
 
 ###### Значение порта по умолчанию можно изменить путём модификации параметра port.
 
-Parcel сборка проекта: `npm run build`.
+Webpack сборка проекта: `yarn build`.
 
-Предсборочная подготовка: `npm run pre:clean`
-
-Parcel сборка и последующее отслеживание изменений: `npm run dev`.
-
-###### Для эффективной работы рекомендуется добавлять флаг `--no-cache`
+Webpack сборка в dev режиме: `yarn build:dev`.
 
 ## Актуальный статус
 
@@ -37,7 +37,9 @@ Sprint 1: Merged.
 
 Sprint 2: Merged.
 
-Sprint 3: In review.
+Sprint 3: Merged.
+
+Sprint 4: In review...
 
 ### Netlify badges
 
@@ -60,3 +62,5 @@ CSS Modules: `enabled`
 Figma: https://www.figma.com/file/tJesHhPmqV1zzyNbDJL85m/Y.Messanger?node-id=12%3A35
 
 Netlify: https://pritornyi-msg.netlify.app/
+
+Heroku: https://pritornyi.herokuapp.com/

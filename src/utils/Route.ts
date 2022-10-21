@@ -18,7 +18,7 @@ export function render(query: string, block: Block) {
   return root;
 }
 
-export interface ComponentConstructable<P extends BlockProps> {
+export interface ComponentConstructable<P extends BlockProps = any> {
     new(props: P): Block<P>
 }
 

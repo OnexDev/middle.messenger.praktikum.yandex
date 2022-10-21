@@ -1,7 +1,7 @@
 import Block from '../../utils/Block';
 import template from './signup.hbs';
 import FormPage from '../../components/formPage';
-import * as styles from '../../components/formPage/formPage.scss';
+import styles from '../../components/formPage/formPage.scss';
 
 import useUsernameValidator from '../../utils/validators/useUsernameValidator';
 import usePasswordValidator from '../../utils/validators/usePasswordValidator';
@@ -21,9 +21,11 @@ export default class signupPage extends Block {
   }
 
   init() {
-    if (store.getState().user) {
-      Router.go(Routes.MESSENGER);
-    }
+      AuthController.fetchUser().then(() => {
+          if(store.getState().user){
+              Router.go(Routes.MESSENGER)
+          }
+      });
 
     this.children.form = new FormPage({
       title: 'Регистрация',
